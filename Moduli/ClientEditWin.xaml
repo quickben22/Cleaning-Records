@@ -1,0 +1,74 @@
+﻿<Window x:Class="CleaningRecords.Moduli.ClientEditWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CleaningRecords.Moduli"
+        mc:Ignorable="d"
+        Title="Client details" Height="450" Width="1200" WindowState="Maximized">
+    <Grid Margin="20">
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+            <ColumnDefinition Width="110" ></ColumnDefinition>
+        </Grid.ColumnDefinitions>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" ></RowDefinition>
+            <RowDefinition Height="150" ></RowDefinition>
+            <RowDefinition Height="*"  ></RowDefinition>
+            <RowDefinition Height="150" ></RowDefinition>
+
+        </Grid.RowDefinitions>
+
+        <TextBlock FontWeight="Bold" Margin="10,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock FontWeight="Bold" Margin="200,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
+
+
+        <TextBlock Margin="10,10,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 2</TextBlock>
+
+        <TextBox  Margin="80,5,10,10" Grid.Column="1" Grid.Row="1" Width="100" TextAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address2, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock Margin="10,60,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 3</TextBlock>
+
+        <TextBox Grid.Row="1"   Margin="80,55,10,10"  Width="100" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address3, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock Grid.Row="1"  Margin="10,110,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 4</TextBlock>
+
+        <TextBox Grid.Row="1"  Margin="80,105,10,10"   Width="100" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address4, UpdateSourceTrigger=PropertyChanged}" />
+
+
+        <TextBlock Grid.Row="1"  Margin="280,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top">Upute</TextBlock>
+
+        <TextBox Grid.Row="1"   Margin="280,40,10,10"  TextWrapping="Wrap" AcceptsReturn="True" Width="100" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock Grid.Row="1"  Margin="460,10,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Opis</TextBlock>
+
+        <TextBox Grid.Row="1"     Margin="460,40,10,10"   TextWrapping="Wrap" AcceptsReturn="True" Width="100" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
+
+
+        <DataGrid Grid.Row="2" x:Name="dataGrid"  ItemsSource="{Binding Source=ClientJobs}"  CanUserAddRows="false" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
+                <DataGridTextColumn Header="No. of hours" Binding="{Binding NoOfHours}"/>
+                <DataGridTextColumn Header="Team" Binding="{Binding Team}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Account number" Binding="{Binding AccountNumber}"/>
+                <DataGridTemplateColumn  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Delete_Click">Delete</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <Button Grid.Row="3" Click="Add_Click">NEW JOB</Button>
+
+    </Grid>
+</Window>
