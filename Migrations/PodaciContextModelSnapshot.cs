@@ -28,8 +28,8 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Contract")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DriversLicence")
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("DriversLicence")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");

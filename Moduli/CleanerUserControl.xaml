@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:CleaningRecords.Moduli"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:ContractList x:Key="ContractList"/>
+    </UserControl.Resources>
+
     <Grid Margin="20">
 
         <Grid.RowDefinitions>
@@ -23,11 +27,22 @@
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
                 <DataGridTextColumn Header="Telephone" Binding="{Binding Telephone}"/>
                 <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="Contract" Binding="{Binding Contract}"/>
+                <DataGridComboBoxColumn Header="Contract"  SelectedItemBinding="{Binding Contract}" ItemsSource="{Binding Source={StaticResource ContractList}}" />
+                <!--<DataGridTextColumn Header="Contract" Binding="{Binding Contract}"/>-->
                 <DataGridTextColumn Header="PPS" Binding="{Binding PPS}"/>
                 <DataGridTextColumn Header="Visa" Binding="{Binding Visa}"/>
-                <DataGridTextColumn Header="DriversLicence" Binding="{Binding DriversLicence}"/>
+                <!--<DataGridTextColumn Header="DriversLicence" Binding="{Binding DriversLicence}"/>-->
+                <DataGridTemplateColumn Header="Drivers Licence">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" IsChecked="{Binding DriversLicence}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
+
+                
+                
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

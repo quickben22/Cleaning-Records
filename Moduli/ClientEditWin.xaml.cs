@@ -40,15 +40,7 @@ namespace CleaningRecords.Moduli
         {
             if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
             {
-                using (var db = new PodaciContext())
-                {
-                    db.Remove(((CleaningJob)((Button)sender).DataContext));
-                    db.SaveChanges();
-                    if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
-                    {
-                        ClientObject.CleaningJobs.Remove(((CleaningJob)((Button)sender).DataContext));
-                    }
-                }
+                Fun.Delete(((Button)sender).DataContext, CleaningJobs: ClientObject.CleaningJobs);
             }
         }
 
@@ -56,7 +48,7 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
-                var clean = db.Add(new CleaningJob { ClientId = ClientObject.Id }).Entity;
+                var clean = db.Add(new CleaningJob { ClientId = ClientObject.Id,Date=DateTime.Now }).Entity;
                 db.SaveChanges();
                 ClientObject.CleaningJobs.Add(clean);
             }

@@ -34,7 +34,7 @@ namespace CleaningRecords.Moduli
             }
         }
 
-            private void Add_Click(object sender, RoutedEventArgs e)
+        private void Add_Click(object sender, RoutedEventArgs e)
         {
             using (var db = new PodaciContext())
             {
@@ -48,13 +48,18 @@ namespace CleaningRecords.Moduli
         {
             if (((Button)sender).DataContext.GetType().Name == "Cleaner")
             {
-                using (var db = new PodaciContext())
-                {
-                    db.Remove(((Cleaner)((Button)sender).DataContext));
-                    db.SaveChanges();
-                    Cleaners.Cleaners.Remove(((Cleaner)((Button)sender).DataContext));
-                }
+                Fun.Delete(((Button)sender).DataContext, Cleaners: Cleaners.Cleaners);
             }
         }
     }
+
+    public class ContractList : List<string>
+    {
+        public ContractList()
+        {
+            this.Add("Self employed");
+            this.Add("Employee");
+        }
+    }
+
 }

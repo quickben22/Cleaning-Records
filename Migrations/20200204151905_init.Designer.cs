@@ -9,14 +9,52 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200203150525_init4")]
-    partial class init4
+    [Migration("20200204151905_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.1");
+
+            modelBuilder.Entity("CleaningRecords.DAL.Models.Cleaner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Contract")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("DriversLicence")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PPS")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Visa")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cleaners");
+                });
 
             modelBuilder.Entity("CleaningRecords.DAL.Models.CleaningJob", b =>
                 {

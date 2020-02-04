@@ -33,8 +33,8 @@ namespace CleaningRecords.DAL.Models
         private string _Visa;
         public string Visa { get { return _Visa; } set { _Visa = (value); this.OnPropertyChanged("Visa"); } }
 
-        private string _DriversLicence;
-        public string DriversLicence { get { return _DriversLicence; } set { _DriversLicence = (value); this.OnPropertyChanged("DriversLicence"); } }
+        private bool _DriversLicence;
+        public bool DriversLicence { get { return _DriversLicence; } set { _DriversLicence = (value); this.OnPropertyChanged("DriversLicence"); } }
 
 
 

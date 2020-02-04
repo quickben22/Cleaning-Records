@@ -24,6 +24,7 @@ namespace CleaningRecords.Moduli
     public partial class ClientsUserControl : UserControl
     {
         ClientsViewModel Clients = new ClientsViewModel();
+     
         public ClientsUserControl()
         {
             InitializeComponent();
@@ -63,12 +64,7 @@ namespace CleaningRecords.Moduli
         {
             if (((Button)sender).DataContext.GetType().Name == "Client")
             {
-                using (var db = new PodaciContext())
-                {
-                    db.Remove(((Client)((Button)sender).DataContext));
-                    db.SaveChanges();
-                    Clients.Clients.Remove(((Client)((Button)sender).DataContext));
-                }
+                Fun.Delete(((Button)sender).DataContext, Clients: Clients.Clients);
             }
         }
     }
