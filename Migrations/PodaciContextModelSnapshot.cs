@@ -81,7 +81,10 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Team")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Time")
+                    b.Property<DateTime>("TimeEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimeStart")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CleaningRecords.DAL.Models
@@ -45,6 +46,7 @@ namespace CleaningRecords.DAL.Models
         public ObservableCollection<CleaningJob> CleaningJobs { get { return _CleaningJobs; } set { _CleaningJobs = (value); this.OnPropertyChanged("CleaningJobs"); } }
 
 
+     
 
 
         public event PropertyChangedEventHandler PropertyChanged;

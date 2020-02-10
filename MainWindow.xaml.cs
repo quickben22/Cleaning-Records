@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace CleaningRecords
 {
     /// <summary>
@@ -24,20 +26,35 @@ namespace CleaningRecords
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
        
 
         private void Clients_Click(object sender, RoutedEventArgs e)
         {
+            DisplayGrid.Children.Clear();
             ClientsUserControl x = new ClientsUserControl();
             DisplayGrid.Children.Add(x);
         }
 
         private void Cleaners_Click(object sender, RoutedEventArgs e)
         {
+            DisplayGrid.Children.Clear();
             CleanerUserControl x = new CleanerUserControl();
             DisplayGrid.Children.Add(x);
         }
+
+
+        private void Clalendar_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayGrid.Children.Clear();
+            CalendarUserControl x = new CalendarUserControl();
+            DisplayGrid.Children.Add(x);
+        }
+
+
+       
+
     }
 }

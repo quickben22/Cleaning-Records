@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200204151905_init")]
+    [Migration("20200210094324_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,10 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Team")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Time")
+                    b.Property<DateTime>("TimeEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimeStart")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

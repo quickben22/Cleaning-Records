@@ -66,22 +66,33 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Time">
+                <DataGridTemplateColumn Header="Start Time">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Time, StringFormat={}{0: H:mm}}" />
+                            <TextBlock Text="{Binding TimeStart, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding Time}" />
+                            <xctk:TimePicker Text="{Binding TimeStart}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="End Time">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TimeEnd, StringFormat={}{0: H:mm}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <xctk:TimePicker Text="{Binding TimeEnd}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-               
 
-               
+
                 <DataGridTextColumn Header="No. of hours" Binding="{Binding NoOfHours}"/>
                 <DataGridTextColumn Header="Team" Binding="{Binding Team}"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
