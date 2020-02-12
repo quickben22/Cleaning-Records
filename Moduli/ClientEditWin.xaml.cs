@@ -48,10 +48,45 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
-                var clean = db.Add(new CleaningJob { ClientId = ClientObject.Id,Date=DateTime.Now }).Entity;
+                var clean = db.Add(new CleaningJob { ClientId = ClientObject.Id, Date = DateTime.Now }).Entity;
                 db.SaveChanges();
                 ClientObject.CleaningJobs.Add(clean);
             }
         }
     }
+
+    public class CleanersList : Dictionary<int, string>
+    {
+        public CleanersList()
+        {
+            using (var db = new PodaciContext())
+            {
+                this.Add(0, null);
+                var Cleaners = db.Cleaners;
+                if (Cleaners != null && Cleaners.Any() )
+                    foreach (var cleaner in Cleaners)
+                        this.Add(cleaner.Id, cleaner.Name + " " + cleaner.Surname);
+
+            }
+
+        }
+    }
+
+    public class TeamsList : Dictionary<int, string>
+    {
+        public TeamsList()
+        {
+            using (var db = new PodaciContext())
+            {
+                var Teams = db.Teams;
+                if (Teams != null && Teams.Any())
+                    foreach (var team in Teams)
+                        this.Add(team.Id, team.Name);
+
+            }
+
+        }
+    }
+
+
 }

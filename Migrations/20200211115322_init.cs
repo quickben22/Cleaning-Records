@@ -51,6 +51,45 @@ namespace CleaningRecords.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CleanerTeam",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CleanerId = table.Column<int>(nullable: false),
+                    TeamId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CleanerTeam", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CleanerTeam_Cleaners_CleanerId",
+                        column: x => x.CleanerId,
+                        principalTable: "Cleaners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CleanerTeam_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CleaningJobs",
                 columns: table => new
                 {
@@ -61,38 +100,77 @@ namespace CleaningRecords.Migrations
                     TimeStart = table.Column<DateTime>(nullable: false),
                     TimeEnd = table.Column<DateTime>(nullable: false),
                     NoOfHours = table.Column<int>(nullable: false),
-                    Team = table.Column<string>(nullable: true),
                     Amount = table.Column<decimal>(nullable: false),
                     AccountNumber = table.Column<string>(nullable: true),
-                    ClientId = table.Column<int>(nullable: false)
+                    ClientId = table.Column<int>(nullable: false),
+                    CleanerId = table.Column<int>(nullable: true),
+                    TeamId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CleaningJobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CleaningJobs_Cleaners_CleanerId",
+                        column: x => x.CleanerId,
+                        principalTable: "Cleaners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CleaningJobs_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CleaningJobs_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CleanerTeam_CleanerId",
+                table: "CleanerTeam",
+                column: "CleanerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CleanerTeam_TeamId",
+                table: "CleanerTeam",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CleaningJobs_CleanerId",
+                table: "CleaningJobs",
+                column: "CleanerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CleaningJobs_ClientId",
                 table: "CleaningJobs",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CleaningJobs_TeamId",
+                table: "CleaningJobs",
+                column: "TeamId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cleaners");
+                name: "CleanerTeam");
 
             migrationBuilder.DropTable(
                 name: "CleaningJobs");
 
             migrationBuilder.DropTable(
+                name: "Cleaners");
+
+            migrationBuilder.DropTable(
                 name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
         }
     }
 }

@@ -53,8 +53,11 @@ namespace CleaningRecords
             DisplayGrid.Children.Add(x);
         }
 
-
-       
-
+        private void Teams_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayGrid.Children.Clear();
+            TeamsUserControl x = new TeamsUserControl();
+            DisplayGrid.Children.Add(x);
+        }
     }
 }

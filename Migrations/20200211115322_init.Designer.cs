@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200210094324_init")]
+    [Migration("20200211115322_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,27 @@ namespace CleaningRecords.Migrations
                     b.ToTable("Cleaners");
                 });
 
+            modelBuilder.Entity("CleaningRecords.DAL.Models.CleanerTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CleanerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CleanerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("CleanerTeam");
+                });
+
             modelBuilder.Entity("CleaningRecords.DAL.Models.CleaningJob", b =>
                 {
                     b.Property<int>("Id")
@@ -67,6 +88,9 @@ namespace CleaningRecords.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("CleanerId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("INTEGER");
@@ -80,8 +104,8 @@ namespace CleaningRecords.Migrations
                     b.Property<int>("NoOfHours")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Team")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TimeEnd")
                         .HasColumnType("TEXT");
@@ -91,7 +115,11 @@ namespace CleaningRecords.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CleanerId");
+
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("CleaningJobs");
                 });
@@ -137,13 +165,50 @@ namespace CleaningRecords.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("CleaningRecords.DAL.Models.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("CleaningRecords.DAL.Models.CleanerTeam", b =>
+                {
+                    b.HasOne("CleaningRecords.DAL.Models.Cleaner", "Cleaner")
+                        .WithMany("CleanerTeams")
+                        .HasForeignKey("CleanerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleaningRecords.DAL.Models.Team", "Team")
+                        .WithMany("CleanerTeams")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CleaningRecords.DAL.Models.CleaningJob", b =>
                 {
+                    b.HasOne("CleaningRecords.DAL.Models.Cleaner", "Cleaner")
+                        .WithMany("CleaningJobs")
+                        .HasForeignKey("CleanerId");
+
                     b.HasOne("CleaningRecords.DAL.Models.Client", "Client")
                         .WithMany("CleaningJobs")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CleaningRecords.DAL.Models.Team", "Team")
+                        .WithMany("CleaningJobs")
+                        .HasForeignKey("TeamId");
                 });
 #pragma warning restore 612, 618
         }

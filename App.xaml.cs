@@ -33,12 +33,18 @@ namespace CleaningRecords
             {
                 if (!db.Clients.Any())
                 {
-                    db.Add(new Client { Name = "Test", CleaningJobs = new System.Collections.ObjectModel.ObservableCollection<CleaningJob> { new CleaningJob { Location = "Test Location" } } });
+                    db.Add(new Client { Name = "TestClient", CleaningJobs = new System.Collections.ObjectModel.ObservableCollection<CleaningJob> { new CleaningJob { Location = "Test Location" } } });
                     db.SaveChanges();
                 }
                 if (!db.Cleaners.Any())
                 {
-                    db.Add(new Cleaner { Name = "Test" });
+                    db.Add(new Cleaner { Name = "TestCleaner" });
+                    db.SaveChanges();
+                }
+
+                if (!db.Teams.Any())
+                {
+                    db.Add(new Team { Name = "TestTeam"});
                     db.SaveChanges();
                 }
             }

@@ -29,6 +29,26 @@ namespace CleaningRecords.DAL
         public  DbSet<CleaningJob> CleaningJobs { get; set; }
         public DbSet<Cleaner> Cleaners { get; set; }
 
+        public DbSet<Team> Teams { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CleanerTeam>()
+                .HasKey(t => new { t.CleanerId, t.TeamId });
+
+            modelBuilder.Entity<CleanerTeam>()
+                .HasOne(pt => pt.Cleaner)
+                .WithMany(p => p.CleanerTeams)
+                .HasForeignKey(pt => pt.CleanerId);
+
+            modelBuilder.Entity<CleanerTeam>()
+                .HasOne(pt => pt.Team)
+                .WithMany(t => t.CleanerTeams)
+                .HasForeignKey(pt => pt.TeamId);
+        }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
            => options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/CleaningDb1.db");
 

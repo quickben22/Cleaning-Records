@@ -37,6 +37,9 @@ namespace CleaningRecords.DAL.Models
         public bool DriversLicence { get { return _DriversLicence; } set { _DriversLicence = (value); this.OnPropertyChanged("DriversLicence"); } }
 
 
+        public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
+
+        public List<CleanerTeam> CleanerTeams { get; set; }
 
 
 

@@ -23,8 +23,10 @@ namespace CleaningRecords.DAL.Models
 
         private int _NoOfHours;
         public int NoOfHours { get { return _NoOfHours; } set { _NoOfHours = (value); this.OnPropertyChanged("NoOfHours"); } }
-        private string _Team;
-        public string Team { get { return _Team; } set { _Team = (value); this.OnPropertyChanged("Team"); } }
+
+
+
+
         private decimal _Amount;
         public decimal Amount { get { return _Amount; } set { _Amount = (value); this.OnPropertyChanged("Amount"); } }
         private string _AccountNumber;
@@ -34,7 +36,14 @@ namespace CleaningRecords.DAL.Models
         public Client Client { get; set; }
 
 
-       
+        private int? _CleanerId;
+        public int? CleanerId { get { return _CleanerId; } set { _CleanerId = (value); this.OnPropertyChanged("CleanerId"); } }
+        public Cleaner Cleaner { get; set; }
+
+
+        private int? _TeamId;
+        public int? TeamId { get { return _TeamId; } set { _TeamId = (value); this.OnPropertyChanged("TeamId"); } }
+        public Team Team { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,8 +53,10 @@ namespace CleaningRecords.DAL.Models
             if (PropertyChanged != null)
             {
 
-           
-
+                if (prop == "TeamId" && TeamId != null)
+                    CleanerId = null;
+                else if (prop == "CleanerId" && CleanerId != null)
+                    TeamId = null;
                 using (var db = new PodaciContext())
                 {
                     db.Update(this);
