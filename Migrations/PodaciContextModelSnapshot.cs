@@ -56,19 +56,13 @@ namespace CleaningRecords.Migrations
 
             modelBuilder.Entity("CleaningRecords.DAL.Models.CleanerTeam", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("CleanerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CleanerId");
+                    b.HasKey("CleanerId", "TeamId");
 
                     b.HasIndex("TeamId");
 

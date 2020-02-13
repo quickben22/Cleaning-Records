@@ -67,14 +67,12 @@ namespace CleaningRecords.Migrations
                 name: "CleanerTeam",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     CleanerId = table.Column<int>(nullable: false),
                     TeamId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CleanerTeam", x => x.Id);
+                    table.PrimaryKey("PK_CleanerTeam", x => new { x.CleanerId, x.TeamId });
                     table.ForeignKey(
                         name: "FK_CleanerTeam_Cleaners_CleanerId",
                         column: x => x.CleanerId,
@@ -128,11 +126,6 @@ namespace CleaningRecords.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CleanerTeam_CleanerId",
-                table: "CleanerTeam",
-                column: "CleanerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CleanerTeam_TeamId",

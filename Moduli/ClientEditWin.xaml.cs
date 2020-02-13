@@ -53,6 +53,9 @@ namespace CleaningRecords.Moduli
                 ClientObject.CleaningJobs.Add(clean);
             }
         }
+
+
+
     }
 
     public class CleanersList : Dictionary<int, string>
@@ -78,6 +81,7 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
+                this.Add(0, null);
                 var Teams = db.Teams;
                 if (Teams != null && Teams.Any())
                     foreach (var team in Teams)

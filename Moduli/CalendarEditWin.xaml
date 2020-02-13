@@ -10,6 +10,8 @@
 
     <Window.Resources>
         <local:ClientsList x:Key="ClientsList"/>
+        <local:CleanersList x:Key="CleanersList"/>
+        <local:TeamsList x:Key="TeamsList"/>
     </Window.Resources>
 
     <Grid>
@@ -66,7 +68,9 @@
 
 
                 <DataGridTextColumn Header="No. of hours" Binding="{Binding NoOfHours}"/>
-                <DataGridTextColumn Header="Team" Binding="{Binding Team}"/>
+                <DataGridComboBoxColumn Header="Cleaner"  ItemsSource="{Binding Source={StaticResource CleanersList}}" SelectedValueBinding="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Account number" Binding="{Binding AccountNumber}"/>
                 <DataGridTemplateColumn  >

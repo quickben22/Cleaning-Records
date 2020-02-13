@@ -57,6 +57,12 @@ namespace CleaningRecords.DAL.Models
                     CleanerId = null;
                 else if (prop == "CleanerId" && CleanerId != null)
                     TeamId = null;
+
+                if (CleanerId == 0)
+                    CleanerId = null;
+                if (TeamId == 0)
+                    TeamId = null;
+
                 using (var db = new PodaciContext())
                 {
                     db.Update(this);

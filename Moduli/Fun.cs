@@ -10,7 +10,7 @@ namespace CleaningRecords.Moduli
 {
     public static class Fun
     {
-        public static void Delete(object Object, ObservableCollection<Client> Clients = null, ObservableCollection<CleaningJob> CleaningJobs = null, ObservableCollection<Cleaner> Cleaners = null)
+        public static void Delete(object Object, ObservableCollection<Client> Clients = null, ObservableCollection<CleaningJob> CleaningJobs = null, ObservableCollection<Cleaner> Cleaners = null, ObservableCollection<TeamsHelper> TeamsHelpers = null)
         {
             var messageBoxText = "Delete this item?";
 
@@ -28,7 +28,13 @@ namespace CleaningRecords.Moduli
 
                         using (var db = new PodaciContext())
                         {
-                            db.Remove(Object);
+                            if (Object.GetType().Name == "TeamsHelper")
+                            {
+                                db.Remove(((TeamsHelper)Object).Team);
+                                TeamsHelpers.Remove((TeamsHelper)Object);
+                            }
+                            else
+                                db.Remove(Object);
                             db.SaveChanges();
                             if (Object.GetType().Name == "Client")
                                 Clients.Remove((Client)Object);

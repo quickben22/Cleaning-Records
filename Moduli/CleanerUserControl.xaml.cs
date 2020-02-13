@@ -51,6 +51,8 @@ namespace CleaningRecords.Moduli
                 Fun.Delete(((Button)sender).DataContext, Cleaners: Cleaners.Cleaners);
             }
         }
+
+      
     }
 
     public class ContractList : List<string>

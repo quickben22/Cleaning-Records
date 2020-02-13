@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200211115322_init")]
+    [Migration("20200213095643_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,19 +58,13 @@ namespace CleaningRecords.Migrations
 
             modelBuilder.Entity("CleaningRecords.DAL.Models.CleanerTeam", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("CleanerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TeamId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CleanerId");
+                    b.HasKey("CleanerId", "TeamId");
 
                     b.HasIndex("TeamId");
 

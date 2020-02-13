@@ -103,6 +103,9 @@
 
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Account number" Binding="{Binding AccountNumber}"/>
+
+          
+
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

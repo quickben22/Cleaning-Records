@@ -62,12 +62,21 @@ namespace CleaningRecords.Moduli
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-
+            using (var db = new PodaciContext())
+            {
+                var team = db.Add(new Team()).Entity;
+                team.CleanerTeams = new ObservableCollection<CleanerTeam>();
+                db.SaveChanges();
+                Teams.Teams.Add(new TeamsHelper { Team = team });
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (((Button)sender).DataContext.GetType().Name == "TeamsHelper")
+            {
+                Fun.Delete(((Button)sender).DataContext, TeamsHelpers: Teams.Teams);
+            }
         }
     }
 

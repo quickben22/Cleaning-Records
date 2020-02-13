@@ -11,6 +11,11 @@
   <ItemGroup>
     <Compile Remove="DAL\Models\ClientCleaningJob.cs" />
     <Compile Remove="DAL\Models\Temp\CleaningJobViewModel.cs" />
+    <Compile Remove="Moduli\CleanersCalendarWin.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Moduli\CleanersCalendarWin.xaml" />
   </ItemGroup>
 
   <ItemGroup>

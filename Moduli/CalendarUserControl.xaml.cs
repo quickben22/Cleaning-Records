@@ -1,4 +1,5 @@
 ﻿using CleaningRecords.DAL;
+using CleaningRecords.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using MonthCalendar;
 using System;
@@ -22,13 +23,16 @@ namespace CleaningRecords.Moduli
     /// </summary>
     public partial class CalendarUserControl : UserControl
     {
+
+        private CalendarViewModel model;
+
         public CalendarUserControl()
         {
             InitializeComponent();
             Loaded += Window1_Loaded;
         }
 
-    
+
 
         private void Window1_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -43,8 +47,8 @@ namespace CleaningRecords.Moduli
             //    _myAppointmentsList.Add(apt);
             //}
 
-
-          
+            model = new CalendarViewModel();
+            this.DataContext = model;
 
 
             SetAppointments();
@@ -75,17 +79,50 @@ namespace CleaningRecords.Moduli
         {
 
 
-                 List<Appointment> _myAppointmentsList = new List<Appointment>();
+            List<Appointment> _myAppointmentsList = new List<Appointment>();
             using (var db = new PodaciContext())
             {
-                var jobs = db.CleaningJobs.Include(x => x.Client).Where(x => x.Date.Month == this.AptCalendar.DisplayStartDate.Month).ToList();
+           
+                var jobs = db.CleaningJobs
+                    .Include(x => x.Client)
+                    .Include(x => x.Team)
+                    .ThenInclude(x => x.CleanerTeams)
+                    .ThenInclude(y => y.Cleaner)
+                    .Include(x => x.Cleaner)
+                    .Where(x => x.Date.Month == this.AptCalendar.DisplayStartDate.Month).ToList();
+
+                if (model.TeamId != null && model.TeamId != 0)
+                    jobs = jobs.Where(x => x.TeamId == model.TeamId)?.ToList();
+
+                if (model.CleanerId != null && model.CleanerId!=0)
+                    jobs = jobs.Where(x => x.CleanerId == model.CleanerId || x.Team?.CleanerTeams?.FirstOrDefault(y => y.CleanerId == model.CleanerId) != null)?.ToList();
 
                 foreach (var job in jobs)
                 {
                     Appointment apt = new Appointment();
                     apt.CleaningJobID = job.Id;
                     apt.Date = job.Date;
-                    apt.Subject = $"{job.TimeStart.ToString("H:mm")} - {job.TimeEnd.ToString("H:mm")} \n {job.Client.Name} {job.Client.Surname}";
+                    string cleaner = "";
+                    if (job.Cleaner != null)
+                    {
+                        apt.CleanerID = (int)job.CleanerId;
+                        cleaner = job.Cleaner.Name + " " + job.Cleaner.Surname;
+                    }
+                    if (job.TeamId != null)
+                    {
+                        if (model.CleanerId != null)
+                        {
+                            var c = job.Team?.CleanerTeams?.FirstOrDefault(x => x.CleanerId == model.CleanerId)?.Cleaner;
+                            cleaner = c?.Name + " " + c?.Surname;
+                            apt.CleanerID = c.Id;
+                        }
+                        else
+                        {
+                            cleaner = job.Team.Name;
+                            apt.TeamID = (int)job.TeamId;
+                        }
+                    }
+                    apt.Subject = $"{job.TimeStart.ToString("H:mm")} - {job.TimeEnd.ToString("H:mm")} \n {job.Client.Name} {job.Client.Surname}\n {cleaner }  ";
                     _myAppointmentsList.Add(apt);
                 }
             }
@@ -93,5 +130,13 @@ namespace CleaningRecords.Moduli
             AptCalendar.MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.Date != null && Convert.ToDateTime(apt.Date).Month == this.AptCalendar.DisplayStartDate.Month && Convert.ToDateTime(apt.Date).Year == this.AptCalendar.DisplayStartDate.Year));
         }
 
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (e?.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                SetAppointments();
+            }
+        }
     }
 }
