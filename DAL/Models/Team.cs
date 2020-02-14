@@ -12,6 +12,9 @@ namespace CleaningRecords.DAL.Models
         public int Id { get; set; }
         private string? _Name;
         public string Name { get { return _Name; } set { _Name = (value); this.OnPropertyChanged("Name"); } }
+
+        private string _Color;
+        public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
         private ObservableCollection<CleanerTeam> _CleanerTeams;
         public ObservableCollection<CleanerTeam> CleanerTeams { get { return _CleanerTeams; } set { _CleanerTeams = (value); this.OnPropertyChanged("CleanerTeams"); } }
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }

@@ -14,9 +14,16 @@
 
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="dataGrid"  ItemsSource="{Binding Source=Clients}" CanUserAddRows="false" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGrid"  FontWeight="SemiBold"  AlternatingRowBackground="AliceBlue"   ItemsSource="{Binding Source=Clients}" CanUserAddRows="false" AutoGenerateColumns="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Client Number" Binding="{Binding ClientNumber}"/>
+                <DataGridTextColumn Header="Client Number" Binding="{Binding ClientNumber}"  />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>

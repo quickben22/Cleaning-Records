@@ -7,22 +7,25 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Moduli\CalendarEditWin.xaml.cs">
+    <Compile Update="Moduli\Calendar\CalendarEditWin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Moduli\CalendarUserControl.xaml.cs">
+    <Compile Update="Moduli\Calendar\CalendarUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Moduli\CleanerUserControl.xaml.cs">
+    <Compile Update="Moduli\Cleaner\CleanerUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Moduli\ClientEditWin.xaml.cs">
+    <Compile Update="Moduli\Client\ClientEditWin.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Moduli\ClientsUserControl.xaml.cs">
+    <Compile Update="Moduli\Client\ClientsUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Moduli\TeamsUserControl.xaml.cs">
+    <Compile Update="Moduli\Helpers\InputDialogSimple.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Moduli\Team\TeamsUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -30,22 +33,25 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\CalendarEditWin.xaml">
+    <Page Update="Moduli\Calendar\CalendarEditWin.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\CalendarUserControl.xaml">
+    <Page Update="Moduli\Calendar\CalendarUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\CleanerUserControl.xaml">
+    <Page Update="Moduli\Cleaner\CleanerUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\ClientEditWin.xaml">
+    <Page Update="Moduli\Client\ClientEditWin.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\ClientsUserControl.xaml">
+    <Page Update="Moduli\Client\ClientsUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Moduli\TeamsUserControl.xaml">
+    <Page Update="Moduli\Helpers\InputDialogSimple.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Moduli\Team\TeamsUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

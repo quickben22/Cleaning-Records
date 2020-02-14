@@ -70,18 +70,5 @@ namespace CleaningRecords.Moduli
             }
         }
     }
-    public class ClientsList : Dictionary<int, string>
-    {
-        public ClientsList()
-        {
-            using (var db = new PodaciContext())
-            {
-                var Clients = db.Clients;
-                foreach (var client in Clients)
-                    this.Add(client.Id, client.Name + " " + client.Surname);
-
-            }
-
-        }
-    }
+   
 }

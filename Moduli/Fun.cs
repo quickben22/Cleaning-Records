@@ -1,10 +1,13 @@
 ﻿using CleaningRecords.DAL;
 using CleaningRecords.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace CleaningRecords.Moduli
 {
@@ -26,22 +29,70 @@ namespace CleaningRecords.Moduli
                 case MessageBoxResult.OK:
                     {
 
-                        using (var db = new PodaciContext())
+                        try
                         {
-                            if (Object.GetType().Name == "TeamsHelper")
+
+                            using (var db = new PodaciContext())
                             {
-                                db.Remove(((TeamsHelper)Object).Team);
-                                TeamsHelpers.Remove((TeamsHelper)Object);
+                                if (Object.GetType().Name == "TeamsHelper")
+                                {
+                                    try
+                                    {
+                                        db.Remove(((TeamsHelper)Object).Team);
+                                        db.SaveChanges();
+                                        TeamsHelpers.Remove((TeamsHelper)Object);
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("Not possible to delete Team while it has cleaning jobs allocated!", "Delete no possible", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                    }
+                                }
+                        
+                           
+                                if (Object.GetType().Name == "Client")
+                                {
+                                    var client = db.Clients.Include(x => x.CleaningJobs).FirstOrDefault();
+
+                                    if (client.CleaningJobs?.Count > 0)
+                                    {
+                                        MessageBox.Show("Not possible to delete Client while he has cleaning jobs allocated to him!", "Delete no possible", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                    }
+                                    else
+                                    {
+                                     
+                                        db.Remove(Object);
+                                        db.SaveChanges();
+                                        Clients.Remove((Client)Object);
+                                    }
+                                }
+                                if (Object.GetType().Name == "CleaningJob")
+                                {
+                                  
+                                    db.Remove(Object);
+                                    db.SaveChanges();
+                                    CleaningJobs.Remove((CleaningJob)Object);
+                                }
+                                if (Object.GetType().Name == "Cleaner")
+                                {
+                                    try
+                                    {
+                                   
+                                        db.Remove(Object);
+                                        db.SaveChanges();
+                                        Cleaners.Remove((Cleaner)Object);
+                                    }
+
+                                    catch
+                                    {
+                                        MessageBox.Show("Not possible to delete Cleaner while he has cleaning jobs allocated!", "Delete no possible", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                    }
+                                }
+                              
                             }
-                            else
-                                db.Remove(Object);
-                            db.SaveChanges();
-                            if (Object.GetType().Name == "Client")
-                                Clients.Remove((Client)Object);
-                            if (Object.GetType().Name == "CleaningJob")
-                                CleaningJobs.Remove((CleaningJob)Object);
-                            if (Object.GetType().Name == "Cleaner")
-                                Cleaners.Remove((Cleaner)Object);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error deleting!", "Delete no possible", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                         break;
                     }
@@ -53,5 +104,23 @@ namespace CleaningRecords.Moduli
             }
 
         }
+
+        public static void RefreshCombo(object c)
+        {
+            if (((ComboBox)c).ItemsSource.GetType().Name == "ClientsList")
+                ((ComboBox)c).ItemsSource = new ClientsList();
+            if (((ComboBox)c).ItemsSource.GetType().Name == "CleanersList")
+                ((ComboBox)c).ItemsSource = new CleanersList();
+            if (((ComboBox)c).ItemsSource.GetType().Name == "ClientsWithNullList")
+                ((ComboBox)c).ItemsSource = new ClientsWithNullList();
+            if (((ComboBox)c).ItemsSource.GetType().Name == "TeamsList")
+                ((ComboBox)c).ItemsSource = new TeamsList();
+            if (((ComboBox)c).ItemsSource.GetType().Name == "TeamsWithAllList")
+                ((ComboBox)c).ItemsSource = new TeamsWithAllList();
+            if (((ComboBox)c).ItemsSource.GetType().Name == "CleanersWithAllList")
+                ((ComboBox)c).ItemsSource = new CleanersWithAllList();
+        }
+
+
     }
 }

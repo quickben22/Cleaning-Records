@@ -33,8 +33,17 @@ namespace CleaningRecords.DAL.Models
         private string _Visa;
         public string Visa { get { return _Visa; } set { _Visa = (value); this.OnPropertyChanged("Visa"); } }
 
-        private bool _DriversLicence;
-        public bool DriversLicence { get { return _DriversLicence; } set { _DriversLicence = (value); this.OnPropertyChanged("DriversLicence"); } }
+        private string _DriversLicence;
+        public string DriversLicence { get { return _DriversLicence; } set { _DriversLicence = (value); this.OnPropertyChanged("DriversLicence"); } }
+
+        private string _Ironing;
+        public string Ironing { get { return _Ironing; } set { _Ironing = (value); this.OnPropertyChanged("Ironing"); } }
+
+        private string _Pets;
+        public string Pets { get { return _Pets; } set { _Pets = (value); this.OnPropertyChanged("Pets"); } }
+
+        private string _Color;
+        public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
 
 
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }

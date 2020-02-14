@@ -31,6 +31,7 @@
 
         </Grid.RowDefinitions>
 
+       
         <TextBlock FontWeight="Bold" Margin="10,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
         <TextBlock FontWeight="Bold" Margin="200,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
 
@@ -54,7 +55,14 @@
         <TextBox Grid.Row="1"     Margin="460,40,10,10"   TextWrapping="Wrap" AcceptsReturn="True" Width="100" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
 
 
-        <DataGrid Grid.Row="2" x:Name="dataGrid"  ItemsSource="{Binding Source=ClientJobs}"  CanUserAddRows="false" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="2" FontWeight="SemiBold" AlternatingRowBackground="AliceBlue" x:Name="dataGrid"  ItemsSource="{Binding Source=ClientJobs}"  CanUserAddRows="false" AutoGenerateColumns="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
                 <DataGridTemplateColumn Header="Date">
@@ -73,24 +81,24 @@
                 <DataGridTemplateColumn Header="Start Time">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TimeStart, StringFormat={}{0: H:mm}}" />
+                            <TextBlock Text="{Binding TimeStart, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeStart}" />
+                            <xctk:TimePicker Text="{Binding TimeStart , UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="End Time">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TimeEnd, StringFormat={}{0: H:mm}}" />
+                            <TextBlock Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeEnd}" />
+                            <xctk:TimePicker Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -102,7 +110,7 @@
                 <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Account number" Binding="{Binding AccountNumber}"/>
+  
 
           
 

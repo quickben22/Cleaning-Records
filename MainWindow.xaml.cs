@@ -26,38 +26,70 @@ namespace CleaningRecords
         public MainWindow()
         {
             InitializeComponent();
-           
+
+            CalendarUserControl x2 = new CalendarUserControl();
+            x2.Visibility = Visibility.Collapsed;
+            DisplayGrid.Children.Add(x2);
+
+
+
+
         }
 
-       
+        private void hide()
+        {
+            int i = 0;
+
+            List<int> toRemove = new List<int>();
+            foreach (var child in DisplayGrid.Children)
+            {
+                if (child?.GetType().Name == "CalendarUserControl")
+                    ((CalendarUserControl)child).Visibility = Visibility.Collapsed;
+                else
+                    toRemove.Add(i);
+                i++;
+            }
+
+            foreach(var j in toRemove)
+                DisplayGrid.Children.RemoveAt(j);
+        }
+
+
 
         private void Clients_Click(object sender, RoutedEventArgs e)
         {
-            DisplayGrid.Children.Clear();
+            hide();
             ClientsUserControl x = new ClientsUserControl();
             DisplayGrid.Children.Add(x);
+
+
         }
 
         private void Cleaners_Click(object sender, RoutedEventArgs e)
         {
-            DisplayGrid.Children.Clear();
-            CleanerUserControl x = new CleanerUserControl();
-            DisplayGrid.Children.Add(x);
+            hide();
+            CleanerUserControl x1 = new CleanerUserControl();
+            DisplayGrid.Children.Add(x1);
+
+
         }
 
 
         private void Clalendar_Click(object sender, RoutedEventArgs e)
         {
-            DisplayGrid.Children.Clear();
-            CalendarUserControl x = new CalendarUserControl();
-            DisplayGrid.Children.Add(x);
+            hide();
+
+
+            DisplayGrid.Children[0].Visibility = Visibility.Visible;
+
         }
 
         private void Teams_Click(object sender, RoutedEventArgs e)
         {
-            DisplayGrid.Children.Clear();
-            TeamsUserControl x = new TeamsUserControl();
-            DisplayGrid.Children.Add(x);
+            hide();
+            TeamsUserControl x3 = new TeamsUserControl();
+            DisplayGrid.Children.Add(x3);
+
         }
     }
 }

@@ -21,7 +21,8 @@ namespace CleaningRecords.Migrations
                     Contract = table.Column<string>(nullable: true),
                     PPS = table.Column<string>(nullable: true),
                     Visa = table.Column<string>(nullable: true),
-                    DriversLicence = table.Column<bool>(nullable: false)
+                    DriversLicence = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,7 +57,8 @@ namespace CleaningRecords.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Color = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,7 +101,6 @@ namespace CleaningRecords.Migrations
                     TimeEnd = table.Column<DateTime>(nullable: false),
                     NoOfHours = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
-                    AccountNumber = table.Column<string>(nullable: true),
                     ClientId = table.Column<int>(nullable: false),
                     CleanerId = table.Column<int>(nullable: true),
                     TeamId = table.Column<int>(nullable: true)

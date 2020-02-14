@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CleaningRecords.Moduli"
+                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <UserControl.Resources>
         <local:ContractList x:Key="ContractList"/>
+        <local:YesNoList x:Key="YesNoList"/>
     </UserControl.Resources>
 
     <Grid Margin="20">
@@ -18,9 +20,16 @@
 
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="dataGrid"  ItemsSource="{Binding Source=Cleaners}" CanUserAddRows="false" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataGrid" FontWeight="SemiBold"  AlternatingRowBackground="AliceBlue"  ItemsSource="{Binding Source=Cleaners}" CanUserAddRows="false" AutoGenerateColumns="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                
+
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
 
                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
@@ -32,15 +41,29 @@
                 <DataGridTextColumn Header="PPS" Binding="{Binding PPS}"/>
                 <DataGridTextColumn Header="Visa" Binding="{Binding Visa}"/>
                 <!--<DataGridTextColumn Header="DriversLicence" Binding="{Binding DriversLicence}"/>-->
-                <DataGridTemplateColumn Header="Drivers Licence">
+
+                <DataGridComboBoxColumn Header="Drivers Licence"  SelectedItemBinding="{Binding DriversLicence}" ItemsSource="{Binding Source={StaticResource YesNoList}}" />
+                <DataGridComboBoxColumn Header="Ironing"  SelectedItemBinding="{Binding Ironing}" ItemsSource="{Binding Source={StaticResource YesNoList}}" />
+                <DataGridComboBoxColumn Header="Pets"  SelectedItemBinding="{Binding Pets}" ItemsSource="{Binding Source={StaticResource YesNoList}}" />
+
+                <DataGridTemplateColumn Header="Color">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <xctk:ColorPicker SelectedColor="{Binding Color, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+             
+                </DataGridTemplateColumn>
+
+                <!--<DataGridTemplateColumn Header="Drivers Licence">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox HorizontalAlignment="Center" IsChecked="{Binding DriversLicence}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
 
-            
+
 
 
                 <DataGridTemplateColumn  >

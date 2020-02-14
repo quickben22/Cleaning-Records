@@ -37,6 +37,9 @@ namespace CleaningRecords.DAL.Models
         private string _Name;
         public string Name { get { return _Name; } set { _Name = (value); this.OnPropertyChanged("Name"); } }
 
+        private string _Color;
+        public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
+
         private int? _CleanerId;
         public int? CleanerId { get { return _CleanerId; } set { _CleanerId = (value); this.OnPropertyChanged("CleanerId"); } }
 
@@ -62,6 +65,16 @@ namespace CleaningRecords.DAL.Models
                 if (prop == "Name")
                 {
                     Team.Name = Name;
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(Team);
+                        db.SaveChanges();
+                    }
+
+                }
+                else if (prop == "Color")
+                {
+                    Team.Color = Color;
                     using (var db = new PodaciContext())
                     {
                         db.Update(Team);

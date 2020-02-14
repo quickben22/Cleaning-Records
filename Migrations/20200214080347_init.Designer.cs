@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200213095643_init")]
+    [Migration("20200214080347_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,14 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Color")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Contract")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("DriversLicence")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("DriversLicence")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -76,9 +79,6 @@ namespace CleaningRecords.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
@@ -164,6 +164,9 @@ namespace CleaningRecords.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");

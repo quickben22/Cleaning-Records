@@ -36,18 +36,20 @@ namespace CleaningRecords.Moduli
                     .Include(x => x.CleanerTeams)
                     .ThenInclude(x => x.Cleaner))
                 {
-                    var th = new TeamsHelper { Team = team, Name = team.Name };
+                    var th = new TeamsHelper { Team = team, Name = team.Name,Color=team.Color };
 
                     if (team.CleanerTeams?.Count > 0)
                         th.CleanerId = team.CleanerTeams[0].CleanerId;
                     if (team.CleanerTeams?.Count > 1)
                         th.Cleaner2Id = team.CleanerTeams[1].CleanerId;
                     if (team.CleanerTeams?.Count > 2)
-                        th.Cleaner2Id = team.CleanerTeams[2].CleanerId;
+                        th.Cleaner3Id = team.CleanerTeams[2].CleanerId;
                     if (team.CleanerTeams?.Count > 3)
-                        th.Cleaner2Id = team.CleanerTeams[3].CleanerId;
+                        th.Cleaner4Id = team.CleanerTeams[3].CleanerId;
                     if (team.CleanerTeams?.Count > 4)
-                        th.Cleaner2Id = team.CleanerTeams[4].CleanerId;
+                        th.Cleaner5Id = team.CleanerTeams[4].CleanerId;
+                    if (team.CleanerTeams?.Count > 5)
+                        th.Cleaner6Id = team.CleanerTeams[5].CleanerId;
 
                     Teams.Teams.Add(th);
 

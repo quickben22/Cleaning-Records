@@ -22,7 +22,14 @@
         </Grid.RowDefinitions>
         <ComboBox SelectedValue=""/>
 
-        <DataGrid Grid.Row="0" x:Name="dataGrid"   CanUserAddRows="false" AutoGenerateColumns="False">
+        <DataGrid FontWeight="SemiBold" AlternatingRowBackground="AliceBlue" Grid.Row="0" x:Name="dataGrid"   CanUserAddRows="false" AutoGenerateColumns="False">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Client"  ItemsSource="{Binding Source={StaticResource ClientsList}}" SelectedValueBinding="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
         
@@ -72,7 +79,7 @@
                 <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Account number" Binding="{Binding AccountNumber}"/>
+               
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

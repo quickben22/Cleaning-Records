@@ -52,16 +52,13 @@ namespace CleaningRecords.Moduli
             }
         }
 
+
+
+
+
       
     }
 
-    public class ContractList : List<string>
-    {
-        public ContractList()
-        {
-            this.Add("Self employed");
-            this.Add("Employee");
-        }
-    }
+    
 
 }

@@ -29,8 +29,7 @@ namespace CleaningRecords.DAL.Models
 
         private decimal _Amount;
         public decimal Amount { get { return _Amount; } set { _Amount = (value); this.OnPropertyChanged("Amount"); } }
-        private string _AccountNumber;
-        public string AccountNumber { get { return _AccountNumber; } set { _AccountNumber = (value); this.OnPropertyChanged("AccountNumber"); } }
+
         private int _ClientId;
         public int ClientId { get { return _ClientId; } set { _ClientId = (value); this.OnPropertyChanged("ClientId"); } }
         public Client Client { get; set; }
