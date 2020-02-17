@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    [Migration("20200214080347_init")]
+    [Migration("20200217123124_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,10 +39,19 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Ironing")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PPS")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Pets")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surname")
@@ -92,10 +101,16 @@ namespace CleaningRecords.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Day")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("NoOfHours")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RepeatJobId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("TeamId")
@@ -107,11 +122,16 @@ namespace CleaningRecords.Migrations
                     b.Property<DateTime>("TimeStart")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Week")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CleanerId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("RepeatJobId");
 
                     b.HasIndex("TeamId");
 
@@ -145,6 +165,9 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Instructions")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -159,6 +182,23 @@ namespace CleaningRecords.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("CleaningRecords.DAL.Models.RepeatJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AllDays")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RepeatFrequency")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RepeatJobs");
+                });
+
             modelBuilder.Entity("CleaningRecords.DAL.Models.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -167,6 +207,9 @@ namespace CleaningRecords.Migrations
 
                     b.Property<string>("Color")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -202,6 +245,10 @@ namespace CleaningRecords.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CleaningRecords.DAL.Models.RepeatJob", "RepeatJob")
+                        .WithMany("CleaningJobs")
+                        .HasForeignKey("RepeatJobId");
 
                     b.HasOne("CleaningRecords.DAL.Models.Team", "Team")
                         .WithMany("CleaningJobs")

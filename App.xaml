@@ -6,7 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
 
-
+            <local:RepeatJobIdConverter x:Key="RepeatJobIdConverter"/>
+            
             <Style TargetType="{x:Type DataGrid}" 
              x:Key="DatagridStyle" 
              BasedOn="{StaticResource {x:Type DataGrid}}">
@@ -21,10 +22,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
 
-
-               
-
             </ResourceDictionary.MergedDictionaries>
+            
+        
         </ResourceDictionary>
     </Application.Resources>
 </Application>

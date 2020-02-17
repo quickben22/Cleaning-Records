@@ -73,7 +73,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding Date}" />
+                            <DatePicker SelectedDate="{Binding Date, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -81,24 +81,24 @@
                 <DataGridTemplateColumn Header="Start Time">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TimeStart, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <TextBlock Text="{Binding TimeStart,  StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeStart , UpdateSourceTrigger=PropertyChanged}" />
+                            <xctk:TimePicker Text="{Binding TimeStart, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="End Time">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <TextBlock Text="{Binding TimeEnd, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged}" />
+                            <xctk:TimePicker Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

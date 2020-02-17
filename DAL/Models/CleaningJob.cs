@@ -1,8 +1,11 @@
-﻿using System;
+﻿using CleaningRecords.Global;
+using CleaningRecords.Moduli;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models
 {
@@ -24,6 +27,12 @@ namespace CleaningRecords.DAL.Models
         private int _NoOfHours;
         public int NoOfHours { get { return _NoOfHours; } set { _NoOfHours = (value); this.OnPropertyChanged("NoOfHours"); } }
 
+        private int _Week;
+        public int Week { get { return _Week; } set { _Week = (value); this.OnPropertyChanged("Week"); } }
+
+
+        private int _Day;
+        public int Day { get { return _Day; } set { _Day = (value); this.OnPropertyChanged("Day"); } }
 
 
 
@@ -44,13 +53,71 @@ namespace CleaningRecords.DAL.Models
         public int? TeamId { get { return _TeamId; } set { _TeamId = (value); this.OnPropertyChanged("TeamId"); } }
         public Team Team { get; set; }
 
+        private int? _RepeatJobId;
+        public int? RepeatJobId { get { return _RepeatJobId; } set { _RepeatJobId = (value); this.OnPropertyChanged("RepeatJobId"); } }
+        public RepeatJob RepeatJob { get; set; }
+
+
+        [NotMapped]
+        public bool changed = false;
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string prop)
         {
+            if (prop == "Date" && Date != null)
+            {
+                Week = Fun.getWeek(Date);
+                Day = Fun.getDay(Date);
+
+            }
+
+
+
+
+
+
+
             if (PropertyChanged != null)
             {
+                if (prop == "Date" && Date != null)
+                {
+                    RepeatJob = null;
+                    RepeatJobId = null;
+
+                }
+                else
+                {
+                    if (RepeatJobId != null && RepeatJob != null)
+                    {
+                        if (!changed)
+                        {
+                            changed = true;
+                        
+                        }
+
+                    }
+                }
+
+                if (prop == "TimeStart" && TimeStart != null)
+                {
+
+                    if (TimeEnd != null)
+                    {
+                        NoOfHours = TimeEnd.Hour - TimeStart.Hour;
+                    }
+                }
+                else if (prop == "TimeEnd" && TimeEnd != null)
+                {
+                    if (TimeStart != null)
+                    {
+                        NoOfHours = TimeEnd.Hour - TimeStart.Hour;
+                    }
+                }
+
 
                 if (prop == "TeamId" && TeamId != null)
                     CleanerId = null;

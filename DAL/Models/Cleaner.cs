@@ -1,7 +1,10 @@
-﻿using System;
+﻿using CleaningRecords.Moduli;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace CleaningRecords.DAL.Models
@@ -11,7 +14,15 @@ namespace CleaningRecords.DAL.Models
 
 
 
-        public int Id { get; set; }
+
+
+
+        private int _Id { get; set; }
+        public int Id { get { return _Id; } set { _Id = (value); this.OnPropertyChanged("Id"); } }
+
+        private bool _IsActive;
+        public bool IsActive { get { return _IsActive; } set { _IsActive = (value); this.OnPropertyChanged("IsActive"); } }
+
         private string _Name;
         public string Name { get { return _Name; } set { _Name = (value); this.OnPropertyChanged("Name"); } }
         private string _Surname;
@@ -46,6 +57,10 @@ namespace CleaningRecords.DAL.Models
         public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
 
 
+        private double _HoursWeekly;
+        [NotMapped]
+        public double HoursWeekly { get { return _HoursWeekly; } set { _HoursWeekly = (value); this.OnPropertyChanged("HoursWeekly"); } }
+
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
 
         public List<CleanerTeam> CleanerTeams { get; set; }
@@ -58,14 +73,23 @@ namespace CleaningRecords.DAL.Models
 
         protected void OnPropertyChanged(string prop)
         {
+            if (prop == "Id")
+            {
+                HoursWeekly = Fun.GetCleanerHours(Id,DateTime.Now);
+            }
             if (PropertyChanged != null)
             {
+
+
 
                 using (var db = new PodaciContext())
                 {
                     db.Update(this);
                     db.SaveChanges();
+
                 }
+              
+
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
 

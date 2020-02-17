@@ -46,6 +46,8 @@
                 <DataGridComboBoxColumn Header="Ironing"  SelectedItemBinding="{Binding Ironing}" ItemsSource="{Binding Source={StaticResource YesNoList}}" />
                 <DataGridComboBoxColumn Header="Pets"  SelectedItemBinding="{Binding Pets}" ItemsSource="{Binding Source={StaticResource YesNoList}}" />
 
+                <DataGridTextColumn IsReadOnly="True" Header="This Week h" Binding="{Binding HoursWeekly}"/>
+
                 <DataGridTemplateColumn Header="Color">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

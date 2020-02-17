@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CleaningRecords"
         mc:Ignorable="d"
         Title="Main menu" Height="450" Width="800" WindowState="Maximized">
-    <Grid>
+    <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="140" ></ColumnDefinition>
             <ColumnDefinition Width="100*" ></ColumnDefinition>

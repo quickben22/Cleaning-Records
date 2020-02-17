@@ -31,6 +31,10 @@ namespace CleaningRecords.DAL
 
         public DbSet<Team> Teams { get; set; }
 
+        public DbSet<RepeatJob> RepeatJobs { get; set; }
+
+        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

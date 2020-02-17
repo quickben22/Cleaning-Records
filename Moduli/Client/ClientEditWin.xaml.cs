@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace CleaningRecords.Moduli
 {
@@ -58,6 +59,14 @@ namespace CleaningRecords.Moduli
         {
 
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+
+            Fun.overWorked(ClientObject.CleaningJobs);
+
+        }
+
     }
 
    

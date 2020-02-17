@@ -13,6 +13,9 @@
     <Compile Update="Moduli\Calendar\CalendarUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Moduli\Calendar\CleaningJobRepeatWin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Moduli\Cleaner\CleanerUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +40,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Moduli\Calendar\CalendarUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Moduli\Calendar\CleaningJobRepeatWin.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Moduli\Cleaner\CleanerUserControl.xaml">

@@ -1,4 +1,6 @@
-﻿using CleaningRecords.Moduli;
+﻿using CleaningRecords.DAL;
+using CleaningRecords.Moduli;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,23 @@ namespace CleaningRecords
         {
             InitializeComponent();
 
+            mainGrid.IsEnabled = false;
+
+
+            using (var db = new PodaciContext())
+            {
+
+                var rjobs = db.RepeatJobs.Include(x => x.CleaningJobs);
+                foreach (var rjob in rjobs)
+                {
+                    var date = DateTime.Now.Date;
+                    var cj = rjob.CleaningJobs.FirstOrDefault(x => x.Date.Date == date);
+                    if (cj != null)
+                        Fun.setRepeatingJobs(rjob.Id, cj);
+                }
+            }
+
+            mainGrid.IsEnabled = true;
             CalendarUserControl x2 = new CalendarUserControl();
             x2.Visibility = Visibility.Collapsed;
             DisplayGrid.Children.Add(x2);
@@ -50,7 +69,8 @@ namespace CleaningRecords
                 i++;
             }
 
-            foreach(var j in toRemove)
+
+            foreach (var j in toRemove)
                 DisplayGrid.Children.RemoveAt(j);
         }
 

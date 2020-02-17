@@ -13,6 +13,10 @@ namespace CleaningRecords.DAL.Models
 
 
         public int Id { get; set; }
+
+        private bool _IsActive;
+        public bool IsActive { get { return _IsActive; } set { _IsActive = (value); this.OnPropertyChanged("IsActive"); } }
+
         private string _ClientNumber;
         public string ClientNumber { get { return _ClientNumber; } set { _ClientNumber = (value); this.OnPropertyChanged("ClientNumber"); } }
         private string _Name;

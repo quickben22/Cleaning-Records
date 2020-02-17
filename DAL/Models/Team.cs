@@ -10,6 +10,10 @@ namespace CleaningRecords.DAL.Models
     {
   
         public int Id { get; set; }
+
+        private bool _IsActive;
+        public bool IsActive { get { return _IsActive; } set { _IsActive = (value); this.OnPropertyChanged("IsActive"); } }
+
         private string? _Name;
         public string Name { get { return _Name; } set { _Name = (value); this.OnPropertyChanged("Name"); } }
 
