@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Collections.Generic;
 using CleaningRecords.DAL.Models;
 using CleaningRecords.DAL;
 using System.Linq;

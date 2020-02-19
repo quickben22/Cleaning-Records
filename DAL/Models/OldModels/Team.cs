@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
-namespace CleaningRecords.DAL.Models
+namespace CleaningRecords.DAL.Models.OldModels
 {
     public class Team : INotifyPropertyChanged
     {
@@ -22,13 +22,6 @@ namespace CleaningRecords.DAL.Models
         private ObservableCollection<CleanerTeam> _CleanerTeams;
         public ObservableCollection<CleanerTeam> CleanerTeams { get { return _CleanerTeams; } set { _CleanerTeams = (value); this.OnPropertyChanged("CleanerTeams"); } }
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
-       
-
-
-        private int _TeamStatus;
-        public int TeamStatus { get { return _TeamStatus; } set { _TeamStatus = (value); this.OnPropertyChanged("TeamStatus"); } }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string prop)

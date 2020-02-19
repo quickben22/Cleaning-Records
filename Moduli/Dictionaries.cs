@@ -56,6 +56,28 @@ namespace CleaningRecords.Moduli
         }
     }
 
+    public class StatusList : Dictionary<int, string>
+    {
+        public StatusList()
+        {
+                this.Add(0, "Active");
+                this.Add(1, "Inactive");
+        }
+    }
+
+    public class JobStatusList : Dictionary<int, string>
+    {
+        public JobStatusList()
+        {
+    
+            this.Add(0, "Active");
+            this.Add(1, "Canceled");
+            this.Add(2, "Completed");
+            this.Add(3, "Payed");
+        }
+    }
+
+
     public class CleanersList : Dictionary<int, string>
     {
         public CleanersList()
@@ -98,7 +120,9 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
+          
                 this.Add(0, "All Cleaners");
+                this.Add(-1, "No Cleaners");
                 var Cleaners = db.Cleaners;
                 if (Cleaners != null && Cleaners.Any())
                     foreach (var cleaner in Cleaners)
@@ -125,6 +149,24 @@ namespace CleaningRecords.Moduli
 
         }
     }
+
+    public class ServicesList : Dictionary<int, string>
+    {
+        public ServicesList()
+        {
+            using (var db = new PodaciContext())
+            {
+                this.Add(0, null);
+                var Services = db.Services;
+                if (Services != null && Services.Any())
+                    foreach (var service in Services)
+                        this.Add(service.Id, service.Name);
+
+            }
+
+        }
+    }
+
 
 
 

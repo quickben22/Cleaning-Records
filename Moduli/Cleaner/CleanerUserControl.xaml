@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <local:ContractList x:Key="ContractList"/>
         <local:YesNoList x:Key="YesNoList"/>
+        <local:StatusList x:Key="StatusList"/>
     </UserControl.Resources>
 
     <Grid Margin="20">
@@ -65,6 +66,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
 
+                <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource StatusList}}" SelectedValueBinding="{Binding CleanerStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
 
 

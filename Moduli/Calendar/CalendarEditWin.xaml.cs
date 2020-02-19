@@ -36,7 +36,11 @@ namespace CleaningRecords.Moduli
             {
                 using (var db = new PodaciContext())
                 {
-                    model.CleaningJobs = new ObservableCollection<CleaningJob>(db.CleaningJobs.Include(x => x.RepeatJob).Where(x => x.Id == CleaningJobId));
+                    model.CleaningJobs = new ObservableCollection<CleaningJob>(
+                        db.CleaningJobs
+                        .Include(x => x.RepeatJob)
+                        .Where(x => x.Id == CleaningJobId)
+                        );
                     dataGrid.ItemsSource = model.CleaningJobs;
                     Date = model.CleaningJobs.FirstOrDefault()?.Date;
                 }

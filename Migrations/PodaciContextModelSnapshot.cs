@@ -25,6 +25,9 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CleanerStatus")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Color")
                         .HasColumnType("TEXT");
 
@@ -102,13 +105,19 @@ namespace CleaningRecords.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("JobStatus")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("NoOfHours")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("NoOfHours")
+                        .HasColumnType("REAL");
 
                     b.Property<int?>("RepeatJobId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("TeamId")
@@ -130,6 +139,8 @@ namespace CleaningRecords.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("RepeatJobId");
+
+                    b.HasIndex("ServiceId");
 
                     b.HasIndex("TeamId");
 
@@ -156,6 +167,9 @@ namespace CleaningRecords.Migrations
 
                     b.Property<string>("ClientNumber")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ClientStatus")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
@@ -197,6 +211,35 @@ namespace CleaningRecords.Migrations
                     b.ToTable("RepeatJobs");
                 });
 
+            modelBuilder.Entity("CleaningRecords.DAL.Models.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Rate")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("ServiceStatus")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+                });
+
             modelBuilder.Entity("CleaningRecords.DAL.Models.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -211,6 +254,9 @@ namespace CleaningRecords.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("TeamStatus")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -247,6 +293,10 @@ namespace CleaningRecords.Migrations
                     b.HasOne("CleaningRecords.DAL.Models.RepeatJob", "RepeatJob")
                         .WithMany("CleaningJobs")
                         .HasForeignKey("RepeatJobId");
+
+                    b.HasOne("CleaningRecords.DAL.Models.Service", "Service")
+                        .WithMany("CleaningJobs")
+                        .HasForeignKey("ServiceId");
 
                     b.HasOne("CleaningRecords.DAL.Models.Team", "Team")
                         .WithMany("CleaningJobs")

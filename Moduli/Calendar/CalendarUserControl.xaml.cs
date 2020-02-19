@@ -93,12 +93,16 @@ namespace CleaningRecords.Moduli
                     .ThenInclude(x => x.CleanerTeams)
                     .ThenInclude(y => y.Cleaner)
                     .Include(x => x.Cleaner)
+                      .Include(x => x.Service)
                     .Where(x => x.Date.Month == calendars[index].DisplayStartDate.Month).ToList();
 
                 if (models[index].TeamId != null && models[index].TeamId != 0)
                     jobs = jobs.Where(x => x.TeamId == models[index].TeamId)?.ToList();
-
-                if (models[index].CleanerId != null && models[index].CleanerId != 0)
+                if (models[index].CleanerId == -1)
+                {
+                    jobs = jobs.Where(x => x.CleanerId == null && x.TeamId == null)?.ToList();
+                }
+                else if (models[index].CleanerId != null && models[index].CleanerId != 0)
                     jobs = jobs.Where(x => x.CleanerId == models[index].CleanerId || x.Team?.CleanerTeams?.FirstOrDefault(y => y.CleanerId == models[index].CleanerId) != null)?.ToList();
 
                 if (models[index].ClientId != null && models[index].ClientId != 0)
@@ -110,6 +114,7 @@ namespace CleaningRecords.Moduli
                     apt.CleaningJobID = job.Id;
                     apt.Date = job.Date;
                     string cleaner = "";
+                    string service = "";
                     if (job.Cleaner != null)
                     {
                         apt.CleanerID = (int)job.CleanerId;
@@ -133,7 +138,14 @@ namespace CleaningRecords.Moduli
                             apt.Color = job?.Team?.Color;
                         }
                     }
-                    apt.Subject = $"{job.TimeStart.ToString("H:mm")} - {job.TimeEnd.ToString("H:mm")} \n {job.Client.Name} {job.Client.Surname}\n {cleaner }  ";
+                    if (job.Service != null && job.ServiceId != 0)
+                    {
+                        apt.ServiceId = (int)job.ServiceId;
+                        apt.ServiceColor = job?.Service?.Color;
+                        service = job?.Service?.Name;
+
+                    }
+                    apt.Subject = $"{job.TimeStart.ToString("H:mm")} - {job.TimeEnd.ToString("H:mm")} - {job.Client.Name} {job.Client.Surname}\n {cleaner } - {service }  ";
                     _myAppointmentsList.Add(apt);
                 }
             }
@@ -164,6 +176,9 @@ namespace CleaningRecords.Moduli
             Grid grid = new Grid();
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.5, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(0.5, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+
 
             grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 10, 0, 0), Text = "Cleaner:", TextWrapping = TextWrapping.Wrap, VerticalAlignment = VerticalAlignment.Top });
 
@@ -195,12 +210,19 @@ namespace CleaningRecords.Moduli
             month.DisplayMonthChanged += new MonthCalendarControl.DisplayMonthChangedEventHandler(DisplayMonthChanged);
             month.DayBoxDoubleClicked += new MonthCalendarControl.DayBoxDoubleClickedEventHandler(DayBoxDoubleClicked_event);
             month.AppointmentDblClicked += new MonthCalendarControl.AppointmentDblClickedEventHandler(AppointmentDblClicked);
+            month.SizeChanged += new SizeChangedEventHandler(AptCalendar_SizeChanged);
 
             grid.Children.Add(month);
 
+            Grid gridRight = new Grid();
+            gridRight.SetValue(Grid.RowProperty, 1);
+            gridRight.SetValue(Grid.ColumnProperty, 1);
+
+            grid.Children.Add(gridRight);
+
             newTabItem.Content = grid;
 
-            models.Add(new  CalendarViewModel { CleanerId = 0, TeamId = 0, ClientId = 0 });
+            models.Add(new CalendarViewModel { CleanerId = 0, TeamId = 0, ClientId = 0 });
             newTabItem.DataContext = models[count];
             calendars.Add(month);
 
@@ -285,6 +307,7 @@ namespace CleaningRecords.Moduli
 
         private void refresh()
         {
+
             foreach (TabItem ti in TabsMain.Items)
             {
                 Grid grid = (Grid)ti.Content;
@@ -298,11 +321,53 @@ namespace CleaningRecords.Moduli
                 }
             }
             SetAppointments(TabsMain.SelectedIndex);
+
+
         }
 
         private void TabsMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetAppointments(TabsMain.SelectedIndex);
+        }
+
+
+        private void AptCalendar_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+          
+
+
+            var height = calendars[TabsMain.SelectedIndex].ActualHeight;
+            if (height > 0)
+            {
+            
+                var month = calendars[TabsMain.SelectedIndex].DisplayStartDate.Month;
+                var year = calendars[TabsMain.SelectedIndex].DisplayStartDate.Year;
+                var week = Fun.getWeek(new DateTime (year, month,1));
+                var koef = 5.25;
+                var margin = height - 5.5 * height / koef;
+                foreach (TabItem ti in TabsMain.Items)
+                {
+                    Grid grid = (Grid)ti.Content;
+                    foreach (var g in grid.Children)
+                    {
+                        if (g?.GetType().Name == "Grid")
+                        {
+                            ((Grid)g).Children.Clear();
+                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test0", Margin = new Thickness(5, margin + height / koef, 0, 0) });
+                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test2", Margin = new Thickness(5, margin + height / koef * 2, 0, 0) });
+                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test3", Margin = new Thickness(5, margin + height / koef * 3, 0, 0) });
+                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test4", Margin = new Thickness(5, margin + height / koef * 4, 0, 0) });
+                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test5", Margin = new Thickness(5, margin + height / koef * 5, 0, 0) });
+
+
+                        }
+                    }
+                }
+            }
+
+
+
         }
     }
 }

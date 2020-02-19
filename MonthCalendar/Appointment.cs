@@ -66,6 +66,19 @@ namespace MonthCalendar
             }
         }
 
+        private int? _ServiceId;
+        public int? ServiceId
+        {
+            get { return this._ServiceId; }
+            set
+            {
+                if (((this._ServiceId == value) == false))
+                {
+                    this._ServiceId = value;
+                }
+            }
+        }
+
 
         private string _Color;
         public string Color
@@ -79,6 +92,20 @@ namespace MonthCalendar
                 }
             }
         }
+
+        private string _ServiceColor;
+        public string ServiceColor
+        {
+            get { return this._ServiceColor; }
+            set
+            {
+                if (((this._ServiceColor == value) == false))
+                {
+                    this._ServiceColor = value;
+                }
+            }
+        }
+
 
 
         public string Subject

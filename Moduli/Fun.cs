@@ -14,7 +14,9 @@ namespace CleaningRecords.Moduli
 {
     public static class Fun
     {
-        public static void Delete(object Object, ObservableCollection<Client> Clients = null, ObservableCollection<CleaningJob> CleaningJobs = null, ObservableCollection<Cleaner> Cleaners = null, ObservableCollection<TeamsHelper> TeamsHelpers = null)
+        public static void Delete(object Object, ObservableCollection<Client> Clients = null, 
+            ObservableCollection<CleaningJob> CleaningJobs = null, ObservableCollection<Cleaner> Cleaners = null, 
+            ObservableCollection<TeamsHelper> TeamsHelpers = null, ObservableCollection<Service> Services = null)
         {
             var messageBoxText = "Delete this item?";
 
@@ -72,6 +74,13 @@ namespace CleaningRecords.Moduli
                                     db.Remove(Object);
                                     db.SaveChanges();
                                     CleaningJobs.Remove((CleaningJob)Object);
+                                }
+                                if (Object.GetType().Name == "Service")
+                                {
+
+                                    db.Remove(Object);
+                                    db.SaveChanges();
+                                    Services.Remove((Service)Object);
                                 }
                                 if (Object.GetType().Name == "Cleaner")
                                 {

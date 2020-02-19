@@ -33,7 +33,7 @@ namespace CleaningRecords.DAL
 
         public DbSet<RepeatJob> RepeatJobs { get; set; }
 
-        
+        public DbSet<Service> Services { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,11 +50,15 @@ namespace CleaningRecords.DAL
                 .HasOne(pt => pt.Team)
                 .WithMany(t => t.CleanerTeams)
                 .HasForeignKey(pt => pt.TeamId);
+
+    
+   
+
         }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-           => options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/CleaningDb1.db");
+           => options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/CleaningDb2.db");
 
     }
 }

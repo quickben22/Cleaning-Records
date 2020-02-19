@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace CleaningRecords.DAL.Models
+namespace CleaningRecords.DAL.Models.OldModels
 {
     public class Client : INotifyPropertyChanged
     {
@@ -43,11 +43,8 @@ namespace CleaningRecords.DAL.Models
         private string _Instructions;
         public string Instructions { get { return _Instructions; } set { _Instructions = (value); this.OnPropertyChanged("Instructions"); } }
 
-        private int _ClientStatus;
-        public int ClientStatus { get { return _ClientStatus; } set { _ClientStatus = (value); this.OnPropertyChanged("ClientStatus"); } }
 
-
-
+     
 
         private ObservableCollection<CleaningJob> _CleaningJobs;
         public ObservableCollection<CleaningJob> CleaningJobs { get { return _CleaningJobs; } set { _CleaningJobs = (value); this.OnPropertyChanged("CleaningJobs"); } }

@@ -10,6 +10,9 @@
     <Window.Resources>
         <local:CleanersList x:Key="CleanersList"/>
         <local:TeamsList x:Key="TeamsList"/>
+        <local:JobStatusList x:Key="JobStatusList"/>
+        <local:ServicesList x:Key="ServicesList"/>
+        
     </Window.Resources>
     <Grid Margin="20">
         <!--<Grid.ColumnDefinitions>
@@ -32,27 +35,27 @@
         </Grid.RowDefinitions>
 
        
-        <TextBlock FontWeight="Bold" Margin="10,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
-        <TextBlock FontWeight="Bold" Margin="200,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock FontWeight="Bold" FontSize="24" Margin="10,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock FontWeight="Bold" FontSize="24" Margin="200,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
 
 
         <TextBlock Margin="10,10,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 2</TextBlock>
 
-        <TextBox  Margin="80,5,10,10" Grid.Column="1" Grid.Row="1" Width="100" TextAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address2, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox  Margin="80,5,10,10" Grid.Column="1" Grid.Row="1" Width="300" TextAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address2, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock Margin="10,60,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 3</TextBlock>
 
-        <TextBox Grid.Row="1"   Margin="80,55,10,10"  Width="100" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address3, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBox Grid.Row="1"   Margin="80,55,10,10"  Width="300" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address3, UpdateSourceTrigger=PropertyChanged}"  />
         <TextBlock Grid.Row="1"  Margin="10,110,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 4</TextBlock>
 
-        <TextBox Grid.Row="1"  Margin="80,105,10,10"   Width="100" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address4, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="1"  Margin="80,105,10,10"   Width="300" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address4, UpdateSourceTrigger=PropertyChanged}" />
 
 
-        <TextBlock Grid.Row="1"  Margin="280,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top">Instructions</TextBlock>
+        <TextBlock Grid.Row="1"  Margin="480,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top">Instructions</TextBlock>
 
-        <TextBox Grid.Row="1"   Margin="280,40,10,10"  TextWrapping="Wrap" AcceptsReturn="True" Width="100" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"  />
-        <TextBlock Grid.Row="1"  Margin="460,10,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Description</TextBlock>
+        <TextBox Grid.Row="1"   Margin="480,40,10,10"  TextWrapping="Wrap" AcceptsReturn="True" Width="230" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock Grid.Row="1"  Margin="760,10,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Description</TextBlock>
 
-        <TextBox Grid.Row="1"     Margin="460,40,10,10"   TextWrapping="Wrap" AcceptsReturn="True" Width="100" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBox Grid.Row="1"     Margin="760,40,10,10"   TextWrapping="Wrap" AcceptsReturn="True" Width="230" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
 
 
         <DataGrid Grid.Row="2" FontWeight="SemiBold" AlternatingRowBackground="AliceBlue" x:Name="dataGrid"  ItemsSource="{Binding Source=ClientJobs}"  CanUserAddRows="false" AutoGenerateColumns="False">
@@ -86,7 +89,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeStart, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <xctk:TimePicker  UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm" Text="{Binding TimeStart}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -98,21 +101,23 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <xctk:TimePicker UpdateValueOnEnterKey="True" Format="Custom" FormatString="H:mm"  Text="{Binding TimeEnd}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
 
 
-                <DataGridTextColumn Header="No. of hours" Binding="{Binding NoOfHours}"/>
+                <DataGridTextColumn Header="No. of hours" IsReadOnly="True" Binding="{Binding NoOfHours}"/>
                 <DataGridComboBoxColumn Header="Cleaner"  ItemsSource="{Binding Source={StaticResource CleanersList}}" SelectedValueBinding="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                 <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                <DataGridComboBoxColumn Header="Service"  ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValueBinding="{Binding ServiceId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
-  
+                <DataGridTextColumn Header="Amount" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource JobStatusList}}" SelectedValueBinding="{Binding JobStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-          
+
+
 
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>

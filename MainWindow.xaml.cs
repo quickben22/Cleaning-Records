@@ -117,5 +117,12 @@ namespace CleaningRecords
             DisplayGrid.Children.Add(x3);
 
         }
+
+        private void Services_Click(object sender, RoutedEventArgs e)
+        {
+            hide();
+            ServicesUserControl x3 = new ServicesUserControl();
+            DisplayGrid.Children.Add(x3);
+        }
     }
 }

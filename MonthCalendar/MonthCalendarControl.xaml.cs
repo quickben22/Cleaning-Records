@@ -160,7 +160,28 @@ namespace MonthCalendar
                             else
                                 apt.DisplayText.Foreground = brushes[(int)a.TeamID % brushesCount];
                         }
-                        apt.DisplayText.Text = a.Subject;
+                         if (a.ServiceId != null)
+                        {
+                            if (a.ServiceColor != null)
+                            {
+                                try
+                                {
+                                    apt.BorderElement.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom(a.ServiceColor));
+                                    apt.BorderElement.BorderThickness = new Thickness(3);
+                                }
+                                catch
+                                {
+
+                                }
+                            }
+                            else
+                            {
+                                apt.BorderElement.BorderBrush = brushes[(int)a.CleanerID % brushesCount];
+                                apt.BorderElement.BorderThickness = new Thickness(3);
+                            }
+
+                        }
+                            apt.DisplayText.Text = a.Subject;
                         apt.Tag = a.CleaningJobID;
                         apt.MouseDoubleClick += Appointment_DoubleClick;
                         dayBox.DayAppointmentsStack.Children.Add(apt);

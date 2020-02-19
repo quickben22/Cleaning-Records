@@ -12,6 +12,8 @@
         <local:ClientsList x:Key="ClientsList"/>
         <local:CleanersList x:Key="CleanersList"/>
         <local:TeamsList x:Key="TeamsList"/>
+        <local:JobStatusList x:Key="JobStatusList"/>
+        <local:ServicesList x:Key="ServicesList"/>
     </Window.Resources>
 
     <Grid>
@@ -20,7 +22,7 @@
             <RowDefinition Height="150" ></RowDefinition>
 
         </Grid.RowDefinitions>
-        <ComboBox SelectedValue=""/>
+        
 
         <DataGrid FontWeight="SemiBold" AlternatingRowBackground="AliceBlue" Grid.Row="0" x:Name="dataGrid"   CanUserAddRows="false" AutoGenerateColumns="False">
             <DataGrid.ColumnHeaderStyle>
@@ -55,7 +57,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeStart, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <xctk:TimePicker UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm"  Text="{Binding TimeStart}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -67,22 +69,26 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker Text="{Binding TimeEnd, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0: H:mm}}" />
+                            <xctk:TimePicker UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm" Text="{Binding TimeEnd}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
 
 
-                <DataGridTextColumn Header="No. of hours" Binding="{Binding NoOfHours}"/>
+                <DataGridTextColumn Header="No. of hours" IsReadOnly="True" Binding="{Binding NoOfHours}"/>
                 <DataGridComboBoxColumn Header="Cleaner"  ItemsSource="{Binding Source={StaticResource CleanersList}}" SelectedValueBinding="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                 <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Service"  ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValueBinding="{Binding ServiceId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+
+
+                <DataGridTextColumn Header="Amount" IsReadOnly="True" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <DataGridTextColumn Header="Repeating" IsReadOnly="True" Binding="{Binding RepeatJobId,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RepeatJobIdConverter}}"/>
+                <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource JobStatusList}}" SelectedValueBinding="{Binding JobStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                
+
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -90,9 +96,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-          
 
-            <DataGridTemplateColumn  >
+
+                <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="Delete_Click">Delete</Button>

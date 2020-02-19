@@ -25,7 +25,8 @@ namespace CleaningRecords.Migrations
                     DriversLicence = table.Column<string>(nullable: true),
                     Ironing = table.Column<string>(nullable: true),
                     Pets = table.Column<string>(nullable: true),
-                    Color = table.Column<string>(nullable: true)
+                    Color = table.Column<string>(nullable: true),
+                    CleanerStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +49,8 @@ namespace CleaningRecords.Migrations
                     Address3 = table.Column<string>(nullable: true),
                     Address4 = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Instructions = table.Column<string>(nullable: true)
+                    Instructions = table.Column<string>(nullable: true),
+                    ClientStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +72,24 @@ namespace CleaningRecords.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Rate = table.Column<double>(nullable: false),
+                    Cost = table.Column<double>(nullable: false),
+                    ServiceStatus = table.Column<int>(nullable: false),
+                    Color = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -77,7 +97,8 @@ namespace CleaningRecords.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Color = table.Column<string>(nullable: true)
+                    Color = table.Column<string>(nullable: true),
+                    TeamStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,14 +139,16 @@ namespace CleaningRecords.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     TimeStart = table.Column<DateTime>(nullable: false),
                     TimeEnd = table.Column<DateTime>(nullable: false),
-                    NoOfHours = table.Column<int>(nullable: false),
+                    NoOfHours = table.Column<double>(nullable: false),
                     Week = table.Column<int>(nullable: false),
                     Day = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
                     ClientId = table.Column<int>(nullable: false),
                     CleanerId = table.Column<int>(nullable: true),
                     TeamId = table.Column<int>(nullable: true),
-                    RepeatJobId = table.Column<int>(nullable: true)
+                    RepeatJobId = table.Column<int>(nullable: true),
+                    ServiceId = table.Column<int>(nullable: true),
+                    JobStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,6 +169,12 @@ namespace CleaningRecords.Migrations
                         name: "FK_CleaningJobs_RepeatJobs_RepeatJobId",
                         column: x => x.RepeatJobId,
                         principalTable: "RepeatJobs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CleaningJobs_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -177,6 +206,11 @@ namespace CleaningRecords.Migrations
                 column: "RepeatJobId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CleaningJobs_ServiceId",
+                table: "CleaningJobs",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CleaningJobs_TeamId",
                 table: "CleaningJobs",
                 column: "TeamId");
@@ -198,6 +232,9 @@ namespace CleaningRecords.Migrations
 
             migrationBuilder.DropTable(
                 name: "RepeatJobs");
+
+            migrationBuilder.DropTable(
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "Teams");

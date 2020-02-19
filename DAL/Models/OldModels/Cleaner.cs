@@ -7,11 +7,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace CleaningRecords.DAL.Models
+namespace CleaningRecords.DAL.Models.OldModels
 {
     public class Cleaner : INotifyPropertyChanged
     {
-
 
         private int _Id { get; set; }
         public int Id { get { return _Id; } set { _Id = (value); this.OnPropertyChanged("Id"); } }
@@ -61,9 +60,6 @@ namespace CleaningRecords.DAL.Models
 
         public List<CleanerTeam> CleanerTeams { get; set; }
 
-
-        private int _CleanerStatus;
-        public int CleanerStatus { get { return _CleanerStatus; } set { _CleanerStatus = (value); this.OnPropertyChanged("CleanerStatus"); } }
 
 
 

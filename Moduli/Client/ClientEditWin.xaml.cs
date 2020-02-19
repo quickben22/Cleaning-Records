@@ -31,7 +31,10 @@ namespace CleaningRecords.Moduli
 
             using (var db = new PodaciContext())
             {
-                ClientObject = db.Clients.Include(x => x.CleaningJobs).FirstOrDefault(x => x.Id == ClientId);
+                ClientObject = db.Clients
+                    .Include(x => x.CleaningJobs)
+                      
+                    .FirstOrDefault(x => x.Id == ClientId);
                 dataGrid.ItemsSource = ClientObject.CleaningJobs;
             }
             this.DataContext = ClientObject;

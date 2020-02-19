@@ -10,7 +10,8 @@
 
         <UserControl.Resources>
         <local:CleanersList x:Key="CleanersList"/>
-        </UserControl.Resources>
+        <local:StatusList x:Key="StatusList"/>
+    </UserControl.Resources>
 
         <Grid Margin="20">
 
@@ -47,6 +48,7 @@
                 </DataGridTemplateColumn>
 
 
+                <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource StatusList}}" SelectedValueBinding="{Binding TeamStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
 
 

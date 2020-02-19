@@ -16,6 +16,7 @@
         <Button Content="Cleaners" HorizontalAlignment="Center" Margin="0,132,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Cleaners_Click"/>
         <Button Content="Teams" HorizontalAlignment="Center" Margin="0,202,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Teams_Click"/>
         <Button Content="Calendar" HorizontalAlignment="Center" Margin="0,272,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Clalendar_Click"/>
+        <Button Content="Services" HorizontalAlignment="Center" Margin="0,342,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Services_Click"/>
 
         <Grid Grid.Column="1"  x:Name="DisplayGrid">
             <TextBlock FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center">CLICK SOMETHING!</TextBlock>
