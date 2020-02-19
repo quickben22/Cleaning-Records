@@ -193,7 +193,7 @@ namespace CleaningRecords.Moduli
                         using (var db = new PodaciContext())
                         {
                             var cleaner = db.Cleaners.FirstOrDefault(x => x.Id == (int)job.CleanerId);
-                            MessageBox.Show($"Warning! {cleaner?.Name} {cleaner?.Surname} has {HoursWeekly} hours a week!", "Possible cleaner over worked!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show($"Warning! {cleaner?.Name} {cleaner?.Surname} has {HoursWeekly} hours a week (on week {job.Week})!", "Possible cleaner over worked!", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
 
                     }

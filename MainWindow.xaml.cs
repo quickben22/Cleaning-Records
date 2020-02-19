@@ -3,6 +3,7 @@ using CleaningRecords.Moduli;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -27,8 +28,13 @@ namespace CleaningRecords
     {
         public MainWindow()
         {
-            InitializeComponent();
 
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+
+            InitializeComponent();
+            this.Title = "Cleaning Records ver. " + fvi.FileVersion;
             mainGrid.IsEnabled = false;
 
 

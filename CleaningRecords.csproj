@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MonthCalendar\**" />
+    <EmbeddedResource Remove="MonthCalendar\**" />
+    <None Remove="MonthCalendar\**" />
+    <Page Remove="MonthCalendar\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="DAL\Models\ClientCleaningJob.cs" />
     <Compile Remove="DAL\Models\Temp\CleaningJobViewModel.cs" />
     <Compile Remove="Moduli\CleanersCalendarWin.xaml.cs" />
@@ -34,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MonthCalendar\MonthCalendar.csproj" />
+    <ProjectReference Include="MonthCalendar\MonthCalendar.csproj" />
   </ItemGroup>
 
 </Project>
