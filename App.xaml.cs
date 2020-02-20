@@ -34,7 +34,7 @@ namespace CleaningRecords
             {
                 try
                 {
-                    //copyDB(db);
+                    copyDB(db);
                 }
                 catch
                 { 
@@ -89,62 +89,62 @@ namespace CleaningRecords
         }
 
 
-        //private void copyDB(PodaciContext db)
-        //{
-        //    using (var db2 = new CleaningRecords.DAL.Models.OldModels.PodaciContext())
-        //    {
-        //        var mappingConfig = new MapperConfiguration(mc =>
-        //        {
-        //            mc.AddProfile(new DAL.Mappings.MappingProfile());
-        //        });
-        //        IMapper m = mappingConfig.CreateMapper();
+        private void copyDB(PodaciContext db)
+        {
+            using (var db2 = new CleaningRecords.DAL.Models.OldModels.PodaciContext())
+            {
+                var mappingConfig = new MapperConfiguration(mc =>
+                {
+                    mc.AddProfile(new DAL.Mappings.MappingProfile());
+                });
+                IMapper m = mappingConfig.CreateMapper();
 
-        //        if (db2.Cleaners.Any() && !db.Cleaners.Any())
-        //        {
-        //            var Cleaners = m.Map<List<CleaningRecords.DAL.Models.Cleaner>>(db2.Cleaners);
-        //            db.AddRange(Cleaners);
-        //        }
+                if (db2.Cleaners.Any() && !db.Cleaners.Any())
+                {
+                    var Cleaners = m.Map<List<CleaningRecords.DAL.Models.Cleaner>>(db2.Cleaners);
+                    db.AddRange(Cleaners);
+                }
 
-        //        if (db2.Clients.Any() && !db.Clients.Any())
-        //        {
-        //            var Clients = m.Map<List<CleaningRecords.DAL.Models.Client>>(db2.Clients);
-        //            db.AddRange(Clients);
-        //        }
-        //        if (db2.Teams.Any() && !db.Teams.Any())
-        //        {
+                if (db2.Clients.Any() && !db.Clients.Any())
+                {
+                    var Clients = m.Map<List<CleaningRecords.DAL.Models.Client>>(db2.Clients);
+                    db.AddRange(Clients);
+                }
+                if (db2.Teams.Any() && !db.Teams.Any())
+                {
 
-        //            var Teams = m.Map<List<CleaningRecords.DAL.Models.Team>>(db2.Teams.Include(x => x.CleanerTeams));
-        //            db.AddRange(Teams);
-        //        }
+                    var Teams = m.Map<List<CleaningRecords.DAL.Models.Team>>(db2.Teams.Include(x => x.CleanerTeams));
+                    db.AddRange(Teams);
+                }
 
-        //        if (db2.RepeatJobs.Any() && !db.RepeatJobs.Any())
-        //        {
-        //            var RepeatJobs = m.Map<List<CleaningRecords.DAL.Models.RepeatJob>>(db2.RepeatJobs);
-        //            db.AddRange(RepeatJobs);
-        //        }
+                if (db2.RepeatJobs.Any() && !db.RepeatJobs.Any())
+                {
+                    var RepeatJobs = m.Map<List<CleaningRecords.DAL.Models.RepeatJob>>(db2.RepeatJobs);
+                    db.AddRange(RepeatJobs);
+                }
 
-        //        if (db2.CleaningJobs.Any() && !db.CleaningJobs.Any())
-        //        {
-        //            var CleaningJobs = m.Map<List<CleaningRecords.DAL.Models.CleaningJob>>(db2.CleaningJobs);
-        //            db.AddRange(CleaningJobs);
+                if (db2.CleaningJobs.Any() && !db.CleaningJobs.Any())
+                {
+                    var CleaningJobs = m.Map<List<CleaningRecords.DAL.Models.CleaningJob>>(db2.CleaningJobs);
+                    db.AddRange(CleaningJobs);
 
-        //        }
-
-
-        //        db.SaveChanges();
-
-        //    }
-        //}
-
-        // private void ConfigureServices(IServiceCollection services)
-        // {
-        //     services.AddDbContext<PodaciContext>
-        //(options => options.UseSqlServer(
-        //            Configuration.GetConnectionString("CleaningDatabase")));
+                }
 
 
-        //     services.AddTransient(typeof(MainWindow));
-        // }
+                db.SaveChanges();
+
+            }
+        }
+
+       // private void ConfigureServices(IServiceCollection services)
+       // {
+       //     services.AddDbContext<PodaciContext>
+       //(options => options.UseSqlServer(
+       //            Configuration.GetConnectionString("CleaningDatabase")));
+
+
+       //     services.AddTransient(typeof(MainWindow));
+       // }
 
         public void ConfigureServices(IServiceCollection services)
         {
