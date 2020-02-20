@@ -21,11 +21,11 @@
             <RowDefinition Height="*" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Button Margin="0,0,400,0" Width="150" Click="NewTab_Click">New Tab</Button>
-        <Button Margin="0,0,0,0" Width="150" Click="CloseTab_Click">Close Tab</Button>
-
-        <Button Margin="400,0,0,0" Width="150" Click="RenameTab_Click">Rename Tab</Button>
-
+        <Button HorizontalAlignment="Left" Margin="50,0,0,0" Width="150" Click="NewTab_Click">NEW TAB</Button>
+        <Button  HorizontalAlignment="Left" Margin="250,0,0,0" Width="150" Click="CloseTab_Click">CLOSE TAB</Button>
+        <Button  HorizontalAlignment="Left" Margin="450,0,0,0" Width="150" Click="RenameTab_Click">RENAME TAB</Button>
+        <Button  HorizontalAlignment="Left" Margin="650,0,0,0" Width="150" Click="Print_Click">PRINT</Button>
+        
         <TabControl Grid.Row="1" TabStripPlacement="Top" Name="TabsMain" SelectionChanged="TabsMain_SelectionChanged">
             <TabItem Header="Main Page" Name="MainTab"  >
                 <Grid x:Name="mainGrid">

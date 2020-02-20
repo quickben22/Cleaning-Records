@@ -77,6 +77,18 @@ namespace CleaningRecords.Moduli
         }
     }
 
+    public class JobStatusWithNullList : Dictionary<int, string>
+    {
+        public JobStatusWithNullList()
+        {
+            this.Add(-1, "");
+            this.Add(0, "Active");
+            this.Add(1, "Canceled");
+            this.Add(2, "Completed");
+            this.Add(3, "Payed");
+        }
+    }
+
 
     public class CleanersList : Dictionary<int, string>
     {

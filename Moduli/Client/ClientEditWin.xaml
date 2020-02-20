@@ -6,13 +6,15 @@
         xmlns:local="clr-namespace:CleaningRecords.Moduli"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Client details" Height="450" Width="1200" WindowState="Maximized">
+        Title="Client details" Height="450" Width="1500" WindowState="Maximized">
     <Window.Resources>
         <local:CleanersList x:Key="CleanersList"/>
         <local:TeamsList x:Key="TeamsList"/>
         <local:JobStatusList x:Key="JobStatusList"/>
         <local:ServicesList x:Key="ServicesList"/>
+        <local:JobStatusWithNullList x:Key="JobStatusWithNullList"/>
         
+
     </Window.Resources>
     <Grid Margin="20">
         <!--<Grid.ColumnDefinitions>
@@ -34,9 +36,19 @@
 
         </Grid.RowDefinitions>
 
-       
+
         <TextBlock FontWeight="Bold" FontSize="24" Margin="10,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
         <TextBlock FontWeight="Bold" FontSize="24" Margin="200,10,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBlock HorizontalAlignment="Left" Margin="400,20,0,0" Text="Year:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Years}"  SelectedValue="{Binding Year, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="440,0,0,0"   Width="100"/>
+        <TextBlock HorizontalAlignment="Left" Margin="590,20,0,0" Text="Month:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Months}"  SelectedValue="{Binding Month, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left" Margin="640,0,0,0"   Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="790,20,0,0" Text="Status:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Source={StaticResource JobStatusWithNullList}}"   SelectedValue="{Binding Status, UpdateSourceTrigger=PropertyChanged}"  SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="840,0,0,0"   Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="990,20,0,0" Text="Service:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Source={StaticResource ServicesList}}"   SelectedValue="{Binding Service, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="1050,0,0,0"   Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1190,20,0,0" Text="Cleaner:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox SelectionChanged="ComboBox_SelectionChanged"   ItemsSource="{Binding Source={StaticResource CleanersList}}"  SelectedValue="{Binding Cleaner, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left" Margin="1250,0,0,0"   Width="120"/>
 
 
         <TextBlock Margin="10,10,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 2</TextBlock>
@@ -44,10 +56,10 @@
         <TextBox  Margin="80,5,10,10" Grid.Column="1" Grid.Row="1" Width="300" TextAlignment="Left"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address2, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock Margin="10,60,10,10" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 3</TextBlock>
 
-        <TextBox Grid.Row="1"   Margin="80,55,10,10"  Width="300" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address3, UpdateSourceTrigger=PropertyChanged}"  />
+        <TextBox Grid.Row="1"   Margin="80,55,10,10"  Width="300"   Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address3, UpdateSourceTrigger=PropertyChanged}"  />
         <TextBlock Grid.Row="1"  Margin="10,110,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Adresa 4</TextBlock>
 
-        <TextBox Grid.Row="1"  Margin="80,105,10,10"   Width="300" TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address4, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="1"  Margin="80,105,10,10"   Width="300"   Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Address4, UpdateSourceTrigger=PropertyChanged}" />
 
 
         <TextBlock Grid.Row="1"  Margin="480,10,10,10" HorizontalAlignment="Left" VerticalAlignment="Top">Instructions</TextBlock>
@@ -56,6 +68,7 @@
         <TextBlock Grid.Row="1"  Margin="760,10,10,10"  HorizontalAlignment="Left" VerticalAlignment="Top">Description</TextBlock>
 
         <TextBox Grid.Row="1"     Margin="760,40,10,10"   TextWrapping="Wrap" AcceptsReturn="True" Width="230" Height="90"  TextAlignment="Center"  Background="Transparent"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"  />
+
 
 
         <DataGrid Grid.Row="2" FontWeight="SemiBold" AlternatingRowBackground="AliceBlue" x:Name="dataGrid"  ItemsSource="{Binding Source=ClientJobs}"  CanUserAddRows="false" AutoGenerateColumns="False">
@@ -67,7 +80,26 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Location" Binding="{Binding Location}"/>
+                <!--<DataGridComboBoxColumn Header="Location"  ItemsSource="{Binding Locations}" SelectedValueBinding="{Binding Location, UpdateSourceTrigger=PropertyChanged}"  />-->
+
+                <DataGridComboBoxColumn Header="Location"
+    SelectedValueBinding="{Binding LocationId, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" DisplayMemberPath="Value"
+                                        >
+
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+
+
                 <DataGridTemplateColumn Header="Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -130,6 +162,6 @@
 
         </DataGrid>
         <Button Grid.Row="3" Click="Add_Click">NEW JOB</Button>
-        
+
     </Grid>
 </Window>

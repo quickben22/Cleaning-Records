@@ -31,13 +31,17 @@ namespace CleaningRecords.Moduli
 
             using (var db = new PodaciContext())
             {
+
                 ClientObject = db.Clients
-                    .Include(x => x.CleaningJobs)
-                      
                     .FirstOrDefault(x => x.Id == ClientId);
+                getCleaningJobs(db);
+                ClientObject.setMonthsYears();
+                ClientObject.setLocations();
+
+                this.DataContext = ClientObject;
                 dataGrid.ItemsSource = ClientObject.CleaningJobs;
             }
-            this.DataContext = ClientObject;
+
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -70,9 +74,34 @@ namespace CleaningRecords.Moduli
 
         }
 
+
+        private void getCleaningJobs(PodaciContext db)
+        {
+
+            var cj = db.CleaningJobs
+                .Include(x => x.Team)
+                .ThenInclude(y => y.CleanerTeams)
+                 .Where(x => x.ClientId == ClientObject.Id
+                 && x.Date.Year == ClientObject.Year
+                 && x.Date.Month == ClientObject.Month
+                 && ((ClientObject.Cleaner != null && ClientObject.Cleaner != 0) ? ClientObject.Cleaner == x.CleanerId || x.Team.CleanerTeams.Any(y => y.CleanerId == ClientObject.Cleaner) : true)
+                 && ((ClientObject.Status != null && ClientObject.Status != -1) ? ClientObject.Status == x.JobStatus : true)
+                 && ((ClientObject.Service != null && ClientObject.Service != 0) ? ClientObject.Service == x.ServiceId : true));
+
+
+
+            ClientObject.CleaningJobs = new ObservableCollection<CleaningJob>(cj);
+            dataGrid.ItemsSource = ClientObject.CleaningJobs;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using (var db = new PodaciContext())
+                getCleaningJobs(db);
+        }
     }
 
-   
+
 
 
 }

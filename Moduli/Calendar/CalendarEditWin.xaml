@@ -35,7 +35,22 @@
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="Client"  ItemsSource="{Binding Source={StaticResource ClientsList}}" SelectedValueBinding="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                <DataGridTextColumn Header="Location" Binding="{Binding Location, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Location"
+    SelectedValueBinding="{Binding LocationId, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" DisplayMemberPath="Value"
+                                        >
+
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridTemplateColumn Header="Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -57,7 +72,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm"  Text="{Binding TimeStart}" />
+                            <xctk:TimePicker   Format="Custom" FormatString="H:mm"  Text="{Binding TimeStart}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -69,7 +84,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm" Text="{Binding TimeEnd}" />
+                            <xctk:TimePicker   Format="Custom" FormatString="H:mm" Text="{Binding TimeEnd}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

@@ -32,7 +32,14 @@ namespace CleaningRecords
             var dir = Directory.GetCurrentDirectory();
             using (var db = new PodaciContext())
             {
-                //copyDB(db);
+                try
+                {
+                    //copyDB(db);
+                }
+                catch
+                { 
+                
+                }
 
                 if (!db.Clients.Any())
                 {

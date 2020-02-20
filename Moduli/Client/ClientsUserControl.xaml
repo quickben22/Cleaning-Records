@@ -27,11 +27,11 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Client Number" Binding="{Binding ClientNumber}"  />
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}"/>
-                <DataGridTextColumn Header="Telephone" Binding="{Binding Telephone}"/>
+                <DataGridTextColumn Header="Client Number" Binding="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}"  />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Telephone" Binding="{Binding Telephone, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource StatusList}}" SelectedValueBinding="{Binding ClientStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
                 <DataGridTemplateColumn  >

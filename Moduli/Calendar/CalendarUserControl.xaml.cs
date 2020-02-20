@@ -148,10 +148,38 @@ namespace CleaningRecords.Moduli
                     apt.Subject = $"{job.TimeStart.ToString("H:mm")} - {job.TimeEnd.ToString("H:mm")} - {job.Client.Name} {job.Client.Surname}\n {cleaner } - {service }  ";
                     _myAppointmentsList.Add(apt);
                 }
+
+                CalculateWeekHours(index, db);
             }
 
             calendars[index].MonthAppointments = _myAppointmentsList.FindAll(new System.Predicate<Appointment>((Appointment apt) => apt.Date != null && Convert.ToDateTime(apt.Date).Month == calendars[index].DisplayStartDate.Month && Convert.ToDateTime(apt.Date).Year == calendars[index].DisplayStartDate.Year));
         }
+
+        private void CalculateWeekHours(int index, PodaciContext db)
+        {
+
+            var month = calendars[index].DisplayStartDate.Month;
+            var year = calendars[index].DisplayStartDate.Year;
+            var week = Fun.getWeek(new DateTime(year, month, 1));
+
+            for (int i = 0; i < 5; i++)
+            {
+                var sum = db.CleaningJobs.Where(x => x.Week == week)?.Select(x => x.NoOfHours)?.Sum() ?? 0;
+                if (i == 0)
+                    models[index].Week1 = sum;
+                if (i == 1)
+                    models[index].Week2 = sum;
+                if (i == 2)
+                    models[index].Week3 = sum;
+                if (i == 3)
+                    models[index].Week4 = sum;
+                if (i == 4)
+                    models[index].Week5 = sum;
+                week++;
+            }
+
+        }
+
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -334,16 +362,14 @@ namespace CleaningRecords.Moduli
         private void AptCalendar_SizeChanged(object sender, SizeChangedEventArgs e)
         {
 
-          
+
 
 
             var height = calendars[TabsMain.SelectedIndex].ActualHeight;
             if (height > 0)
             {
-            
-                var month = calendars[TabsMain.SelectedIndex].DisplayStartDate.Month;
-                var year = calendars[TabsMain.SelectedIndex].DisplayStartDate.Year;
-                var week = Fun.getWeek(new DateTime (year, month,1));
+
+
                 var koef = 5.25;
                 var margin = height - 5.5 * height / koef;
                 foreach (TabItem ti in TabsMain.Items)
@@ -354,12 +380,32 @@ namespace CleaningRecords.Moduli
                         if (g?.GetType().Name == "Grid")
                         {
                             ((Grid)g).Children.Clear();
-                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test0", Margin = new Thickness(5, margin + height / koef, 0, 0) });
-                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test2", Margin = new Thickness(5, margin + height / koef * 2, 0, 0) });
-                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test3", Margin = new Thickness(5, margin + height / koef * 3, 0, 0) });
-                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test4", Margin = new Thickness(5, margin + height / koef * 4, 0, 0) });
-                            ((Grid)g).Children.Add(new TextBlock { FontWeight = FontWeights.Bold, Text = "Test5", Margin = new Thickness(5, margin + height / koef * 5, 0, 0) });
 
+                           var tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize=18,  Margin = new Thickness(10, margin + height / koef, 0, 0) };
+                            Binding b = new Binding("Week1");
+                            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            tb1.SetBinding(TextBlock.TextProperty, b);
+                            ((Grid)g).Children.Add(tb1);
+                            tb1 =new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 2, 0, 0) };
+                             b = new Binding("Week2");
+                            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            tb1.SetBinding(TextBlock.TextProperty, b);
+                            ((Grid)g).Children.Add(tb1);
+                            tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 3, 0, 0) };
+                             b = new Binding("Week3");
+                            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            tb1.SetBinding(TextBlock.TextProperty, b);
+                            ((Grid)g).Children.Add(tb1);
+                            tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 4, 0, 0) };
+                             b = new Binding("Week4");
+                            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            tb1.SetBinding(TextBlock.TextProperty, b);
+                            ((Grid)g).Children.Add(tb1);
+                            tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 5, 0, 0) };
+                             b = new Binding("Week5");
+                            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            tb1.SetBinding(TextBlock.TextProperty, b);
+                            ((Grid)g).Children.Add(tb1);
 
                         }
                     }
@@ -367,6 +413,11 @@ namespace CleaningRecords.Moduli
             }
 
 
+
+        }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

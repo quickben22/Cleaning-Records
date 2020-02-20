@@ -2,6 +2,7 @@
 using CleaningRecords.Moduli;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,8 +14,18 @@ namespace CleaningRecords.DAL.Models
     public class CleaningJob : INotifyPropertyChanged
     {
 
+        public CleaningJob()
+        {
+            _Locations = new ObservableCollection<string>();
+        }
+
 
         public int Id { get; set; }
+
+
+        private int? _LocationId;
+        public int? LocationId { get { return _LocationId; } set { _LocationId = (value); this.OnPropertyChanged("LocationId"); } }
+
         private string _Location;
         public string Location { get { return _Location; } set { _Location = (value); this.OnPropertyChanged("Location"); } }
         private DateTime _Date;
@@ -68,6 +79,10 @@ namespace CleaningRecords.DAL.Models
 
         [NotMapped]
         public bool changed = false;
+
+        private ObservableCollection<string> _Locations;
+        [NotMapped]
+        public ObservableCollection<string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
 
 
 
