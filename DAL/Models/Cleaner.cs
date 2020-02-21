@@ -67,6 +67,58 @@ namespace CleaningRecords.DAL.Models
 
 
 
+        private DateTime _MondayStart;
+        public DateTime MondayStart { get { return _MondayStart; } set { _MondayStart = (value); this.OnPropertyChanged("MondayStart"); } }
+        private DateTime _MondayEnd;
+        public DateTime MondayEnd { get { return _MondayEnd; } set { _MondayEnd = (value); this.OnPropertyChanged("MondayEnd"); } }
+        private DateTime _TuesdayStart;
+        public DateTime TuesdayStart { get { return _TuesdayStart; } set { _TuesdayStart = (value); this.OnPropertyChanged("TuesdayStart"); } }
+ 
+        private DateTime _TuesdayEnd;
+        public DateTime TuesdayEnd { get { return _TuesdayEnd; } set { _TuesdayEnd = (value); this.OnPropertyChanged("TuesdayEnd"); } }
+        private DateTime _WednesdayStart;
+        public DateTime WednesdayStart { get { return _WednesdayStart; } set { _WednesdayStart = (value); this.OnPropertyChanged("WednesdayStart"); } }
+        private DateTime _WednesdayEnd;
+        public DateTime WednesdayEnd { get { return _WednesdayEnd; } set { _WednesdayEnd = (value); this.OnPropertyChanged("WednesdayEnd"); } }
+        private DateTime _ThursdayStart;
+        public DateTime ThursdayStart { get { return _ThursdayStart; } set { _ThursdayStart = (value); this.OnPropertyChanged("ThursdayStart"); } }
+        private DateTime _ThursdayEnd;
+        public DateTime ThursdayEnd { get { return _ThursdayEnd; } set { _ThursdayEnd = (value); this.OnPropertyChanged("ThursdayEnd"); } }
+        private DateTime _FridayStart;
+        public DateTime FridayStart { get { return _FridayStart; } set { _FridayStart = (value); this.OnPropertyChanged("FridayStart"); } }
+        private DateTime _FridayEnd;
+        public DateTime FridayEnd { get { return _FridayEnd; } set { _FridayEnd = (value); this.OnPropertyChanged("FridayEnd"); } }
+        private DateTime _SaturdayStart;
+        public DateTime SaturdayStart { get { return _SaturdayStart; } set { _SaturdayStart = (value); this.OnPropertyChanged("SaturdayStart"); } }
+        private DateTime _SaturdayEnd;
+        public DateTime SaturdayEnd { get { return _SaturdayEnd; } set { _SaturdayEnd = (value); this.OnPropertyChanged("SaturdayEnd"); } }
+        private DateTime _SundayStart;
+        public DateTime SundayStart { get { return _SundayStart; } set { _SundayStart = (value); this.OnPropertyChanged("SundayStart"); } }
+        private DateTime _SundayEnd;
+        public DateTime SundayEnd { get { return _SundayEnd; } set { _SundayEnd = (value); this.OnPropertyChanged("SundayEnd"); } }
+        private DateTime _NotAvailableStart;
+        public DateTime NotAvailableStart { get { return _NotAvailableStart; } set { _NotAvailableStart = (value); this.OnPropertyChanged("NotAvailableStart"); } }
+        private DateTime _NotAvailableEnd;
+        public DateTime NotAvailableEnd { get { return _NotAvailableEnd; } set { _NotAvailableEnd = (value); this.OnPropertyChanged("NotAvailableEnd"); } }
+
+
+        private bool _Monday;
+        public bool Monday { get { return _Monday; } set { _Monday = (value); this.OnPropertyChanged("Monday"); } }
+        private bool _Tuesday;
+        public bool Tuesday { get { return _Tuesday; } set { _Tuesday = (value); this.OnPropertyChanged("Tuesday"); } }
+        private bool _Wednesday;
+        public bool Wednesday { get { return _Wednesday; } set { _Wednesday = (value); this.OnPropertyChanged("Wednesday"); } }
+        private bool _Thursday;
+        public bool Thursday { get { return _Thursday; } set { _Thursday = (value); this.OnPropertyChanged("Thursday"); } }
+        private bool _Friday;
+        public bool Friday { get { return _Friday; } set { _Friday = (value); this.OnPropertyChanged("Friday"); } }
+        private bool _Saturday;
+        public bool Saturday { get { return _Saturday; } set { _Saturday = (value); this.OnPropertyChanged("Saturday"); } }
+        private bool _Sunday;
+        public bool Sunday { get { return _Sunday; } set { _Sunday = (value); this.OnPropertyChanged("Sunday"); } }
+        private bool _NotAvailable;
+        public bool NotAvailable { get { return _NotAvailable; } set { _NotAvailable = (value); this.OnPropertyChanged("NotAvailable"); } }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,5 +1,6 @@
 ﻿using CleaningRecords.DAL;
 using CleaningRecords.DAL.Models;
+using CleaningRecords.PDF;
 using Microsoft.EntityFrameworkCore;
 using MonthCalendar;
 using System;
@@ -79,6 +80,65 @@ namespace CleaningRecords.Moduli
             SetAppointments(TabsMain.SelectedIndex);
         }
 
+
+        private void setWorkHours(PodaciContext db, int index)
+        {
+            if (models[index].CleanerId != null && models[index].CleanerId != 0)
+            {
+                var cleaner = db.Cleaners.FirstOrDefault(x => x.Id == models[index].CleanerId);
+                if (cleaner.Monday)
+                    models[index].Monday = $"{cleaner.MondayStart.ToString("HH:mm")} - {cleaner.MondayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Monday = "Not available";
+              
+                if (cleaner.Tuesday)
+                    models[index].Tuesday = $"{cleaner.TuesdayStart.ToString("HH:mm")} - {cleaner.TuesdayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Tuesday = "Not available";
+
+                if (cleaner.Wednesday)
+                    models[index].Wednesday = $"{cleaner.WednesdayStart.ToString("HH:mm")} - {cleaner.WednesdayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Wednesday = "Not available";
+
+                if (cleaner.Thursday)
+                    models[index].Thursday = $"{cleaner.ThursdayStart.ToString("HH:mm")} - {cleaner.ThursdayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Thursday = "Not available";
+
+                if (cleaner.Friday)
+                    models[index].Friday = $"{cleaner.FridayStart.ToString("HH:mm")} - {cleaner.FridayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Friday = "Not available";
+
+                if (cleaner.Saturday)
+                    models[index].Saturday = $"{cleaner.SaturdayStart.ToString("HH:mm")} - {cleaner.SaturdayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Saturday = "Not available";
+
+                if (cleaner.Sunday)
+                    models[index].Sunday = $"{cleaner.SundayStart.ToString("HH:mm")} - {cleaner.SundayEnd.ToString("HH:mm")}";
+                else
+                    models[index].Sunday = "Not available";
+
+                if (cleaner.NotAvailable)
+                    models[index].NotAvailable = $"{cleaner.NotAvailableStart.ToString("dd.MM.yyyy.")} - {cleaner.NotAvailableEnd.ToString("dd.MM.yyyy.")}";
+                else
+                    models[index].NotAvailable = "No breaks";
+            }
+            else
+            {
+                models[index].Monday = "00:00 - 00:00";
+                models[index].Tuesday = "00:00 - 00:00";
+                models[index].Wednesday = "00:00 - 00:00";
+                models[index].Thursday = "00:00 - 00:00";
+                models[index].Friday = "00:00 - 00:00";
+                models[index].Saturday = "00:00 - 00:00";
+                models[index].Sunday = "00:00 - 00:00";
+                models[index].NotAvailable = "No breaks";
+            }
+        }
+
         private void SetAppointments(int index)
         {
             if (index < 0) return;
@@ -86,6 +146,8 @@ namespace CleaningRecords.Moduli
             List<Appointment> _myAppointmentsList = new List<Appointment>();
             using (var db = new PodaciContext())
             {
+                setWorkHours(db, index);
+
 
                 var jobs = db.CleaningJobs
                     .Include(x => x.Client)
@@ -186,6 +248,8 @@ namespace CleaningRecords.Moduli
 
             if (e?.AddedItems != null && e.AddedItems.Count > 0)
             {
+
+
 
                 SetAppointments(TabsMain.SelectedIndex);
             }
@@ -381,28 +445,28 @@ namespace CleaningRecords.Moduli
                         {
                             ((Grid)g).Children.Clear();
 
-                           var tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize=18,  Margin = new Thickness(10, margin + height / koef, 0, 0) };
+                            var tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef, 0, 0) };
                             Binding b = new Binding("Week1");
                             b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                             tb1.SetBinding(TextBlock.TextProperty, b);
                             ((Grid)g).Children.Add(tb1);
-                            tb1 =new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 2, 0, 0) };
-                             b = new Binding("Week2");
+                            tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 2, 0, 0) };
+                            b = new Binding("Week2");
                             b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                             tb1.SetBinding(TextBlock.TextProperty, b);
                             ((Grid)g).Children.Add(tb1);
                             tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 3, 0, 0) };
-                             b = new Binding("Week3");
+                            b = new Binding("Week3");
                             b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                             tb1.SetBinding(TextBlock.TextProperty, b);
                             ((Grid)g).Children.Add(tb1);
                             tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 4, 0, 0) };
-                             b = new Binding("Week4");
+                            b = new Binding("Week4");
                             b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                             tb1.SetBinding(TextBlock.TextProperty, b);
                             ((Grid)g).Children.Add(tb1);
                             tb1 = new TextBlock { FontWeight = FontWeights.Bold, FontSize = 18, Margin = new Thickness(10, margin + height / koef * 5, 0, 0) };
-                             b = new Binding("Week5");
+                            b = new Binding("Week5");
                             b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                             tb1.SetBinding(TextBlock.TextProperty, b);
                             ((Grid)g).Children.Add(tb1);
@@ -418,7 +482,11 @@ namespace CleaningRecords.Moduli
 
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-
+            var month = calendars[TabsMain.SelectedIndex].DisplayStartDate.Month;
+            var year = calendars[TabsMain.SelectedIndex].DisplayStartDate.Year;
+            var pdf = new GeneratePDF();
+            using (var db = new PodaciContext())
+                pdf.Create(month, year, models[TabsMain.SelectedIndex].CleanerId, db);
         }
     }
 }

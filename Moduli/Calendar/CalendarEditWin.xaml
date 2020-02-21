@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningRecords.Moduli"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="CalendarEditWin" Height="450" Width="800" WindowState="Maximized">
 
@@ -38,18 +39,20 @@
                 <DataGridComboBoxColumn Header="Location"
     SelectedValueBinding="{Binding LocationId, UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="Key" DisplayMemberPath="Value"
+                                     
                                         >
-
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=Locations}" />
                         </Style>
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Locations, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=Locations}" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
+  
+
                 </DataGridComboBoxColumn>
                 <DataGridTemplateColumn Header="Date">
                     <DataGridTemplateColumn.CellTemplate>
@@ -72,7 +75,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker   Format="Custom" FormatString="H:mm"  Text="{Binding TimeStart}" />
+                            <materialDesign:TimePicker  SelectedTimeFormat="Short" Is24Hours="True"  Text="{Binding TimeStart, StringFormat={}{0: H:mm},UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -84,7 +87,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker   Format="Custom" FormatString="H:mm" Text="{Binding TimeEnd}" />
+                            <materialDesign:TimePicker   SelectedTimeFormat="Short" Is24Hours="True" Text="{Binding TimeEnd, StringFormat={}{0: H:mm},UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

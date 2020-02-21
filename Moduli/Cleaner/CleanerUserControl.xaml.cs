@@ -38,7 +38,7 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
-                var cleaner = db.Add(new Cleaner()).Entity;
+                var cleaner = db.Add(new Cleaner {Monday=true,Tuesday=true,Wednesday=true,Thursday=true,Friday=true,Saturday=true,Sunday=true,NotAvailableStart=DateTime.Now,NotAvailableEnd=DateTime.Now }).Entity;
                 db.SaveChanges();
                 Cleaners.Cleaners.Add(cleaner);
             }
@@ -52,11 +52,15 @@ namespace CleaningRecords.Moduli
             }
         }
 
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).DataContext.GetType().Name == "Cleaner")
+            {
 
-
-
-
-      
+                CleanerEditWin dlg = new CleanerEditWin(((Cleaner)((Button)sender).DataContext).Id);
+                dlg.ShowDialog();
+            }
+        }
     }
 
     

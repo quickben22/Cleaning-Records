@@ -27,6 +27,7 @@ namespace CleaningRecords
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             var dir = Directory.GetCurrentDirectory();
@@ -36,7 +37,7 @@ namespace CleaningRecords
                 {
                     copyDB(db);
                 }
-                catch
+                catch (Exception ex)
                 { 
                 
                 }
@@ -136,15 +137,15 @@ namespace CleaningRecords
             }
         }
 
-       // private void ConfigureServices(IServiceCollection services)
-       // {
-       //     services.AddDbContext<PodaciContext>
-       //(options => options.UseSqlServer(
-       //            Configuration.GetConnectionString("CleaningDatabase")));
+        // private void ConfigureServices(IServiceCollection services)
+        // {
+        //     services.AddDbContext<PodaciContext>
+        //(options => options.UseSqlServer(
+        //            Configuration.GetConnectionString("CleaningDatabase")));
 
 
-       //     services.AddTransient(typeof(MainWindow));
-       // }
+        //     services.AddTransient(typeof(MainWindow));
+        // }
 
         public void ConfigureServices(IServiceCollection services)
         {

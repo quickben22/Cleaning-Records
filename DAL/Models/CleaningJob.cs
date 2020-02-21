@@ -16,7 +16,7 @@ namespace CleaningRecords.DAL.Models
 
         public CleaningJob()
         {
-            _Locations = new ObservableCollection<string>();
+            _Locations = new Dictionary<int, string>();
         }
 
 
@@ -52,7 +52,19 @@ namespace CleaningRecords.DAL.Models
         public decimal Amount { get { return _Amount; } set { _Amount = (value); this.OnPropertyChanged("Amount"); } }
 
         private int _ClientId;
-        public int ClientId { get { return _ClientId; } set { _ClientId = (value); this.OnPropertyChanged("ClientId"); } }
+        public int ClientId
+        {
+            get
+            {
+                setLocations(_ClientId);
+
+                return _ClientId;
+            }
+            set
+            {
+                _ClientId = (value); this.OnPropertyChanged("ClientId");
+            }
+        }
         public Client Client { get; set; }
 
 
@@ -80,10 +92,30 @@ namespace CleaningRecords.DAL.Models
         [NotMapped]
         public bool changed = false;
 
-        private ObservableCollection<string> _Locations;
+        private Dictionary<int, string> _Locations;
         [NotMapped]
-        public ObservableCollection<string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
+        public Dictionary<int, string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
 
+        [NotMapped]
+        public Dictionary<int, string> Locations2 = new Dictionary<int, string> { { 1, "TEst" } };
+
+
+
+        private void setLocations(int _id)
+        {
+
+            if (Client != null)
+                Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
+            else if (_id != 0)
+            {
+                using (var db = new PodaciContext())
+                {
+                    var c = db.Clients.FirstOrDefault(x => x.Id == _id);
+                    Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                }
+            }
+
+        }
 
 
 
@@ -100,7 +132,8 @@ namespace CleaningRecords.DAL.Models
 
 
 
-
+            if (prop == "ClientId")
+                setLocations(_ClientId);
 
 
 

@@ -9,13 +9,14 @@ namespace CleaningRecords.DAL.Models
     public class CalendarEditViewModel : INotifyPropertyChanged
     {
 
+     
+
 
         private ObservableCollection<CleaningJob> _CleaningJobs;
         public ObservableCollection<CleaningJob> CleaningJobs { get { return _CleaningJobs; } set { _CleaningJobs = (value); this.OnPropertyChanged("CleaningJobs"); } }
 
-
-
-  
+     
+       
 
         public event PropertyChangedEventHandler PropertyChanged;
 

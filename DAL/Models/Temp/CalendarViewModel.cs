@@ -42,7 +42,24 @@ namespace CleaningRecords.DAL.Models
         public double Week5 { get { return _Week5; } set { _Week5 = (value); this.OnPropertyChanged("Week5"); } }
 
 
-    
+
+        private string _Monday;
+        public string Monday { get { return _Monday; } set { _Monday = (value); this.OnPropertyChanged("Monday"); } }
+        private string _Tuesday;
+        public string Tuesday { get { return _Tuesday; } set { _Tuesday = (value); this.OnPropertyChanged("Tuesday"); } }
+        private string _Wednesday;
+        public string Wednesday { get { return _Wednesday; } set { _Wednesday = (value); this.OnPropertyChanged("Wednesday"); } }
+        private string _Thursday;
+        public string Thursday { get { return _Thursday; } set { _Thursday = (value); this.OnPropertyChanged("Thursday"); } }
+        private string _Friday;
+        public string Friday { get { return _Friday; } set { _Friday = (value); this.OnPropertyChanged("Friday"); } }
+        private string _Saturday;
+        public string Saturday { get { return _Saturday; } set { _Saturday = (value); this.OnPropertyChanged("Saturday"); } }
+        private string _Sunday;
+        public string Sunday { get { return _Sunday; } set { _Sunday = (value); this.OnPropertyChanged("Sunday"); } }
+
+        private string _NotAvailable;
+        public string NotAvailable { get { return _NotAvailable; } set { _NotAvailable = (value); this.OnPropertyChanged("NotAvailable"); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

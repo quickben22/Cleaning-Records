@@ -3,14 +3,16 @@ using System;
 using CleaningRecords.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    partial class PodaciContextModelSnapshot : ModelSnapshot
+    [Migration("20200221105924_init8")]
+    partial class init8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Friday")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("FridayEnd")
                         .HasColumnType("TEXT");
 
@@ -53,9 +52,6 @@ namespace CleaningRecords.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Monday")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("MondayEnd")
@@ -73,26 +69,17 @@ namespace CleaningRecords.Migrations
                     b.Property<DateTime>("NotAvailableStart")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("NotAvailable")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PPS")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Pets")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Saturday")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("SaturdayEnd")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("SaturdayStart")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Sunday")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("SundayEnd")
                         .HasColumnType("TEXT");
@@ -106,17 +93,11 @@ namespace CleaningRecords.Migrations
                     b.Property<string>("Telephone")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Thursday")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("ThursdayEnd")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ThursdayStart")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Tuesday")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TuesdayEnd")
                         .HasColumnType("TEXT");
@@ -126,9 +107,6 @@ namespace CleaningRecords.Migrations
 
                     b.Property<string>("Visa")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Wednesday")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("WednesdayEnd")
                         .HasColumnType("TEXT");

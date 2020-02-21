@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningRecords.Moduli"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Client details" Height="450" Width="1500" WindowState="Maximized">
     <Window.Resources>
@@ -121,7 +122,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker  UpdateValueOnEnterKey="True"  Format="Custom" FormatString="H:mm" Text="{Binding TimeStart}" />
+                            <materialDesign:TimePicker  SelectedTimeFormat="Short" Is24Hours="True" Text="{Binding TimeStart, StringFormat={}{0: H:mm},UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -133,7 +134,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <xctk:TimePicker UpdateValueOnEnterKey="True" Format="Custom" FormatString="H:mm"  Text="{Binding TimeEnd}" />
+                            <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  Text="{Binding TimeEnd, StringFormat={}{0: H:mm},UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
