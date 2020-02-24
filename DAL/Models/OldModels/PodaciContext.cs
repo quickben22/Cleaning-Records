@@ -1,4 +1,5 @@
 ﻿using CleaningRecords.DAL.Models;
+using CleaningRecords.Global;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace CleaningRecords.DAL.Models.OldModels
 
         public DbSet<RepeatJob> RepeatJobs { get; set; }
 
-
+        public DbSet<Service> Services { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,7 +55,7 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-           => options.UseSqlite($"Data Source={Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\CleaningRecords\\app-1.0.4\\CleaningDb1.db");
+           => options.UseSqlite($"Data Source={ZP.OldDbdir}\\{ZP.OldDb}");
 
     }
 }

@@ -3,14 +3,16 @@ using System;
 using CleaningRecords.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleaningRecords.Migrations
 {
     [DbContext(typeof(PodaciContext))]
-    partial class PodaciContextModelSnapshot : ModelSnapshot
+    [Migration("20200224091106_init1")]
+    partial class init1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,19 +45,10 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("Friday")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Friday2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("FridayEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("FridayEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("FridayStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("FridayStart2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Ironing")
@@ -67,19 +60,10 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("Monday")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Monday2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("MondayEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("MondayEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("MondayStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("MondayStart2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -88,19 +72,10 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("NotAvailable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("NotAvailable2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("NotAvailableEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("NotAvailableEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("NotAvailableStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NotAvailableStart2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PPS")
@@ -112,37 +87,19 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("Saturday")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Saturday2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("SaturdayEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("SaturdayEnd2")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("SaturdayStart")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("SaturdayStart2")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Sunday")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Sunday2")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("SundayEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("SundayEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("SundayStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("SundayStart2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Surname")
@@ -154,37 +111,19 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("Thursday")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Thursday2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("ThursdayEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("ThursdayEnd2")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("ThursdayStart")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("ThursdayStart2")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Tuesday")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Tuesday2")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("TuesdayEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("TuesdayEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("TuesdayStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("TuesdayStart2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Visa")
@@ -193,19 +132,10 @@ namespace CleaningRecords.Migrations
                     b.Property<bool>("Wednesday")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Wednesday2")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("WednesdayEnd")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("WednesdayEnd2")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("WednesdayStart")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("WednesdayStart2")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

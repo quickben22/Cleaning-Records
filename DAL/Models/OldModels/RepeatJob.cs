@@ -59,7 +59,7 @@ namespace CleaningRecords.DAL.Models.OldModels
         protected void OnPropertyChanged(string prop)
         {
 
-    
+
 
             if (PropertyChanged != null)
             {

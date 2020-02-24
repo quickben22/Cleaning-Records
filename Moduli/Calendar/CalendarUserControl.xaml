@@ -25,18 +25,15 @@
         <Button  HorizontalAlignment="Left" Margin="250,0,0,0" Width="150" Click="CloseTab_Click">CLOSE TAB</Button>
         <Button  HorizontalAlignment="Left" Margin="450,0,0,0" Width="150" Click="RenameTab_Click">RENAME TAB</Button>
         <Button  HorizontalAlignment="Left" Margin="650,0,0,0" Width="150" Click="Print_Click">PRINT</Button>
-        
+
         <TabControl Grid.Row="1" TabStripPlacement="Top" Name="TabsMain" SelectionChanged="TabsMain_SelectionChanged">
             <TabItem Header="Main Page" Name="MainTab"  >
-                <Grid x:Name="mainGrid">
+                <Grid x:Name="mainGrid" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="80" ></RowDefinition>
                         <RowDefinition Height="*" ></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="50" />
-                    </Grid.ColumnDefinitions>
+
 
 
 
@@ -52,28 +49,36 @@
                     <TextBlock HorizontalAlignment="Left" Margin="300,20,0,0" Text="{Binding Wednesday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
                     <TextBlock HorizontalAlignment="Left" Margin="250,55,0,0" Text="Thu:" VerticalAlignment="Center" />
                     <TextBlock HorizontalAlignment="Left" Margin="300,55,0,0" Text="{Binding Thursday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="450,-50,0,0" Text="Fri:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="500,-50,0,0" Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="450,-15,0,0" Text="Sat:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="500,-15,0,0" Text="{Binding Saturday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="450,20,0,0" Text="Sun:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="500,20,0,0" Text="{Binding Sunday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="450,55,0,0" Text="Not:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="500,55,0,0" Text="{Binding NotAvailable, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,7,0,0" Text="Fri:" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,7,0,0" Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,25,0,0" Text="Sat:" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,25,0,0" Text="{Binding Saturday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,42,0,0" Text="Sun:" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,42,0,0" Text="{Binding Sunday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,60,0,0" Text="Not:" VerticalAlignment="Top" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,60,0,0" Text="{Binding NotAvailable, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" />
 
-                    <TextBlock HorizontalAlignment="Left" Margin="670,0,0,0" Text="Team:" VerticalAlignment="Center" />
-                    <ComboBox Margin="710,5,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource TeamsWithAllList}}" SelectedValue="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="926,0,0,0" Text="Team:" VerticalAlignment="Center" />
+                    <ComboBox Margin="966,29,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource TeamsWithAllList}}" SelectedValue="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" VerticalAlignment="Top"/>
 
-                    <TextBlock HorizontalAlignment="Left" Margin="890,0,0,0" Text="Client:" VerticalAlignment="Center"  />
-                    <ComboBox Margin="930,5,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource ClientsWithNullList}}" SelectedValue="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="1146,0,0,0" Text="Client:" VerticalAlignment="Center"  />
+                    <ComboBox Margin="1186,29,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource ClientsWithNullList}}" SelectedValue="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" VerticalAlignment="Top"/>
 
-
-
-                    <cal:MonthCalendarControl SizeChanged="AptCalendar_SizeChanged" Grid.Row="1" x:Name="AptCalendar" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
+                    <ScrollViewer  Grid.Row="1" VerticalScrollBarVisibility = "Auto">
+                        <Grid    >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="50" />
+                            </Grid.ColumnDefinitions>
+                            <cal:MonthCalendarControl SizeChanged="AptCalendar_SizeChanged" Height="3000" x:Name="AptCalendar" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
                                     DisplayMonthChanged="DisplayMonthChanged" DayBoxDoubleClicked="DayBoxDoubleClicked_event"
                                     AppointmentDblClicked="AppointmentDblClicked"/>
+                            <Grid Grid.Column="1" Grid.Row="1" Name="RightGrid"/>
+                        </Grid>
 
-                    <Grid Grid.Column="1" Grid.Row="1" Name="RightGrid"/>
+                    </ScrollViewer>
+
+
 
                 </Grid>
             </TabItem>

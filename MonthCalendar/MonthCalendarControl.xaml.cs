@@ -65,7 +65,16 @@ namespace MonthCalendar
             //-- Want to have the calendar show up, even if no appoints are assigned 
             //   Note - in my own app, appointments are loaded by a backgroundWorker thread to avoid a laggy UI
             if (_monthAppointments == null)
-                BuildCalendarUI();
+            {
+                try
+                {
+                    BuildCalendarUI();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("MonthCalendarControl Error: " + ex.Message);
+                }
+            }
         }
 
         List<SolidColorBrush> brushes = new List<SolidColorBrush>{Brushes.Red,Brushes.Black,Brushes.Blue,Brushes.Brown,
@@ -160,7 +169,7 @@ namespace MonthCalendar
                             else
                                 apt.DisplayText.Foreground = brushes[(int)a.TeamID % brushesCount];
                         }
-                         if (a.ServiceId != null)
+                        if (a.ServiceId != null)
                         {
                             if (a.ServiceColor != null)
                             {
@@ -176,12 +185,12 @@ namespace MonthCalendar
                             }
                             else
                             {
-                                apt.BorderElement.BorderBrush = brushes[(int)a.CleanerID % brushesCount];
+                                apt.BorderElement.BorderBrush = brushes[(int)a.ServiceId % brushesCount];
                                 apt.BorderElement.BorderThickness = new Thickness(3);
                             }
 
                         }
-                            apt.DisplayText.Text = a.Subject;
+                        apt.DisplayText.Text = a.Subject;
                         apt.Tag = a.CleaningJobID;
                         apt.MouseDoubleClick += Appointment_DoubleClick;
                         dayBox.DayAppointmentsStack.Children.Add(apt);
@@ -203,7 +212,7 @@ namespace MonthCalendar
 
             int EndOffSetDays = 7 - (Convert.ToInt32(System.Enum.ToObject(typeof(System.DayOfWeek), _DisplayStartDate.AddDays(DaysInMonth - 1).DayOfWeek)) + 1);
 
-            for (int i = 1; i <= Convert.ToInt32((DaysInMonth + OffSetDays + EndOffSetDays) / 7) + 1; i++)
+            for (int i = 1; i <= Convert.ToInt32((DaysInMonth + OffSetDays - 1) / 7) + 1; i++)
             {
                 dynamic rowDef = new RowDefinition();
                 rowDef.Height = rowHeight;

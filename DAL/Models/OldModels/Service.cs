@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
-using System.Windows;
 
-namespace CleaningRecords.DAL.Models
+namespace CleaningRecords.DAL.Models.OldModels
 {
     public class Service : INotifyPropertyChanged
     {
@@ -40,19 +39,11 @@ namespace CleaningRecords.DAL.Models
             if (PropertyChanged != null)
             {
 
-                try
+                using (var db = new PodaciContext())
                 {
-                    using (var db = new PodaciContext())
-                    {
-                        db.Update(this);
-                        db.SaveChanges();
-                    }
+                    db.Update(this);
+                    db.SaveChanges();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Service Update Error: " + ex.Message);
-                }
-
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
 

@@ -152,6 +152,7 @@ namespace CleaningRecords.Moduli
             using (var db = new PodaciContext())
             {
                 this.Add(0, "All Teams");
+                this.Add(-1, "No Teams");
                 var Teams = db.Teams;
                 if (Teams != null && Teams.Any())
                     foreach (var team in Teams)

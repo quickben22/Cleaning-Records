@@ -96,23 +96,35 @@ namespace CleaningRecords.DAL.Models
         [NotMapped]
         public Dictionary<int, string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
 
-        [NotMapped]
-        public Dictionary<int, string> Locations2 = new Dictionary<int, string> { { 1, "TEst" } };
+
 
 
 
         private void setLocations(int _id)
         {
 
-            if (Client != null)
-                Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
-            else if (_id != 0)
+
+            try
             {
-                using (var db = new PodaciContext())
+
+
+                if (Client != null)
+                    Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
+                else if (_id != 0)
                 {
-                    var c = db.Clients.FirstOrDefault(x => x.Id == _id);
-                    Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                    using (var db = new PodaciContext())
+                    {
+                        if (db.Clients.Any())
+                        {
+                            var c = db.Clients.FirstOrDefault(x => x.Id == _id);
+                            Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("setLocations Error: " + ex.Message);
             }
 
         }
@@ -145,7 +157,7 @@ namespace CleaningRecords.DAL.Models
                     RepeatJobId = null;
 
                 }
-                else
+                else if (prop != "Locations")
                 {
                     if (RepeatJobId != null && RepeatJob != null)
                     {
@@ -191,10 +203,17 @@ namespace CleaningRecords.DAL.Models
                     Amount = ConvertAmount();
                 }
 
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("CleaningJob Update Error: " + ex.Message);
                 }
 
 
@@ -236,9 +255,9 @@ namespace CleaningRecords.DAL.Models
 
 
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show("ConvertAmount Error: " + ex.Message);
             }
             return Amount;
         }

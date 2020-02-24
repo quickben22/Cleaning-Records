@@ -99,6 +99,11 @@ namespace CleaningRecords.Moduli
             using (var db = new PodaciContext())
                 getCleaningJobs(db);
         }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 
 

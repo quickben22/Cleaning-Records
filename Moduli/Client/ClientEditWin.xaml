@@ -162,7 +162,9 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Grid.Row="3" Click="Add_Click">NEW JOB</Button>
+        <Button Grid.Row="3" Height="45" FontSize="22" Width="250" Margin="0,0,0,70" Click="Add_Click">NEW JOB</Button>
+        <Button Grid.Row="3" Height="45" FontSize="22" Width="250" Margin="0,70,0,0" Click="Close_Click">FINISH</Button>
+
 
     </Grid>
 </Window>

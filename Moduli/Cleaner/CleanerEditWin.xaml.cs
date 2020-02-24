@@ -91,6 +91,70 @@ namespace CleaningRecords.Moduli
             }
         }
 
+        private void Start2_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            if (e?.NewValue != null)
+            {
+                Cleaner.MondayStart2 = (DateTime)e.NewValue;
+                Cleaner.TuesdayStart2 = (DateTime)e.NewValue;
+                Cleaner.WednesdayStart2 = (DateTime)e.NewValue;
+                Cleaner.ThursdayStart2 = (DateTime)e.NewValue;
+                Cleaner.FridayStart2 = (DateTime)e.NewValue;
+                Cleaner.SaturdayStart2 = (DateTime)e.NewValue;
+                Cleaner.SundayStart2 = (DateTime)e.NewValue;
+            }
+        }
 
+        private void End2_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            if (e?.NewValue != null)
+            {
+                Cleaner.MondayEnd2 = (DateTime)e.NewValue;
+                Cleaner.TuesdayEnd2 = (DateTime)e.NewValue;
+                Cleaner.WednesdayEnd2 = (DateTime)e.NewValue;
+                Cleaner.ThursdayEnd2 = (DateTime)e.NewValue;
+                Cleaner.FridayEnd2 = (DateTime)e.NewValue;
+                Cleaner.SaturdayEnd2 = (DateTime)e.NewValue;
+                Cleaner.SundayEnd2 = (DateTime)e.NewValue;
+            }
+        }
+
+        private void CheckBox2_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (checkAll2.IsChecked == true)
+            {
+                if (Cleaner.Monday)
+                    Cleaner.Monday2 = true;
+                if (Cleaner.Tuesday)
+                    Cleaner.Tuesday2 = true;
+                if (Cleaner.Wednesday)
+                    Cleaner.Wednesday2 = true;
+                if (Cleaner.Thursday)
+                    Cleaner.Thursday2 = true;
+                if (Cleaner.Friday)
+                    Cleaner.Friday2 = true;
+                if (Cleaner.Saturday)
+                    Cleaner.Saturday2 = true;
+                if (Cleaner.Sunday)
+                    Cleaner.Sunday2 = true;
+            }
+            else
+            {
+                Cleaner.Monday2 = false;
+                Cleaner.Tuesday2 = false;
+                Cleaner.Wednesday2 = false;
+                Cleaner.Thursday2 = false;
+                Cleaner.Friday2 = false;
+                Cleaner.Saturday2 = false;
+                Cleaner.Sunday2 = false;
+            }
+
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace CleaningRecords.DAL.Models.OldModels
 {
     public class Team : INotifyPropertyChanged
     {
-  
+
         public int Id { get; set; }
 
         private bool _IsActive;
@@ -22,6 +22,13 @@ namespace CleaningRecords.DAL.Models.OldModels
         private ObservableCollection<CleanerTeam> _CleanerTeams;
         public ObservableCollection<CleanerTeam> CleanerTeams { get { return _CleanerTeams; } set { _CleanerTeams = (value); this.OnPropertyChanged("CleanerTeams"); } }
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
+
+
+
+        private int _TeamStatus;
+        public int TeamStatus { get { return _TeamStatus; } set { _TeamStatus = (value); this.OnPropertyChanged("TeamStatus"); } }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string prop)

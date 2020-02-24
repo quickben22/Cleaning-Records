@@ -38,7 +38,7 @@ namespace CleaningRecords.Moduli
         {
             using (var db = new PodaciContext())
             {
-                var cleaner = db.Add(new Cleaner {Monday=true,Tuesday=true,Wednesday=true,Thursday=true,Friday=true,Saturday=true,Sunday=true,NotAvailableStart=DateTime.Now,NotAvailableEnd=DateTime.Now }).Entity;
+                var cleaner = db.Add(new Cleaner {Monday=true,Tuesday=true,Wednesday=true,Thursday=true,Friday=true,Saturday=true,Sunday=true,NotAvailableStart=DateTime.Now,NotAvailableEnd=DateTime.Now, NotAvailableStart2 = DateTime.Now, NotAvailableEnd2 = DateTime.Now }).Entity;
                 db.SaveChanges();
                 Cleaners.Cleaners.Add(cleaner);
             }

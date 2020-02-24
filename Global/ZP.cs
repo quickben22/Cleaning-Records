@@ -12,5 +12,13 @@ namespace CleaningRecords.Global
              {4,"Every 4 Week" },{5,"Every 5 Week" },{6,"Every 6 Week" },
                 {7,"Every 7 Week" },{8,"Every 8 Week" },
                 };
+
+        public static string Dbdir= "";
+        public static string OldDbdir= "";
+        public static string OldDb = "CleaningDb2.db";
+        public static string Db = "CleaningDb3.db";
+
+
+        public static string[] days = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
     }
 }

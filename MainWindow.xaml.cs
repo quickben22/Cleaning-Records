@@ -1,9 +1,12 @@
 ﻿using CleaningRecords.DAL;
+using CleaningRecords.Global;
 using CleaningRecords.Moduli;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -124,5 +127,18 @@ namespace CleaningRecords
             ServicesUserControl x3 = new ServicesUserControl();
             DisplayGrid.Children.Add(x3);
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            try
+            {
+                File.Copy(ZP.Dbdir + "\\" + ZP.Db, ZP.OldDbdir + "\\" + ZP.OldDb, true);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
     }
 }

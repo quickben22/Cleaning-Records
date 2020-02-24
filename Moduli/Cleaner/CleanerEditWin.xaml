@@ -7,51 +7,81 @@
 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CleanerEditWin" Height="550" Width="800">
+        Title="CleanerEditWin" Height="650" Width="1200" WindowStartupLocation="CenterScreen" >
     <Grid>
         <TextBlock TextAlignment="Right" FontWeight="Bold" FontSize="24" Margin="10,5,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name}"  />
         <TextBlock TextAlignment="Right" FontWeight="Bold" FontSize="24" Margin="200,5,10,10" Grid.Row="0" Width="150" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Surname}"  />
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="180,54,0,0" FontWeight="Bold" Text="Start" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="310,54,0,0" FontWeight="Bold" Text="End" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="460,54,0,0" FontWeight="Bold" Text="AVAILABLE" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="439,57,0,0" FontWeight="Bold" Text="AVAILABLE" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="597,54,0,0" FontWeight="Bold" Text="Start 2" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="727,54,0,0" FontWeight="Bold" Text="End 2" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,87,0,0" Text="Copy Time:" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  SelectedTimeChanged="Start_SelectedTimeChanged"  HorizontalAlignment="Left" Margin="170,84,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  SelectedTimeChanged="End_SelectedTimeChanged"    HorizontalAlignment="Left" Margin="310,84,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox x:Name="checkAll" Content="Select All" HorizontalAlignment="Left" Margin="480,84,0,0" VerticalAlignment="Top" Click="CheckBox_Click"/>
+        <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  SelectedTimeChanged="Start2_SelectedTimeChanged"  HorizontalAlignment="Left" Margin="587,84,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  SelectedTimeChanged="End2_SelectedTimeChanged"    HorizontalAlignment="Left" Margin="727,84,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox x:Name="checkAll" Content="Select All" HorizontalAlignment="Left" Margin="462,87,0,0" VerticalAlignment="Top" Click="CheckBox_Click"/>
+        <CheckBox x:Name="checkAll2" Content="Select All" HorizontalAlignment="Left" Margin="916,87,0,0" VerticalAlignment="Top" Click="CheckBox2_Click"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,127,0,0" Text="Monday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  IsEnabled="{Binding Monday}"  Text="{Binding MondayStart,StringFormat={}{0:HH:mm}}"  HorizontalAlignment="Left" Margin="170,124,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Monday}" Text="{Binding MondayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,124,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,124,0,0" VerticalAlignment="Top" IsChecked="{Binding Monday}"/>
+        <materialDesign:TimePicker SelectedTimeFormat="Short" Is24Hours="True"  IsEnabled="{Binding Monday2}"  Text="{Binding MondayStart2,StringFormat={}{0:HH:mm}}"  HorizontalAlignment="Left" Margin="587,124,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Monday2}" Text="{Binding MondayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,124,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,127,0,0" VerticalAlignment="Top" IsChecked="{Binding Monday}"/>
+        <CheckBox IsEnabled="{Binding Monday}" HorizontalAlignment="Left" Margin="916,127,0,0" VerticalAlignment="Top" IsChecked="{Binding Monday2}"/>
         <TextBlock  Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,167,0,0" Text="Tuesday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Tuesday}" Text="{Binding TuesdayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,164,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Tuesday}" Text="{Binding TuesdayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,164,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,164,0,0" VerticalAlignment="Top" IsChecked="{Binding Tuesday}"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Tuesday2}" Text="{Binding TuesdayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,164,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Tuesday2}" Text="{Binding TuesdayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,164,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,167,0,0" VerticalAlignment="Top" IsChecked="{Binding Tuesday}"/>
+        <CheckBox IsEnabled="{Binding Tuesday}" HorizontalAlignment="Left" Margin="916,167,0,0" VerticalAlignment="Top" IsChecked="{Binding Tuesday2}"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,207,0,0" Text="Wednesday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Wednesday}" Text="{Binding WednesdayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,204,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Wednesday}" Text="{Binding WednesdayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,204,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,204,0,0" VerticalAlignment="Top" IsChecked="{Binding Wednesday}"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Wednesday2}" Text="{Binding WednesdayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,204,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Wednesday2}" Text="{Binding WednesdayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,204,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,207,0,0" VerticalAlignment="Top" IsChecked="{Binding Wednesday}"/>
+        <CheckBox IsEnabled="{Binding Wednesday}" HorizontalAlignment="Left" Margin="916,207,0,0" VerticalAlignment="Top" IsChecked="{Binding Wednesday2}"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,247,0,0" Text="Thursday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Thursday}" Text="{Binding ThursdayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,244,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Thursday}" Text="{Binding ThursdayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,244,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,244,0,0" VerticalAlignment="Top" IsChecked="{Binding Thursday}"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Thursday2}" Text="{Binding ThursdayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,244,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Thursday2}" Text="{Binding ThursdayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,244,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,247,0,0" VerticalAlignment="Top" IsChecked="{Binding Thursday}"/>
+        <CheckBox IsEnabled="{Binding Thursday}" HorizontalAlignment="Left" Margin="916,247,0,0" VerticalAlignment="Top" IsChecked="{Binding Thursday2}"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,287,0,0" Text="Friday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Friday}" Text="{Binding FridayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,284,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Friday}" Text="{Binding FridayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,284,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,284,0,0" VerticalAlignment="Top" IsChecked="{Binding Friday}"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Friday2}" Text="{Binding FridayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,284,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Friday2}" Text="{Binding FridayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,284,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,287,0,0" VerticalAlignment="Top" IsChecked="{Binding Friday}"/>
+        <CheckBox IsEnabled="{Binding Friday}" HorizontalAlignment="Left" Margin="916,287,0,0" VerticalAlignment="Top" IsChecked="{Binding Friday2}"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,327,0,0" Text="Saturday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Saturday}" Text="{Binding SaturdayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,324,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Saturday}" Text="{Binding SaturdayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,324,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,324,0,0" VerticalAlignment="Top" IsChecked="{Binding Saturday}"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Saturday2}" Text="{Binding SaturdayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,324,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Saturday2}" Text="{Binding SaturdayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,324,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,327,0,0" VerticalAlignment="Top" IsChecked="{Binding Saturday}"/>
+        <CheckBox IsEnabled="{Binding Saturday}" HorizontalAlignment="Left" Margin="916,327,0,0" VerticalAlignment="Top" IsChecked="{Binding Saturday2}"/>
         <TextBlock Width="65" TextAlignment="Right" HorizontalAlignment="Left" Margin="100,367,0,0" Text="Sunday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <materialDesign:TimePicker IsEnabled="{Binding Sunday}" Text="{Binding SundayStart,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="170,364,0,0" VerticalAlignment="Top"  Width="110"/>
         <materialDesign:TimePicker IsEnabled="{Binding Sunday}" Text="{Binding SundayEnd,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="310,364,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox HorizontalAlignment="Left" Margin="480,364,0,0" VerticalAlignment="Top" IsChecked="{Binding Sunday}"/>
-
+        <materialDesign:TimePicker IsEnabled="{Binding Sunday2}" Text="{Binding SundayStart2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="587,364,0,0" VerticalAlignment="Top"  Width="110"/>
+        <materialDesign:TimePicker IsEnabled="{Binding Sunday2}" Text="{Binding SundayEnd2,StringFormat={}{0:HH:mm}}" SelectedTimeFormat="Short" Is24Hours="True" HorizontalAlignment="Left" Margin="727,364,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox HorizontalAlignment="Left" Margin="462,367,0,0" VerticalAlignment="Top" IsChecked="{Binding Sunday}"/>
+        <CheckBox IsEnabled="{Binding Sunday}" HorizontalAlignment="Left" Margin="916,367,0,0" VerticalAlignment="Top" IsChecked="{Binding Sunday2}"/>
         <TextBlock Width="95" TextAlignment="Right" HorizontalAlignment="Left" Margin="70,450,0,0" Text="Not available:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <DatePicker IsEnabled="{Binding NotAvailable}" SelectedDate="{Binding NotAvailableStart, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="170,444,0,0" VerticalAlignment="Top"  Width="110"/>
         <DatePicker IsEnabled="{Binding NotAvailable}" SelectedDate="{Binding NotAvailableEnd, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="310,444,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox Content="Not available" HorizontalAlignment="Left" Margin="480,444,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable}"/>
+        <DatePicker IsEnabled="{Binding NotAvailable2}" SelectedDate="{Binding NotAvailableStart2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="587,444,0,0" VerticalAlignment="Top"  Width="110"/>
+        <DatePicker IsEnabled="{Binding NotAvailable2}" SelectedDate="{Binding NotAvailableEnd2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="727,444,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox Content="Not available" HorizontalAlignment="Left" Margin="462,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable}"/>
+        <CheckBox IsEnabled="{Binding NotAvailable}" Content="Not available" HorizontalAlignment="Left" Margin="916,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable2}"/>
+        <Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="439,525,0,0" VerticalAlignment="Top" Height="54" Width="180" Click="Close_Click"/>
 
     </Grid>
 </Window>

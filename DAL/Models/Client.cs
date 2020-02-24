@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models
 {
@@ -65,9 +66,9 @@ namespace CleaningRecords.DAL.Models
         public Dictionary<int, string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
 
 
-        private Dictionary<int,string> _Months;
+        private Dictionary<int, string> _Months;
         [NotMapped]
-        public Dictionary<int,string> Months { get { return _Months; } set { _Months = (value); this.OnPropertyChanged("Months"); } }
+        public Dictionary<int, string> Months { get { return _Months; } set { _Months = (value); this.OnPropertyChanged("Months"); } }
 
         private ObservableCollection<int> _Years;
         [NotMapped]
@@ -110,7 +111,7 @@ namespace CleaningRecords.DAL.Models
                 {10,"October" }, {11,"November" }, {12,"December" } };
 
             Year = year;
-            Month= DateTime.Now.Month;
+            Month = DateTime.Now.Month;
 
         }
         public void setLocations()
@@ -136,12 +137,19 @@ namespace CleaningRecords.DAL.Models
             if (PropertyChanged != null)
             {
 
-
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Client Update Error: " + ex.Message);
+                }
+
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
 

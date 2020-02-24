@@ -12,6 +12,7 @@ using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using CleaningRecords.DAL.Models;
 using AutoMapper;
+using CleaningRecords.Global;
 
 namespace CleaningRecords
 {
@@ -27,6 +28,8 @@ namespace CleaningRecords
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            ZP.Dbdir = Directory.GetCurrentDirectory();
+            ZP.OldDbdir=$"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\CleaningRecordsOldDb";
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
@@ -38,8 +41,8 @@ namespace CleaningRecords
                     copyDB(db);
                 }
                 catch (Exception ex)
-                { 
-                
+                {
+
                 }
 
                 if (!db.Clients.Any())
@@ -106,23 +109,35 @@ namespace CleaningRecords
                     db.AddRange(Cleaners);
                 }
 
+
                 if (db2.Clients.Any() && !db.Clients.Any())
                 {
                     var Clients = m.Map<List<CleaningRecords.DAL.Models.Client>>(db2.Clients);
                     db.AddRange(Clients);
                 }
+
+
                 if (db2.Teams.Any() && !db.Teams.Any())
                 {
 
                     var Teams = m.Map<List<CleaningRecords.DAL.Models.Team>>(db2.Teams.Include(x => x.CleanerTeams));
                     db.AddRange(Teams);
                 }
+                if (db2.Services.Any() && !db.Services.Any())
+                {
+
+                    var Services = m.Map<List<CleaningRecords.DAL.Models.Service>>(db2.Services);
+                    db.AddRange(Services);
+                }
+
+
 
                 if (db2.RepeatJobs.Any() && !db.RepeatJobs.Any())
                 {
                     var RepeatJobs = m.Map<List<CleaningRecords.DAL.Models.RepeatJob>>(db2.RepeatJobs);
                     db.AddRange(RepeatJobs);
                 }
+
 
                 if (db2.CleaningJobs.Any() && !db.CleaningJobs.Any())
                 {
@@ -131,8 +146,8 @@ namespace CleaningRecords
 
                 }
 
-
                 db.SaveChanges();
+
 
             }
         }
@@ -149,6 +164,7 @@ namespace CleaningRecords
 
         public void ConfigureServices(IServiceCollection services)
         {
+      
             services.AddEntityFrameworkSqlite()
        .AddDbContext<PodaciContext>(
            options => { options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/data.db"); });

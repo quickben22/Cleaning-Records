@@ -1,4 +1,5 @@
 ﻿using CleaningRecords.DAL.Models;
+using CleaningRecords.Global;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace CleaningRecords.DAL
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-           => options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/CleaningDb2.db");
+           => options.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/CleaningDb3.db");//{ZP.Dbdir}/{ZP.Db}"); //"{Directory.GetCurrentDirectory()}/CleaningDb3.db"
 
     }
 }

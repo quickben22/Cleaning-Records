@@ -2,8 +2,10 @@
 using CleaningRecords.Moduli;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -12,8 +14,18 @@ namespace CleaningRecords.DAL.Models.OldModels
     public class CleaningJob : INotifyPropertyChanged
     {
 
+        public CleaningJob()
+        {
+            _Locations = new Dictionary<int, string>();
+        }
+
 
         public int Id { get; set; }
+
+
+        private int? _LocationId;
+        public int? LocationId { get { return _LocationId; } set { _LocationId = (value); this.OnPropertyChanged("LocationId"); } }
+
         private string _Location;
         public string Location { get { return _Location; } set { _Location = (value); this.OnPropertyChanged("Location"); } }
         private DateTime _Date;
@@ -24,8 +36,8 @@ namespace CleaningRecords.DAL.Models.OldModels
         public DateTime TimeEnd { get { return _TimeEnd; } set { _TimeEnd = (value); this.OnPropertyChanged("TimeEnd"); } }
 
 
-        private int _NoOfHours;
-        public int NoOfHours { get { return _NoOfHours; } set { _NoOfHours = (value); this.OnPropertyChanged("NoOfHours"); } }
+        private double _NoOfHours;
+        public double NoOfHours { get { return _NoOfHours; } set { _NoOfHours = (value); this.OnPropertyChanged("NoOfHours"); } }
 
         private int _Week;
         public int Week { get { return _Week; } set { _Week = (value); this.OnPropertyChanged("Week"); } }
@@ -40,7 +52,19 @@ namespace CleaningRecords.DAL.Models.OldModels
         public decimal Amount { get { return _Amount; } set { _Amount = (value); this.OnPropertyChanged("Amount"); } }
 
         private int _ClientId;
-        public int ClientId { get { return _ClientId; } set { _ClientId = (value); this.OnPropertyChanged("ClientId"); } }
+        public int ClientId
+        {
+            get
+            {
+                //setLocations(_ClientId);
+
+                return _ClientId;
+            }
+            set
+            {
+                _ClientId = (value); this.OnPropertyChanged("ClientId");
+            }
+        }
         public Client Client { get; set; }
 
 
@@ -57,10 +81,43 @@ namespace CleaningRecords.DAL.Models.OldModels
         public int? RepeatJobId { get { return _RepeatJobId; } set { _RepeatJobId = (value); this.OnPropertyChanged("RepeatJobId"); } }
         public RepeatJob RepeatJob { get; set; }
 
+        private int? _ServiceId;
+        public int? ServiceId { get { return _ServiceId; } set { _ServiceId = (value); this.OnPropertyChanged("ServiceId"); } }
+        public Service Service { get; set; }
+
+        private int _JobStatus;
+        public int JobStatus { get { return _JobStatus; } set { _JobStatus = (value); this.OnPropertyChanged("JobStatus"); } }
+
 
         [NotMapped]
         public bool changed = false;
 
+        private Dictionary<int, string> _Locations;
+        [NotMapped]
+        public Dictionary<int, string> Locations { get { return _Locations; } set { _Locations = (value); this.OnPropertyChanged("Locations"); } }
+
+
+
+
+
+        private void setLocations(int _id)
+        {
+
+            if (Client != null)
+                Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
+            else if (_id != 0)
+            {
+                using (var db = new PodaciContext())
+                {
+                    if (db.Clients.Any())
+                    {
+                        var c = db.Clients.FirstOrDefault(x => x.Id == _id);
+                        Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                    }
+                }
+            }
+
+        }
 
 
 
@@ -77,7 +134,8 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
 
-
+            //if (prop == "ClientId")
+            //    setLocations(_ClientId);
 
 
 
@@ -89,14 +147,14 @@ namespace CleaningRecords.DAL.Models.OldModels
                     RepeatJobId = null;
 
                 }
-                else
+                else if (prop != "Locations")
                 {
                     if (RepeatJobId != null && RepeatJob != null)
                     {
                         if (!changed)
                         {
                             changed = true;
-                        
+
                         }
 
                     }
@@ -107,16 +165,15 @@ namespace CleaningRecords.DAL.Models.OldModels
 
                     if (TimeEnd != null)
                     {
-                        var time = TimeEnd - TimeStart;
-                        NoOfHours = time.Hours + time.Minutes/60;
+                        NoOfHours = ConvertTime();
                     }
                 }
                 else if (prop == "TimeEnd" && TimeEnd != null)
                 {
                     if (TimeStart != null)
                     {
-                        var time = TimeEnd - TimeStart;
-                        NoOfHours = time.Hours + time.Minutes / 60;
+
+                        NoOfHours = ConvertTime();
                     }
                 }
 
@@ -131,6 +188,11 @@ namespace CleaningRecords.DAL.Models.OldModels
                 if (TeamId == 0)
                     TeamId = null;
 
+                if (prop == "TimeEnd" || prop == "TimeStart" || prop == "ServiceId")
+                {
+                    Amount = ConvertAmount();
+                }
+
                 using (var db = new PodaciContext())
                 {
                     db.Update(this);
@@ -139,11 +201,50 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
 
+        private double ConvertTime()
+        {
+            try
+            {
+                var time = TimeEnd - TimeStart;
+                return Math.Round((time.Hours + ((double)time.Minutes) / 60), 2);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+
+        private decimal ConvertAmount()
+        {
+            try
+            {
+
+                if (TimeEnd != null && TimeStart != null && ServiceId != null && ServiceId != 0)
+                {
+                    double amount = 0;
+                    var hours = ConvertTime();
+                    using (var db = new PodaciContext())
+                    {
+                        var rate = db.Services.FirstOrDefault(x => x.Id == ServiceId)?.Rate;
+                        if (rate != null)
+                            amount = (double)rate * hours;
+                    }
+                    return (decimal)amount;
+                }
 
 
             }
+            catch
+            {
+
+            }
+            return Amount;
         }
+
 
     }
 }

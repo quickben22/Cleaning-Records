@@ -1,4 +1,5 @@
 ﻿using CleaningRecords.DAL;
+using CleaningRecords.Global;
 using CleaningRecords.Moduli;
 using Microsoft.EntityFrameworkCore;
 using PdfSharp.Drawing;
@@ -88,7 +89,7 @@ namespace CleaningRecords.PDF
         XPen borderPen = new XPen(XColors.Black, 2);
 
 
-        string[] days = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+      
         public void BeginHeader(XGraphics gfx, int number)
         {
 
@@ -106,7 +107,7 @@ namespace CleaningRecords.PDF
             XFont font = new XFont("Verdana", 12, XFontStyle.Regular);
 
 
-            gfx.DrawString($"{days[number]}", font, XBrushes.Navy, rect, XStringFormats.TopCenter);
+            gfx.DrawString($"{ZP.days[number]}", font, XBrushes.Navy, rect, XStringFormats.TopCenter);
 
 
 
