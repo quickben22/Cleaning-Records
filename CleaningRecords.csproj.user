@@ -28,6 +28,9 @@
     <Compile Update="Moduli\Client\ClientsUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Moduli\Services\ExtraServicesWin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Moduli\Helpers\InputDialogSimple.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +64,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Moduli\Client\ClientsUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Moduli\Services\ExtraServicesWin.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Moduli\Helpers\InputDialogSimple.xaml">

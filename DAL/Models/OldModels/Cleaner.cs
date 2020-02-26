@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models.OldModels
 {
@@ -102,6 +103,41 @@ namespace CleaningRecords.DAL.Models.OldModels
         public DateTime NotAvailableEnd { get { return _NotAvailableEnd; } set { _NotAvailableEnd = (value); this.OnPropertyChanged("NotAvailableEnd"); } }
 
 
+        private DateTime _MondayStart2;
+        public DateTime MondayStart2 { get { return _MondayStart2; } set { _MondayStart2 = (value); this.OnPropertyChanged("MondayStart2"); } }
+        private DateTime _MondayEnd2;
+        public DateTime MondayEnd2 { get { return _MondayEnd2; } set { _MondayEnd2 = (value); this.OnPropertyChanged("MondayEnd2"); } }
+        private DateTime _TuesdayStart2;
+        public DateTime TuesdayStart2 { get { return _TuesdayStart2; } set { _TuesdayStart2 = (value); this.OnPropertyChanged("TuesdayStart2"); } }
+
+        private DateTime _TuesdayEnd2;
+        public DateTime TuesdayEnd2 { get { return _TuesdayEnd2; } set { _TuesdayEnd2 = (value); this.OnPropertyChanged("TuesdayEnd2"); } }
+        private DateTime _WednesdayStart2;
+        public DateTime WednesdayStart2 { get { return _WednesdayStart2; } set { _WednesdayStart2 = (value); this.OnPropertyChanged("WednesdayStart2"); } }
+        private DateTime _WednesdayEnd2;
+        public DateTime WednesdayEnd2 { get { return _WednesdayEnd2; } set { _WednesdayEnd2 = (value); this.OnPropertyChanged("WednesdayEnd2"); } }
+        private DateTime _ThursdayStart2;
+        public DateTime ThursdayStart2 { get { return _ThursdayStart2; } set { _ThursdayStart2 = (value); this.OnPropertyChanged("ThursdayStart2"); } }
+        private DateTime _ThursdayEnd2;
+        public DateTime ThursdayEnd2 { get { return _ThursdayEnd2; } set { _ThursdayEnd2 = (value); this.OnPropertyChanged("ThursdayEnd2"); } }
+        private DateTime _FridayStart2;
+        public DateTime FridayStart2 { get { return _FridayStart2; } set { _FridayStart2 = (value); this.OnPropertyChanged("FridayStart2"); } }
+        private DateTime _FridayEnd2;
+        public DateTime FridayEnd2 { get { return _FridayEnd2; } set { _FridayEnd2 = (value); this.OnPropertyChanged("FridayEnd2"); } }
+        private DateTime _SaturdayStart2;
+        public DateTime SaturdayStart2 { get { return _SaturdayStart2; } set { _SaturdayStart2 = (value); this.OnPropertyChanged("SaturdayStart2"); } }
+        private DateTime _SaturdayEnd2;
+        public DateTime SaturdayEnd2 { get { return _SaturdayEnd2; } set { _SaturdayEnd2 = (value); this.OnPropertyChanged("SaturdayEnd2"); } }
+        private DateTime _SundayStart2;
+        public DateTime SundayStart2 { get { return _SundayStart2; } set { _SundayStart2 = (value); this.OnPropertyChanged("SundayStart2"); } }
+        private DateTime _SundayEnd2;
+        public DateTime SundayEnd2 { get { return _SundayEnd2; } set { _SundayEnd2 = (value); this.OnPropertyChanged("SundayEnd2"); } }
+        private DateTime _NotAvailableStart2;
+        public DateTime NotAvailableStart2 { get { return _NotAvailableStart2; } set { _NotAvailableStart2 = (value); this.OnPropertyChanged("NotAvailableStart2"); } }
+        private DateTime _NotAvailableEnd2;
+        public DateTime NotAvailableEnd2 { get { return _NotAvailableEnd2; } set { _NotAvailableEnd2 = (value); this.OnPropertyChanged("NotAvailableEnd2"); } }
+
+
         private bool _Monday;
         public bool Monday { get { return _Monday; } set { _Monday = (value); this.OnPropertyChanged("Monday"); } }
         private bool _Tuesday;
@@ -119,6 +155,23 @@ namespace CleaningRecords.DAL.Models.OldModels
         private bool _NotAvailable;
         public bool NotAvailable { get { return _NotAvailable; } set { _NotAvailable = (value); this.OnPropertyChanged("NotAvailable"); } }
 
+        private bool _Monday2;
+        public bool Monday2 { get { return _Monday2; } set { _Monday2 = (value); this.OnPropertyChanged("Monday2"); } }
+        private bool _Tuesday2;
+        public bool Tuesday2 { get { return _Tuesday2; } set { _Tuesday2 = (value); this.OnPropertyChanged("Tuesday2"); } }
+        private bool _Wednesday2;
+        public bool Wednesday2 { get { return _Wednesday2; } set { _Wednesday2 = (value); this.OnPropertyChanged("Wednesday2"); } }
+        private bool _Thursday2;
+        public bool Thursday2 { get { return _Thursday2; } set { _Thursday2 = (value); this.OnPropertyChanged("Thursday2"); } }
+        private bool _Friday2;
+        public bool Friday2 { get { return _Friday2; } set { _Friday2 = (value); this.OnPropertyChanged("Friday2"); } }
+        private bool _Saturday2;
+        public bool Saturday2 { get { return _Saturday2; } set { _Saturday2 = (value); this.OnPropertyChanged("Saturday2"); } }
+        private bool _Sunday2;
+        public bool Sunday2 { get { return _Sunday2; } set { _Sunday2 = (value); this.OnPropertyChanged("Sunday2"); } }
+        private bool _NotAvailable2;
+        public bool NotAvailable2 { get { return _NotAvailable2; } set { _NotAvailable2 = (value); this.OnPropertyChanged("NotAvailable2"); } }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -133,13 +186,20 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
 
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
 
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Cleaner Update Error: " + ex.Message);
+                }
 
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));

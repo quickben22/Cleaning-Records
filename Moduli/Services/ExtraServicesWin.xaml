@@ -1,0 +1,26 @@
+﻿<Window x:Class="CleaningRecords.Moduli.ExtraServicesWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CleaningRecords.Moduli"
+        mc:Ignorable="d"
+        Title="ExtraServicesWin" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:ServicesList x:Key="ServicesList"/>
+    </Window.Resources>
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="118,73,0,0" Text="Service 1:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValue="{Binding Service1Id, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="191,67,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="118,123,0,0" Text="Service 2:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValue="{Binding Service2Id, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="191,117,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="418,73,0,0" Text="Service 3:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValue="{Binding Service3Id, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="491,67,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="418,123,0,0" Text="Service 4:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValue="{Binding Service4Id, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="491,117,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="291,217,0,0" VerticalAlignment="Top" Height="80" Width="184" Click="Close_Click"/>
+
+    </Grid>
+</Window>

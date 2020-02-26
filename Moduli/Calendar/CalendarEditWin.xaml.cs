@@ -133,6 +133,16 @@ namespace CleaningRecords.Moduli
         {
             Close();
         }
+
+        private void Services_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
+            {
+                ExtraServicesWin dlg = new ExtraServicesWin(((CleaningJob)((Button)sender).DataContext).Id);
+                dlg.ShowDialog();
+                ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
+            }
+        }
     }
 
 }

@@ -30,8 +30,9 @@ namespace CleaningRecords.DAL.Models
         private string _Color;
         public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
 
-
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
+
+        public List<ServiceJob> ServiceJobs { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models.OldModels
 {
@@ -29,8 +30,9 @@ namespace CleaningRecords.DAL.Models.OldModels
         private string _Color;
         public string Color { get { return _Color; } set { _Color = (value); this.OnPropertyChanged("Color"); } }
 
-
         public ObservableCollection<CleaningJob> CleaningJobs { get; set; }
+
+        public List<ServiceJob> ServiceJobs { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,11 +41,19 @@ namespace CleaningRecords.DAL.Models.OldModels
             if (PropertyChanged != null)
             {
 
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Service Update Error: " + ex.Message);
+                }
+
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
 

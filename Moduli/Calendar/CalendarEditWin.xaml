@@ -98,7 +98,7 @@
                 <DataGridComboBoxColumn Header="Cleaner"  ItemsSource="{Binding Source={StaticResource CleanersList}}" SelectedValueBinding="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
                 <DataGridComboBoxColumn Header="Team"  ItemsSource="{Binding Source={StaticResource TeamsList}}" SelectedValueBinding="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                <DataGridComboBoxColumn Header="Service"  ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValueBinding="{Binding ServiceId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
+                <DataGridComboBoxColumn Header="Main Service"  ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValueBinding="{Binding ServiceId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
 
                 <DataGridTextColumn Header="Amount" IsReadOnly="True" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
@@ -114,7 +114,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
+                <DataGridTemplateColumn  >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Services_Click">Services</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
                 <DataGridTemplateColumn  >
                     <DataGridTemplateColumn.CellTemplate>

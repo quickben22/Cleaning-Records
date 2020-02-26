@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models
 {
@@ -59,7 +60,7 @@ namespace CleaningRecords.DAL.Models
         protected void OnPropertyChanged(string prop)
         {
 
-    
+
 
             if (PropertyChanged != null)
             {
@@ -79,28 +80,42 @@ namespace CleaningRecords.DAL.Models
 
         public void daysToAllDays()
         {
-            string bits = "";
-
-            foreach (var bit in days)
+            try
             {
-                if (bit)
-                    bits += "1";
-                else
-                    bits += "0";
+
+                string bits = "";
+
+                foreach (var bit in days)
+                {
+                    if (bit)
+                        bits += "1";
+                    else
+                        bits += "0";
+                }
+                AllDays = Convert.ToInt32(bits, 2);
             }
-            AllDays = Convert.ToInt32(bits, 2);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error daysToAllDay :"+ex.Message);
+            }
         }
 
         public void AllDaysToDays()
         {
-
-            days = new ObservableCollection<bool> { false, false, false, false, false, false, false };
-
-            string binary = Convert.ToString(AllDays, 2).PadLeft(7, '0');
-
-            for (int i = 0; i < 7; i++)
+            try
             {
-                days[i] = binary[i] == '1';
+                days = new ObservableCollection<bool> { false, false, false, false, false, false, false };
+
+                string binary = Convert.ToString(AllDays, 2).PadLeft(7, '0');
+
+                for (int i = 0; i < 7; i++)
+                {
+                    days[i] = binary[i] == '1';
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error AllDaysToDays :"+ex.Message);
             }
 
         }

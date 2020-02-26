@@ -52,8 +52,18 @@ namespace CleaningRecords.DAL
                 .WithMany(t => t.CleanerTeams)
                 .HasForeignKey(pt => pt.TeamId);
 
-    
-   
+            modelBuilder.Entity<ServiceJob>()
+             .HasKey(t => new { t.ServiceId, t.CleaningJobId });
+
+            modelBuilder.Entity<ServiceJob>()
+                .HasOne(pt => pt.Service)
+                .WithMany(p => p.ServiceJobs)
+                .HasForeignKey(pt => pt.ServiceId);
+
+            modelBuilder.Entity<ServiceJob>()
+                .HasOne(pt => pt.CleaningJob)
+                .WithMany(t => t.ServiceJobs)
+                .HasForeignKey(pt => pt.CleaningJobId);
 
         }
 

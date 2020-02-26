@@ -22,8 +22,8 @@
             </LinearGradientBrush>
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer VerticalScrollBarVisibility = "Auto">
-    <Grid>
+    <!--<ScrollViewer VerticalScrollBarVisibility = "Auto">-->
+    <Grid VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="21"/>
             <RowDefinition Height="*"/>
@@ -36,5 +36,5 @@
                     VerticalAlignment="Stretch">
         </StackPanel>
     </Grid>
-    </ScrollViewer>
+    <!--</ScrollViewer>-->
 </UserControl>

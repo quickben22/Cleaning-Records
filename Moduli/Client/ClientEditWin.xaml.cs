@@ -89,6 +89,8 @@ namespace CleaningRecords.Moduli
                  && ((ClientObject.Service != null && ClientObject.Service != 0) ? ClientObject.Service == x.ServiceId : true));
 
 
+            foreach (var c in cj)
+                c.Team = null;
 
             ClientObject.CleaningJobs = new ObservableCollection<CleaningJob>(cj);
             dataGrid.ItemsSource = ClientObject.CleaningJobs;
@@ -103,6 +105,16 @@ namespace CleaningRecords.Moduli
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Services_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
+            {
+                ExtraServicesWin dlg = new ExtraServicesWin(((CleaningJob)((Button)sender).DataContext).Id);
+                dlg.ShowDialog();
+                ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
+            }
         }
     }
 

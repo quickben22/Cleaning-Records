@@ -195,28 +195,39 @@ namespace CleaningRecords.Moduli
             try
             {
                 List<string> busy = new List<string>();
-                foreach (var job in CleaningJobs)
+            foreach (var job in CleaningJobs)
+            {
+
+                if (job.CleanerId != null && job.CleanerId != 0 && job.CleanerId != -1 && !busy.Contains(job.CleanerId + "," + job.Week))
                 {
 
-                    if (job.CleanerId != null && job.CleanerId != 0 && job.CleanerId != -1 && !busy.Contains(job.CleanerId + "," + job.Week))
-                    {
-
-                        var HoursWeekly = GetCleanerHours((int)job.CleanerId, job.Date);
-
-                        if (HoursWeekly >= 18)
-                        {
-                            using (var db = new PodaciContext())
-                            {
-                                var cleaner = db.Cleaners.FirstOrDefault(x => x.Id == (int)job.CleanerId);
-                                MessageBox.Show($"Warning! {cleaner?.Name} {cleaner?.Surname} has {HoursWeekly} hours a week (on week {job.Week})!", "Possible cleaner over worked!", MessageBoxButton.OK, MessageBoxImage.Warning);
-                                busy.Add(job.CleanerId + "," + job.Week);
-                            }
-
-                        }
-                    }
-                    workerBusy(job);
+                    var s = OverworkHelper((int)job.CleanerId, job);
+                    if (s != null)
+                        busy.Add(s);
 
                 }
+                else if (job.TeamId != null && job.TeamId != 0 && job.TeamId != -1)
+                {
+                    using (var db = new PodaciContext())
+                    {
+                        var team = db.Teams
+                                  .Include(x => x.CleanerTeams)
+                                  .FirstOrDefault(x => x.Id == job.TeamId);
+                        if (team?.CleanerTeams != null)
+                            foreach (var ct in team.CleanerTeams)
+                            {
+                                if (!busy.Contains(ct.CleanerId + "," + job.Week))
+                                {
+                                    var s = OverworkHelper(ct.CleanerId, job);
+                                    if (s != null)
+                                        busy.Add(s);
+                                }
+                            }
+                    }
+                }
+                workerBusy(job);
+
+            }
             }
             catch (Exception ex)
             {
@@ -225,51 +236,100 @@ namespace CleaningRecords.Moduli
 
         }
 
+        private static string OverworkHelper(int CleanerId, CleaningJob job)
+        {
+            var HoursWeekly = GetCleanerHours(CleanerId, job.Date);
+
+            if (HoursWeekly >= 18)
+            {
+                using (var db = new PodaciContext())
+                {
+                    var cleaner = db.Cleaners.FirstOrDefault(x => x.Id == CleanerId);
+                    MessageBox.Show($"Warning! {cleaner?.Name} {cleaner?.Surname} has {HoursWeekly} hours a week (on week {job.Week})!", "Possible cleaner over worked!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return (CleanerId + "," + job.Week);
+                }
+
+            }
+
+            return null;
+        }
+
         public static void workerBusy(CleaningJob job)
         {
 
-            var cleaner = job.Cleaner;
-            if (cleaner == null)
+            var cleanerTemp = job.Cleaner;
+            if (cleanerTemp == null)
             {
                 if (job.CleanerId != null && job.CleanerId != 0 && job.CleanerId != -1)
                     using (var db = new PodaciContext())
-                        cleaner = db.Cleaners.FirstOrDefault(x => x.Id == job.CleanerId);
+                        cleanerTemp = db.Cleaners.FirstOrDefault(x => x.Id == job.CleanerId);
             }
-            if (cleaner == null)
-                return;
-
-            var Days = new bool[] { cleaner.Monday, cleaner.Tuesday, cleaner.Wednesday, cleaner.Thursday, cleaner.Friday, cleaner.Saturday, cleaner.Sunday };
-            var Days2 = new bool[] { cleaner.Monday2, cleaner.Tuesday2, cleaner.Wednesday2, cleaner.Thursday2, cleaner.Friday2, cleaner.Saturday2, cleaner.Sunday2 };
-            var DaysStart = new DateTime[] { cleaner.MondayStart, cleaner.TuesdayStart, cleaner.WednesdayStart, cleaner.ThursdayStart, cleaner.FridayStart, cleaner.SaturdayStart, cleaner.SundayStart };
-            var DaysEnd = new DateTime[] { cleaner.MondayEnd, cleaner.TuesdayEnd, cleaner.WednesdayEnd, cleaner.ThursdayEnd, cleaner.FridayEnd, cleaner.SaturdayEnd, cleaner.SundayEnd };
-            var DaysStart2 = new DateTime[] { cleaner.MondayStart2, cleaner.TuesdayStart2, cleaner.WednesdayStart2, cleaner.ThursdayStart2, cleaner.FridayStart2, cleaner.SaturdayStart2, cleaner.SundayStart2 };
-            var DaysEnd2 = new DateTime[] { cleaner.MondayEnd2, cleaner.TuesdayEnd2, cleaner.WednesdayEnd2, cleaner.ThursdayEnd2, cleaner.FridayEnd2, cleaner.SaturdayEnd2, cleaner.SundayEnd2 };
-            if (!(job.Day > 0))
-                return;
-            if (!Days[job.Day])
+            List<Cleaner> cleaners = new List<Cleaner>();
+            if (cleanerTemp == null)
             {
-                MessageBox.Show($"Warning! Cleaner {cleaner.Name} {cleaner.Surname} not available {ZP.days[job.Day]}!");
-                return;
-            }
+                var team = job.Team;
 
-            var zeroTime = new DateTime(2020, 1, 1).TimeOfDay;
+                if (team == null)
+                {
+                    if (job.TeamId != null && job.TeamId != 0 && job.TeamId != -1)
+                        using (var db = new PodaciContext())
+                            team = db.Teams
+                                .Include(x => x.CleanerTeams)
+                                .ThenInclude(y => y.Cleaner)
+                                .FirstOrDefault(x => x.Id == job.TeamId);
 
-            if (job.TimeStart.TimeOfDay == zeroTime && job.TimeStart.TimeOfDay == zeroTime)
-                return;
-
-            if (job.TimeStart.TimeOfDay >= DaysStart[job.Day].TimeOfDay && job.TimeStart.TimeOfDay <= DaysEnd[job.Day].TimeOfDay
-              && job.TimeEnd.TimeOfDay >= DaysStart[job.Day].TimeOfDay && job.TimeEnd.TimeOfDay <= DaysEnd[job.Day].TimeOfDay)
-                return;
-
-            if (Days2[job.Day])
-            {
-                if (job.TimeStart.TimeOfDay >= DaysStart2[job.Day].TimeOfDay && job.TimeStart.TimeOfDay <= DaysEnd2[job.Day].TimeOfDay
-         && job.TimeEnd.TimeOfDay >= DaysStart2[job.Day].TimeOfDay && job.TimeEnd.TimeOfDay <= DaysEnd2[job.Day].TimeOfDay)
+                }
+                if (team?.CleanerTeams == null)
                     return;
+
+                foreach (var ct in team.CleanerTeams)
+                {
+                    if (ct?.Cleaner != null)
+                        cleaners.Add(ct.Cleaner);
+                }
             }
+            else
+                cleaners.Add(cleanerTemp);
 
-            MessageBox.Show($"Warning! Cleaner {cleaner.Name} {cleaner.Surname} not available {ZP.days[job.Day]} between hours of {job.TimeStart.ToString("HH:mm")} - {job.TimeEnd.ToString("HH:mm")}!");
 
+            foreach (var cleaner in cleaners)
+            {
+
+                var Days = new bool[] { cleaner.Monday, cleaner.Tuesday, cleaner.Wednesday, cleaner.Thursday, cleaner.Friday, cleaner.Saturday, cleaner.Sunday };
+                var Days2 = new bool[] { cleaner.Monday2, cleaner.Tuesday2, cleaner.Wednesday2, cleaner.Thursday2, cleaner.Friday2, cleaner.Saturday2, cleaner.Sunday2 };
+                var DaysStart = new DateTime[] { cleaner.MondayStart, cleaner.TuesdayStart, cleaner.WednesdayStart, cleaner.ThursdayStart, cleaner.FridayStart, cleaner.SaturdayStart, cleaner.SundayStart };
+                var DaysEnd = new DateTime[] { cleaner.MondayEnd, cleaner.TuesdayEnd, cleaner.WednesdayEnd, cleaner.ThursdayEnd, cleaner.FridayEnd, cleaner.SaturdayEnd, cleaner.SundayEnd };
+                var DaysStart2 = new DateTime[] { cleaner.MondayStart2, cleaner.TuesdayStart2, cleaner.WednesdayStart2, cleaner.ThursdayStart2, cleaner.FridayStart2, cleaner.SaturdayStart2, cleaner.SundayStart2 };
+                var DaysEnd2 = new DateTime[] { cleaner.MondayEnd2, cleaner.TuesdayEnd2, cleaner.WednesdayEnd2, cleaner.ThursdayEnd2, cleaner.FridayEnd2, cleaner.SaturdayEnd2, cleaner.SundayEnd2 };
+                if (!(job.Day > 0))
+                    continue;
+                if (!Days[job.Day])
+                {
+                    MessageBox.Show($"Warning! Cleaner {cleaner.Name} {cleaner.Surname} not available {ZP.days[job.Day]}!");
+                    continue;
+                }
+
+                var zeroTime = new DateTime(2020, 1, 1).TimeOfDay;
+
+                if (job.TimeStart.TimeOfDay == zeroTime && job.TimeStart.TimeOfDay == zeroTime)
+                    continue;
+
+                if (DaysStart[job.Day].TimeOfDay == zeroTime && DaysEnd[job.Day].TimeOfDay == zeroTime)
+                    continue;
+
+                if (job.TimeStart.TimeOfDay >= DaysStart[job.Day].TimeOfDay && job.TimeStart.TimeOfDay <= DaysEnd[job.Day].TimeOfDay
+                  && job.TimeEnd.TimeOfDay >= DaysStart[job.Day].TimeOfDay && job.TimeEnd.TimeOfDay <= DaysEnd[job.Day].TimeOfDay)
+                    continue;
+
+                if (Days2[job.Day])
+                {
+                    if (job.TimeStart.TimeOfDay >= DaysStart2[job.Day].TimeOfDay && job.TimeStart.TimeOfDay <= DaysEnd2[job.Day].TimeOfDay
+             && job.TimeEnd.TimeOfDay >= DaysStart2[job.Day].TimeOfDay && job.TimeEnd.TimeOfDay <= DaysEnd2[job.Day].TimeOfDay)
+                        continue;
+                }
+
+                MessageBox.Show($"Warning! Cleaner {cleaner.Name} {cleaner.Surname} not available {ZP.days[job.Day]} between hours of {job.TimeStart.ToString("HH:mm")} - {job.TimeEnd.ToString("HH:mm")}!");
+            }
 
 
 
@@ -399,7 +459,7 @@ namespace CleaningRecords.Moduli
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Error Repeating jobs: " + ex.Message);
             }
 
         }

@@ -1,5 +1,6 @@
 ﻿using CleaningRecords.Global;
 using CleaningRecords.Moduli;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -56,7 +57,7 @@ namespace CleaningRecords.DAL.Models.OldModels
         {
             get
             {
-                //setLocations(_ClientId);
+                setLocations(_ClientId);
 
                 return _ClientId;
             }
@@ -85,6 +86,9 @@ namespace CleaningRecords.DAL.Models.OldModels
         public int? ServiceId { get { return _ServiceId; } set { _ServiceId = (value); this.OnPropertyChanged("ServiceId"); } }
         public Service Service { get; set; }
 
+
+        public List<ServiceJob> ServiceJobs { get; set; }
+
         private int _JobStatus;
         public int JobStatus { get { return _JobStatus; } set { _JobStatus = (value); this.OnPropertyChanged("JobStatus"); } }
 
@@ -103,18 +107,28 @@ namespace CleaningRecords.DAL.Models.OldModels
         private void setLocations(int _id)
         {
 
-            if (Client != null)
-                Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
-            else if (_id != 0)
+
+            try
             {
-                using (var db = new PodaciContext())
+
+
+                if (Client != null)
+                    Locations = new Dictionary<int, string> { { 0, Client.Address }, { 1, Client.Address2 }, { 2, Client.Address3 }, { 3, Client.Address4 } };
+                else if (_id != 0)
                 {
-                    if (db.Clients.Any())
+                    using (var db = new PodaciContext())
                     {
-                        var c = db.Clients.FirstOrDefault(x => x.Id == _id);
-                        Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                        if (db.Clients.Any())
+                        {
+                            var c = db.Clients.FirstOrDefault(x => x.Id == _id);
+                            Locations = new Dictionary<int, string> { { 0, c.Address }, { 1, c.Address2 }, { 2, c.Address3 }, { 3, c.Address4 } };
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("setLocations Error: " + ex.Message);
             }
 
         }
@@ -134,8 +148,8 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
 
-            //if (prop == "ClientId")
-            //    setLocations(_ClientId);
+            if (prop == "ClientId")
+                setLocations(_ClientId);
 
 
 
@@ -179,24 +193,48 @@ namespace CleaningRecords.DAL.Models.OldModels
 
 
                 if (prop == "TeamId" && TeamId != null)
+                {
                     CleanerId = null;
+                    Cleaner = null;
+                }
                 else if (prop == "CleanerId" && CleanerId != null)
+                {
                     TeamId = null;
+                    Team = null;
+                }
 
                 if (CleanerId == 0)
+                {
                     CleanerId = null;
+                    Cleaner = null;
+                }
                 if (TeamId == 0)
+                {
                     TeamId = null;
+                    Team = null;
+                }
+                if (ServiceId == 0)
+                {
+                    ServiceId = null;
+                    Service = null;
+                }
 
                 if (prop == "TimeEnd" || prop == "TimeStart" || prop == "ServiceId")
                 {
-                    Amount = ConvertAmount();
+                    ConvertAmount();
                 }
 
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("CleaningJob Update Error: " + ex.Message);
                 }
 
 
@@ -218,31 +256,44 @@ namespace CleaningRecords.DAL.Models.OldModels
         }
 
 
-        private decimal ConvertAmount()
+        public void ConvertAmount()
         {
             try
             {
-
+                double amount = 0;
                 if (TimeEnd != null && TimeStart != null && ServiceId != null && ServiceId != 0)
                 {
-                    double amount = 0;
+
                     var hours = ConvertTime();
                     using (var db = new PodaciContext())
                     {
                         var rate = db.Services.FirstOrDefault(x => x.Id == ServiceId)?.Rate;
                         if (rate != null)
                             amount = (double)rate * hours;
+
+                        var serviceJobs = db.CleaningJobs.Include(x => x.ServiceJobs).ThenInclude(y => y.Service).FirstOrDefault(x => x.Id == Id).ServiceJobs;
+
+                        if (serviceJobs != null && serviceJobs.Count > 0)
+                        {
+                            foreach (var serviceJob in serviceJobs)
+                            {
+                                if (serviceJob.Service?.Rate != null)
+                                    amount += (double)serviceJob.Service.Rate * hours;
+
+                            }
+                        }
+
                     }
-                    return (decimal)amount;
+
                 }
 
-
+                Amount = (decimal)amount;
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show("ConvertAmount Error: " + ex.Message);
             }
-            return Amount;
+
         }
 
 

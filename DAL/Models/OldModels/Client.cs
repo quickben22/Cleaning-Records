@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace CleaningRecords.DAL.Models.OldModels
 {
@@ -136,12 +137,19 @@ namespace CleaningRecords.DAL.Models.OldModels
             if (PropertyChanged != null)
             {
 
-
-                using (var db = new PodaciContext())
+                try
                 {
-                    db.Update(this);
-                    db.SaveChanges();
+                    using (var db = new PodaciContext())
+                    {
+                        db.Update(this);
+                        db.SaveChanges();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Client Update Error: " + ex.Message);
+                }
+
 
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
 
