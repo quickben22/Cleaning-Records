@@ -69,7 +69,7 @@ namespace CleaningRecords.PDF
         private void DrawLine(XGraphics gfx, int month, int year)
         {
             var dayStart = Fun.getDay(new DateTime(year, month, 1));
-            var dayEnd = Fun.getDay(new DateTime((month + 1) == 13 ? year + 1 : year, (month + 1) % 13, 1)) - 1;
+            var dayEnd = Fun.getDay(new DateTime((month + 1) == 13 ? year + 1 : year, Math.Max(1,(month + 1) % 13), 1)) - 1;
 
 
             for (int i = 0; i < 7; i++)

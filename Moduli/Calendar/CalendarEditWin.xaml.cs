@@ -76,9 +76,8 @@ namespace CleaningRecords.Moduli
 
                     if (cj.changed)
                     {
-                        MessageBoxResult result = MessageBox.Show("Only this shift?", "Shift change", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                        if (result == MessageBoxResult.Yes)
+                        OnlyThisShiftDlg dlg = new OnlyThisShiftDlg();
+                        if (dlg.ShowDialog() == true)
                         {
                             cj.RepeatJob = null;
                             cj.RepeatJobId = null;
@@ -87,7 +86,7 @@ namespace CleaningRecords.Moduli
                                 db.Update(cj);
                                 db.SaveChanges();
                             }
-                          
+
                         }
                         else
                             Fun.setRepeatingJobs(repeatJobs[cj.Id], cj);
@@ -139,8 +138,8 @@ namespace CleaningRecords.Moduli
             if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
             {
                 ExtraServicesWin dlg = new ExtraServicesWin(((CleaningJob)((Button)sender).DataContext).Id);
-                dlg.ShowDialog();
-                ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
+                if (dlg.ShowDialog() == true)
+                    ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
             }
         }
     }

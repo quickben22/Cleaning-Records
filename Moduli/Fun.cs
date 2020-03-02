@@ -195,39 +195,39 @@ namespace CleaningRecords.Moduli
             try
             {
                 List<string> busy = new List<string>();
-            foreach (var job in CleaningJobs)
-            {
-
-                if (job.CleanerId != null && job.CleanerId != 0 && job.CleanerId != -1 && !busy.Contains(job.CleanerId + "," + job.Week))
+                foreach (var job in CleaningJobs)
                 {
 
-                    var s = OverworkHelper((int)job.CleanerId, job);
-                    if (s != null)
-                        busy.Add(s);
-
-                }
-                else if (job.TeamId != null && job.TeamId != 0 && job.TeamId != -1)
-                {
-                    using (var db = new PodaciContext())
+                    if (job.CleanerId != null && job.CleanerId != 0 && job.CleanerId != -1 && !busy.Contains(job.CleanerId + "," + job.Week))
                     {
-                        var team = db.Teams
-                                  .Include(x => x.CleanerTeams)
-                                  .FirstOrDefault(x => x.Id == job.TeamId);
-                        if (team?.CleanerTeams != null)
-                            foreach (var ct in team.CleanerTeams)
-                            {
-                                if (!busy.Contains(ct.CleanerId + "," + job.Week))
-                                {
-                                    var s = OverworkHelper(ct.CleanerId, job);
-                                    if (s != null)
-                                        busy.Add(s);
-                                }
-                            }
-                    }
-                }
-                workerBusy(job);
 
-            }
+                        var s = OverworkHelper((int)job.CleanerId, job);
+                        if (s != null)
+                            busy.Add(s);
+
+                    }
+                    else if (job.TeamId != null && job.TeamId != 0 && job.TeamId != -1)
+                    {
+                        using (var db = new PodaciContext())
+                        {
+                            var team = db.Teams
+                                      .Include(x => x.CleanerTeams)
+                                      .FirstOrDefault(x => x.Id == job.TeamId);
+                            if (team?.CleanerTeams != null)
+                                foreach (var ct in team.CleanerTeams)
+                                {
+                                    if (!busy.Contains(ct.CleanerId + "," + job.Week))
+                                    {
+                                        var s = OverworkHelper(ct.CleanerId, job);
+                                        if (s != null)
+                                            busy.Add(s);
+                                    }
+                                }
+                        }
+                    }
+                    workerBusy(job);
+
+                }
             }
             catch (Exception ex)
             {
@@ -350,9 +350,14 @@ namespace CleaningRecords.Moduli
 
                 var date = CleaningJobCopy.Date;
 
+
+                List<int> ids = new List<int>();
                 using (var db = new PodaciContext())
                 {
-                    var RepeatJob = db.RepeatJobs.Include(x => x.CleaningJobs).FirstOrDefault(x => x.Id == RepeatJobId);
+
+
+                    var RepeatJob = db.RepeatJobs
+                    .Include(x => x.CleaningJobs).FirstOrDefault(x => x.Id == RepeatJobId);
 
                     RepeatJob.AllDaysToDays();
                     //var defaultCleanJob = RepeatJob.CleaningJobs.FirstOrDefault();
@@ -365,7 +370,7 @@ namespace CleaningRecords.Moduli
                     int maxWeek = getWeek(new DateTime(year, 12, 31));
                     List<int> weeks = new List<int> { week };
 
-                    for (int i = 0; i < iterations; i++)
+                    for (int i = 0; i < iterations + 1; i++)
                     {
                         weeks.Add((weeks[i] + RepeatJob.RepeatFrequency) % (maxWeek + 1));
                     }
@@ -404,6 +409,8 @@ namespace CleaningRecords.Moduli
 
                     for (int i = 0; i < iterations; i++)
                     {
+                        //var watch = System.Diagnostics.Stopwatch.StartNew();
+
                         for (int j = 0; j < datesCount; j++)
                         {
 
@@ -418,18 +425,19 @@ namespace CleaningRecords.Moduli
                                 defaultCleanJob.NoOfHours = CleaningJobCopy.NoOfHours;
                                 defaultCleanJob.ClientId = CleaningJobCopy.ClientId;
                                 defaultCleanJob.CleanerId = CleaningJobCopy.CleanerId;
+                                defaultCleanJob.ServiceId = CleaningJobCopy.ServiceId;
                                 defaultCleanJob.Amount = CleaningJobCopy.Amount;
                                 defaultCleanJob.Date = weekDatetimes[j];
                                 defaultCleanJob.RepeatJob = null;
                                 defaultCleanJob.RepeatJobId = RepeatJobId;
-
-
+                                defaultCleanJob.JobStatus = CleaningJobCopy.JobStatus;
                                 db.Add(defaultCleanJob);
                                 db.SaveChanges();
+                                ids.Add(defaultCleanJob.Id);
+
                             }
                             else
                             {
-
 
                                 cleanjob.TeamId = CleaningJobCopy.TeamId;
                                 cleanjob.TimeEnd = CleaningJobCopy.TimeEnd;
@@ -438,28 +446,98 @@ namespace CleaningRecords.Moduli
                                 cleanjob.NoOfHours = CleaningJobCopy.NoOfHours;
                                 cleanjob.ClientId = CleaningJobCopy.ClientId;
                                 cleanjob.CleanerId = CleaningJobCopy.CleanerId;
+                                cleanjob.ServiceId = CleaningJobCopy.ServiceId;
                                 cleanjob.Amount = CleaningJobCopy.Amount;
                                 cleanjob.Date = weekDatetimes[j];
+                                cleanjob.JobStatus = CleaningJobCopy.JobStatus;
 
+                                //watch.Reset();
+                                //watch.Start();
                                 if (cleanjob.Id != CleaningJobCopy.Id)
                                 {
+                                    ids.Add(cleanjob.Id);
                                     db.Update(cleanjob);
-                                    db.SaveChanges();
+
                                 }
+                                //watch.Stop();
+                                //var elapsedMs2 = watch.ElapsedMilliseconds;
+                                //System.Diagnostics.Debug.WriteLine("elapsedMs2= " + elapsedMs2 );
 
                             }
 
                             weekDatetimes[j] = weekDatetimes[j].AddDays(7 * RepeatJob.RepeatFrequency);
                         }
+
                     }
-
+                    db.SaveChanges();
                 }
+                using (var db = new PodaciContext())
+                {
+
+                    var cjTemp = db.CleaningJobs.Include(x => x.ServiceJobs).FirstOrDefault(x => x.Id == CleaningJobCopy.Id);
+
+                
+
+                    foreach (int id in ids)
+                    {
+
+                        var ServiceJobsCopy = new List<ServiceJob>();
+                        foreach (var v in cjTemp.ServiceJobs)
+                            ServiceJobsCopy.Add(new ServiceJob { CleaningJobId = v.CleaningJobId, ServiceId = v.ServiceId });
 
 
+                        if (ServiceJobsCopy != null)
+                            foreach (var v in ServiceJobsCopy)
+                            {
+                                v.CleaningJobId = id;
+                                v.CleaningJob = null;
+                            }
+                        var cljTemp = db.CleaningJobs.Include(x => x.ServiceJobs).FirstOrDefault(x => x.Id == id).ServiceJobs;
+
+
+                        checkAndSaveServiceJobs(ServiceJobsCopy, cljTemp, db);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error Repeating jobs: " + ex.Message);
+            }
+
+        }
+
+        public static void checkAndSaveServiceJobs(List<ServiceJob> newServiceJob, List<ServiceJob> oldServiceJob, PodaciContext db)
+        {
+            if (newServiceJob == null)
+                newServiceJob = new List<ServiceJob>();
+            if (oldServiceJob == null)
+                oldServiceJob = new List<ServiceJob>();
+
+            List<ServiceJob> toRemove = new List<ServiceJob>();
+            foreach (var job in oldServiceJob)
+            {
+                if (!newServiceJob.Any(x => x.ServiceId == job.ServiceId))
+                {
+                    toRemove.Add(job);
+
+                }
+            }
+            if (toRemove.Count > 0)
+            {
+                db.RemoveRange(toRemove);
+                db.SaveChanges();
+            }
+
+            foreach (var job in newServiceJob)
+            {
+                if (!oldServiceJob.Any(x => x.ServiceId == job.ServiceId))
+                {
+                    db.Add(job);
+
+                    db.SaveChanges();
+                    //job.CleaningJob = null;
+                }
             }
 
         }

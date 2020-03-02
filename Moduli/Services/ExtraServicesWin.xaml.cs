@@ -53,5 +53,12 @@ namespace CleaningRecords.Moduli
         {
             Close();
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (model.changed)
+                this.DialogResult = true;
+        }
+
     }
 }

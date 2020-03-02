@@ -15,7 +15,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"  ></RowDefinition>
-            <RowDefinition Height="150" ></RowDefinition>
+            <RowDefinition Height="50" ></RowDefinition>
 
         </Grid.RowDefinitions>
 
@@ -54,6 +54,7 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Grid.Row="1" Click="Add_Click">NEW SERVICE</Button>
+        <Button Grid.Row="1" Height="45" FontSize="22" Width="250" Margin="0,0,0,0" Click="Add_Click">NEW SERVICE</Button>
+        <!--<Button Grid.Row="1" Click="Add_Click">NEW SERVICE</Button>-->
     </Grid>
 </UserControl>

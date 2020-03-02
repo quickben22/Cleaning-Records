@@ -77,11 +77,20 @@
         <TextBlock Width="95" TextAlignment="Right" HorizontalAlignment="Left" Margin="70,450,0,0" Text="Not available:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <DatePicker IsEnabled="{Binding NotAvailable}" SelectedDate="{Binding NotAvailableStart, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="170,444,0,0" VerticalAlignment="Top"  Width="110"/>
         <DatePicker IsEnabled="{Binding NotAvailable}" SelectedDate="{Binding NotAvailableEnd, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="310,444,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox Content="Not available" HorizontalAlignment="Left" Margin="462,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable}"/>
         <DatePicker IsEnabled="{Binding NotAvailable2}" SelectedDate="{Binding NotAvailableStart2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="587,444,0,0" VerticalAlignment="Top"  Width="110"/>
         <DatePicker IsEnabled="{Binding NotAvailable2}" SelectedDate="{Binding NotAvailableEnd2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="727,444,0,0" VerticalAlignment="Top"  Width="110"/>
-        <CheckBox Content="Not available" HorizontalAlignment="Left" Margin="462,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable}"/>
-        <CheckBox IsEnabled="{Binding NotAvailable}" Content="Not available" HorizontalAlignment="Left" Margin="916,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable2}"/>
-        <Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="439,525,0,0" VerticalAlignment="Top" Height="54" Width="180" Click="Close_Click"/>
+       <CheckBox IsEnabled="{Binding NotAvailable}" Content="Not available" HorizontalAlignment="Left" Margin="916,447,0,0" VerticalAlignment="Top" IsChecked="{Binding NotAvailable2}"/>
+        
+        <TextBlock Width="95" TextAlignment="Right" HorizontalAlignment="Left" Margin="70,485,0,0" Text="Holiday:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <DatePicker IsEnabled="{Binding Holiday}" SelectedDate="{Binding HolidayStart, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="170,479,0,0" VerticalAlignment="Top"  Width="110"/>
+        <DatePicker IsEnabled="{Binding Holiday}" SelectedDate="{Binding HolidayEnd, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="310,479,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox Content="Holiday" HorizontalAlignment="Left" Margin="462,482,0,0" VerticalAlignment="Top" IsChecked="{Binding Holiday}"/>
+        <DatePicker IsEnabled="{Binding Holiday2}" SelectedDate="{Binding HolidayStart2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="587,479,0,0" VerticalAlignment="Top"  Width="110"/>
+        <DatePicker IsEnabled="{Binding Holiday2}" SelectedDate="{Binding HolidayEnd2, StringFormat={}{0:d.M.yyyy.},UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Margin="727,479,0,0" VerticalAlignment="Top"  Width="110"/>
+        <CheckBox IsEnabled="{Binding Holiday}" Content="Holiday" HorizontalAlignment="Left" Margin="916,482,0,0" VerticalAlignment="Top" IsChecked="{Binding Holiday2}"/>
+
+        <Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="439,535,0,0" VerticalAlignment="Top" Height="54" Width="180" Click="Close_Click"/>
 
     </Grid>
 </Window>

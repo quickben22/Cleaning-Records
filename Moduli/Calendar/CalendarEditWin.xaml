@@ -11,6 +11,8 @@
 
     <Window.Resources>
         <local:ClientsList x:Key="ClientsList"/>
+        <local:CleanersWithAllList x:Key="CleanersWithAllList"/>
+        
         <local:CleanersList x:Key="CleanersList"/>
         <local:TeamsList x:Key="TeamsList"/>
         <local:JobStatusList x:Key="JobStatusList"/>

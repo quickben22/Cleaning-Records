@@ -102,6 +102,11 @@ namespace CleaningRecords.DAL.Models
         private DateTime _NotAvailableEnd;
         public DateTime NotAvailableEnd { get { return _NotAvailableEnd; } set { _NotAvailableEnd = (value); this.OnPropertyChanged("NotAvailableEnd"); } }
 
+        private DateTime _HolidayStart;
+        public DateTime HolidayStart { get { return _HolidayStart; } set { _HolidayStart = (value); this.OnPropertyChanged("HolidayStart"); } }
+        private DateTime _HolidayEnd;
+        public DateTime HolidayEnd { get { return _HolidayEnd; } set { _HolidayEnd = (value); this.OnPropertyChanged("HolidayEnd"); } }
+
 
         private DateTime _MondayStart2;
         public DateTime MondayStart2 { get { return _MondayStart2; } set { _MondayStart2 = (value); this.OnPropertyChanged("MondayStart2"); } }
@@ -137,6 +142,10 @@ namespace CleaningRecords.DAL.Models
         private DateTime _NotAvailableEnd2;
         public DateTime NotAvailableEnd2 { get { return _NotAvailableEnd2; } set { _NotAvailableEnd2 = (value); this.OnPropertyChanged("NotAvailableEnd2"); } }
 
+        private DateTime _HolidayStart2;
+        public DateTime HolidayStart2 { get { return _HolidayStart2; } set { _HolidayStart2 = (value); this.OnPropertyChanged("HolidayStart2"); } }
+        private DateTime _HolidayEnd2;
+        public DateTime HolidayEnd2 { get { return _HolidayEnd2; } set { _HolidayEnd2 = (value); this.OnPropertyChanged("HolidayEnd2"); } }
 
         private bool _Monday;
         public bool Monday { get { return _Monday; } set { _Monday = (value); this.OnPropertyChanged("Monday"); } }
@@ -154,6 +163,8 @@ namespace CleaningRecords.DAL.Models
         public bool Sunday { get { return _Sunday; } set { _Sunday = (value); this.OnPropertyChanged("Sunday"); } }
         private bool _NotAvailable;
         public bool NotAvailable { get { return _NotAvailable; } set { _NotAvailable = (value); this.OnPropertyChanged("NotAvailable"); } }
+        private bool _Holiday;
+        public bool Holiday { get { return _Holiday; } set { _Holiday = (value); this.OnPropertyChanged("Holiday"); } }
 
         private bool _Monday2;
         public bool Monday2 { get { return _Monday2; } set { _Monday2 = (value); this.OnPropertyChanged("Monday2"); } }
@@ -171,6 +182,8 @@ namespace CleaningRecords.DAL.Models
         public bool Sunday2 { get { return _Sunday2; } set { _Sunday2 = (value); this.OnPropertyChanged("Sunday2"); } }
         private bool _NotAvailable2;
         public bool NotAvailable2 { get { return _NotAvailable2; } set { _NotAvailable2 = (value); this.OnPropertyChanged("NotAvailable2"); } }
+        private bool _Holiday2;
+        public bool Holiday2 { get { return _Holiday2; } set { _Holiday2 = (value); this.OnPropertyChanged("Holiday2"); } }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

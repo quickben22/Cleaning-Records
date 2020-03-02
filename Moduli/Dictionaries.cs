@@ -81,7 +81,7 @@ namespace CleaningRecords.Moduli
     {
         public JobStatusWithNullList()
         {
-            this.Add(-1, "");
+            this.Add(-1, "All statuses");
             this.Add(0, "Active");
             this.Add(1, "Canceled");
             this.Add(2, "Completed");
@@ -106,6 +106,8 @@ namespace CleaningRecords.Moduli
 
         }
     }
+
+
 
     public class TeamsList : Dictionary<int, string>
     {
@@ -170,6 +172,23 @@ namespace CleaningRecords.Moduli
             using (var db = new PodaciContext())
             {
                 this.Add(0, null);
+                var Services = db.Services;
+                if (Services != null && Services.Any())
+                    foreach (var service in Services)
+                        this.Add(service.Id, service.Name);
+
+            }
+
+        }
+    }
+
+    public class ServicesListWithAll : Dictionary<int, string>
+    {
+        public ServicesListWithAll()
+        {
+            using (var db = new PodaciContext())
+            {
+                this.Add(0, "All services");
                 var Services = db.Services;
                 if (Services != null && Services.Any())
                     foreach (var service in Services)

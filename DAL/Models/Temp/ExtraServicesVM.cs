@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleaningRecords.Moduli;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace CleaningRecords.DAL.Models
         public int? Service4Id { get { return _Service4Id; } set { _Service4Id = (value); this.OnPropertyChanged("Service4Id"); } }
 
         public CleaningJob CleaningJob { get; set; }
+
+        public bool changed = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -52,11 +55,11 @@ namespace CleaningRecords.DAL.Models
                         using (var db = new PodaciContext())
                         {
 
-                            foreach (var sj in CleaningJob.ServiceJobs)
-                                db.Remove(sj);
-                            db.SaveChanges();
+                            //foreach (var sj in CleaningJob.ServiceJobs)
+                            //    db.Remove(sj);
+                            //db.SaveChanges();
 
-                            CleaningJob.ServiceJobs.Clear();
+                          
                             List<ServiceJob> toAdd = new List<ServiceJob>();
                             if (Service1Id != null && Service1Id != 0)
                                 toAdd.Add(new ServiceJob { ServiceId = (int)Service1Id, CleaningJobId = CleaningJob.Id });
@@ -67,10 +70,13 @@ namespace CleaningRecords.DAL.Models
                             if (Service4Id != null && Service4Id != 0)
                                 toAdd.Add(new ServiceJob { ServiceId = (int)Service4Id, CleaningJobId = CleaningJob.Id });
 
-                            db.AddRange(toAdd);
-                            db.SaveChanges();
+                            Fun.checkAndSaveServiceJobs(toAdd, CleaningJob.ServiceJobs, db);
+
+                          
                             CleaningJob.ServiceJobs = toAdd;
                         }
+
+                    changed = true;
                 }
                 catch (Exception ex)
                 {

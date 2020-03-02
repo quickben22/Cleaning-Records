@@ -158,6 +158,16 @@ namespace CleaningRecords.Moduli
                 }
                 else
                     models[index].NotAvailable = "No breaks";
+
+                if (cleaner.Holiday)
+                {
+                    models[index].Holiday = $"{cleaner.HolidayStart.ToString("dd.MM.yyyy.")} - {cleaner.HolidayEnd.ToString("dd.MM.yyyy.")}";
+                    if (cleaner.Holiday2)
+                        models[index].Holiday += $" , {cleaner.HolidayStart2.ToString("dd.MM.yyyy.")} - {cleaner.HolidayEnd2.ToString("dd.MM.yyyy.")}";
+                }
+                else
+                    models[index].Holiday = "No holidays";
+
             }
             else
             {
@@ -287,7 +297,7 @@ namespace CleaningRecords.Moduli
                     models[index].Week5 = sum;
                 week++;
             }
-            var Last_week = Fun.getWeek(new DateTime((month + 1) == 13 ? year + 1 : year, (month + 1) % 13, 1).AddDays(-1));
+            var Last_week = Fun.getWeek(new DateTime((month + 1) == 13 ? year + 1 : year, Math.Max(1, (month + 1) % 13), 1).AddDays(-1));
 
             if (Last_week == week)
                 set_week_hours(false, index);
@@ -324,54 +334,63 @@ namespace CleaningRecords.Moduli
                 };
 
                 Grid grid = new Grid();
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(85) });
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.5, GridUnitType.Star) });
 
 
 
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, 0, 0, 0), Text = "Cleaner:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(20, -30, 0, 0), Text = "Cleaner:", VerticalAlignment = VerticalAlignment.Center });
 
-                ComboBox combo = new ComboBox { ItemsSource = new CleanersWithAllList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Width = 160, Margin = new Thickness(70, 5, 0, 0) };
+                ComboBox combo = new ComboBox { ItemsSource = new CleanersWithAllList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Width = 160, Margin = new Thickness(70, -30, 0, 0) };
                 Binding b = new Binding("CleanerId");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 combo.SetBinding(ComboBox.SelectedValueProperty, b);
                 combo.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
                 grid.Children.Add(combo);
 
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(926, 0, 0, 0), Text = "Team:", VerticalAlignment = VerticalAlignment.Center });
-                combo = new ComboBox { ItemsSource = new TeamsWithAllList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top, Width = 160, Margin = new Thickness(966, 29, 0, 0) };
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(926, -40, 0, 0), Text = "Team:", VerticalAlignment = VerticalAlignment.Center });
+                combo = new ComboBox { ItemsSource = new TeamsWithAllList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Width = 160, Margin = new Thickness(966, -40, 0, 0) };
                 b = new Binding("TeamId");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 combo.SetBinding(ComboBox.SelectedValueProperty, b);
                 combo.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
                 grid.Children.Add(combo);
 
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(1146, 0, 0, 0), Text = "Client:", VerticalAlignment = VerticalAlignment.Center });
-                combo = new ComboBox { ItemsSource = new ClientsWithNullList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top, Width = 160, Margin = new Thickness(1186, 29, 0, 0) };
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(926, 30, 0, 0), Text = "Client:", VerticalAlignment = VerticalAlignment.Center });
+                combo = new ComboBox { ItemsSource = new ClientsWithNullList(), SelectedValuePath = "Key", DisplayMemberPath = "Value", HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center, Width = 160, Margin = new Thickness(966, 30, 0, 0) };
                 b = new Binding("ClientId");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 combo.SetBinding(ComboBox.SelectedValueProperty, b);
                 combo.SelectionChanged += new SelectionChangedEventHandler(ComboBox_SelectionChanged);
                 grid.Children.Add(combo);
 
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, -50, 0, 0), Text = "Mon:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, -15, 0, 0), Text = "Tue:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, 20, 0, 0), Text = "Wed:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, 55, 0, 0), Text = "Thu:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, -50, 0, 0), Text = "Fri:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, -15, 0, 0), Text = "Sat:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, 20, 0, 0), Text = "Sun:", VerticalAlignment = VerticalAlignment.Center });
-                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, 55, 0, 0), Text = "Not:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, 70, 0, 0), Text = "Hol:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, -70, 0, 0), Text = "Mon:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, -35, 0, 0), Text = "Tue:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, 0, 0, 0), Text = "Wed:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(250, 35, 0, 0), Text = "Thu:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, -70, 0, 0), Text = "Fri:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, -35, 0, 0), Text = "Sat:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, 0, 0, 0), Text = "Sun:", VerticalAlignment = VerticalAlignment.Center });
+                grid.Children.Add(new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(580, 70, 0, 0), Text = "Not:", VerticalAlignment = VerticalAlignment.Center });
+
+
+                b = new Binding("Holiday");
+                b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                TextBlock tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, 70, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb.SetBinding(TextBlock.TextProperty, b);
+                grid.Children.Add(tb);
+
 
                 b = new Binding("Monday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                TextBlock tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, -50, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                 tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, -70, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
                 b = new Binding("Tuesday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, -15, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, -35, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
@@ -379,41 +398,41 @@ namespace CleaningRecords.Moduli
 
                 b = new Binding("Wednesday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, 20, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
 
                 b = new Binding("Thursday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, 55, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(300, 35, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
 
                 b = new Binding("Friday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, -50, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, -70, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
 
                 b = new Binding("Saturday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, -15, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, -35, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
 
                 b = new Binding("Sunday");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, 20, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
                 b = new Binding("NotAvailable");
                 b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, 55, 0, 0), VerticalAlignment = VerticalAlignment.Center };
+                tb = new TextBlock { HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(630, 70, 0, 0), VerticalAlignment = VerticalAlignment.Center };
                 tb.SetBinding(TextBlock.TextProperty, b);
                 grid.Children.Add(tb);
 
@@ -569,7 +588,7 @@ namespace CleaningRecords.Moduli
                     using (var db = new PodaciContext())
                         CalculateWeekHours(TempIndex, db);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Error calculating week hours");
                 }

@@ -30,7 +30,7 @@
             <TabItem Header="Main Page" Name="MainTab"  >
                 <Grid x:Name="mainGrid" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80" ></RowDefinition>
+                        <RowDefinition Height="85" ></RowDefinition>
                         <RowDefinition Height="*" ></RowDefinition>
                     </Grid.RowDefinitions>
 
@@ -38,31 +38,34 @@
 
 
 
-                    <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0" Text="Cleaner:" VerticalAlignment="Center" />
-                    <ComboBox Name="test" SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Source={StaticResource CleanersWithAllList}}" SelectedValue="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left" Margin="70,5,0,0"   Width="160"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="20,-30,0,0" Text="Cleaner:" VerticalAlignment="Center" />
+                    <ComboBox Name="test" SelectionChanged="ComboBox_SelectionChanged"  ItemsSource="{Binding Source={StaticResource CleanersWithAllList}}" SelectedValue="{Binding CleanerId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left" Margin="70,-30,0,0"   Width="160"/>
 
-                    <TextBlock HorizontalAlignment="Left" Margin="250,-50,0,0" Text="Mon:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="300,-50,0,0" Text="{Binding Monday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="250,-15,0,0" Text="Tue:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="300,-15,0,0" Text="{Binding Tuesday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="250,20,0,0" Text="Wed:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="300,20,0,0" Text="{Binding Wednesday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="250,55,0,0" Text="Thu:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="300,55,0,0" Text="{Binding Thursday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="580,-50,0,0" Text="Fri:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="630,-50,0,0" Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="580,-15,0,0" Text="Sat:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="630,-15,0,0" Text="{Binding Saturday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="580,20,0,0" Text="Sun:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="630,20,0,0" Text="{Binding Sunday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="580,55,0,0" Text="Not:" VerticalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Left" Margin="630,55,0,0" Text="{Binding NotAvailable, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="250,70,0,0" Text="Hol:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="300,70,0,0" Text="{Binding Holiday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
 
-                    <TextBlock HorizontalAlignment="Left" Margin="926,0,0,0" Text="Team:" VerticalAlignment="Center" />
-                    <ComboBox Margin="966,29,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource TeamsWithAllList}}" SelectedValue="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="250,-70,0,0" Text="Mon:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="300,-70,0,0" Text="{Binding Monday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="250,-35,0,0" Text="Tue:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="300,-35,0,0" Text="{Binding Tuesday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="250,0,0,0" Text="Wed:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="300,0,0,0" Text="{Binding Wednesday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="250,35,0,0" Text="Thu:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="300,35,0,0" Text="{Binding Thursday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,-70,0,0" Text="Fri:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,-70,0,0" Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,-35,0,0" Text="Sat:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,-35,0,0" Text="{Binding Saturday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,0,0,0" Text="Sun:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,0,0,0" Text="{Binding Sunday, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="580,70,0,0" Text="Not:" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="630,70,0,0" Text="{Binding NotAvailable, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
 
-                    <TextBlock HorizontalAlignment="Left" Margin="1146,0,0,0" Text="Client:" VerticalAlignment="Center"  />
-                    <ComboBox Margin="1186,29,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource ClientsWithNullList}}" SelectedValue="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="926,-40,0,0" Text="Team:" VerticalAlignment="Center" />
+                    <ComboBox Margin="966,-40,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource TeamsWithAllList}}" SelectedValue="{Binding TeamId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" />
+
+                    <TextBlock HorizontalAlignment="Left" Margin="926,30,0,0" Text="Client:" VerticalAlignment="Center"  />
+                    <ComboBox Margin="966,30,0,0"  SelectionChanged="ComboBox_SelectionChanged"    ItemsSource="{Binding Source={StaticResource ClientsWithNullList}}" SelectedValue="{Binding ClientId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  HorizontalAlignment="Left"   Width="160" />
 
                     <ScrollViewer  Grid.Row="1" VerticalScrollBarVisibility = "Auto">
                         <Grid    >

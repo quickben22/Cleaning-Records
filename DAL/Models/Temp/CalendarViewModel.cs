@@ -61,6 +61,9 @@ namespace CleaningRecords.DAL.Models
         private string _NotAvailable;
         public string NotAvailable { get { return _NotAvailable; } set { _NotAvailable = (value); this.OnPropertyChanged("NotAvailable"); } }
 
+        private string _Holiday;
+        public string Holiday { get { return _Holiday; } set { _Holiday = (value); this.OnPropertyChanged("Holiday"); } }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string prop)
