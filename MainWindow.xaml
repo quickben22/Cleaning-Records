@@ -12,11 +12,11 @@
             <ColumnDefinition Width="100*" ></ColumnDefinition>
          
         </Grid.ColumnDefinitions>
-        <Button Content="Clients" Click="Clients_Click" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Height="30" Width="90"/>
-        <Button Content="Cleaners" HorizontalAlignment="Center" Margin="0,132,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Cleaners_Click"/>
-        <Button Content="Teams" HorizontalAlignment="Center" Margin="0,202,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Teams_Click"/>
-        <Button Content="Calendar" HorizontalAlignment="Center" Margin="0,272,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Clalendar_Click"/>
-        <Button Content="Services" HorizontalAlignment="Center" Margin="0,342,0,0" VerticalAlignment="Top" Height="30" Width="90" Click="Services_Click"/>
+        <Button Content="CLIENTS" Click="Clients_Click" HorizontalAlignment="Center" FontSize="16"  Height="50" FontWeight="Bold" Margin="0,40,0,0"      Width="120"    VerticalAlignment="Top"/>
+        <Button Content="CLEANERS" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="16"  Height="50" Width="120" Click="Cleaners_Click"/>
+        <Button Content="TEAMS" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top"     FontWeight="Bold" FontSize="16"  Height="50" Width="120" Click="Teams_Click"/>
+        <Button Content="CALENDAR" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="16"  Height="50" Width="120" Click="Clalendar_Click"/>
+        <Button Content="SERVICES" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="16"  Height="50" Width="120" Click="Services_Click"/>
 
         <Grid Grid.Column="1"  x:Name="DisplayGrid">
             <TextBlock FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center">CLICK SOMETHING!</TextBlock>

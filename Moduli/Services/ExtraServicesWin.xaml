@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningRecords.Moduli"
         mc:Ignorable="d"
-        Title="ExtraServicesWin" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="ADDITIONAL SERVICES" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <local:ServicesList x:Key="ServicesList"/>
     </Window.Resources>
@@ -20,7 +21,15 @@
         <TextBlock HorizontalAlignment="Left" Margin="418,123,0,0" Text="Service 4:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValue="{Binding Service4Id, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left" Margin="491,117,0,0" VerticalAlignment="Top" Width="120"/>
 
-        <Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="291,217,0,0" VerticalAlignment="Top" Height="80" Width="184" Click="Close_Click"/>
+        <!--<Button Content="FINISH" FontSize="26" HorizontalAlignment="Left" Margin="291,217,0,0" VerticalAlignment="Top" Height="80" Width="184" Click="Close_Click"/>-->
+        <Button Grid.Row="3" VerticalAlignment="Center" Margin="0,70,0,0" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Height="45" FontSize="22" Width="250"  Click="Close_Click" >
 
+
+            <StackPanel Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="ExitRun" VerticalAlignment="Center" Height="35" Width="35" />
+                <TextBlock Text="FINISH" Margin="10,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
+
+        </Button>
     </Grid>
 </Window>

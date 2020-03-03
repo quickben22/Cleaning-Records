@@ -24,6 +24,7 @@ namespace CleaningRecords.Moduli
     public partial class ClientEditWin : Window
     {
         Client ClientObject = new Client();
+        Dictionary<int, int> repeatJobs = new Dictionary<int, int>();
 
         public ClientEditWin(int ClientId)
         {
@@ -39,8 +40,10 @@ namespace CleaningRecords.Moduli
                 ClientObject.setLocations();
 
                 this.DataContext = ClientObject;
-                dataGrid.ItemsSource = ClientObject.CleaningJobs;
+
             }
+
+
 
         }
 
@@ -62,15 +65,40 @@ namespace CleaningRecords.Moduli
             }
         }
 
-        private void ClrPcker_Background_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        {
 
-        }
 
         protected override void OnClosing(CancelEventArgs e)
         {
 
             Fun.overWorked(ClientObject.CleaningJobs);
+            foreach (var cj in ClientObject.CleaningJobs)
+            {
+                if (repeatJobs.ContainsKey(cj.Id) && cj.RepeatJobId != null)
+                {
+
+                    if (cj.changed)
+                    {
+                        OnlyThisShiftDlg dlg = new OnlyThisShiftDlg();
+                        if (dlg.ShowDialog() == true)
+                        {
+                            cj.RepeatJob = null;
+                            cj.RepeatJobId = null;
+                            using (var db = new PodaciContext())
+                            {
+                                db.Update(cj);
+                                db.SaveChanges();
+                            }
+
+                        }
+                        else
+                            Fun.setRepeatingJobs(repeatJobs[cj.Id], cj);
+
+                    }
+
+
+                }
+            }
+
 
         }
 
@@ -79,6 +107,7 @@ namespace CleaningRecords.Moduli
         {
 
             var cj = db.CleaningJobs
+                .Include(x => x.RepeatJob)
                 .Include(x => x.Team)
                 .ThenInclude(y => y.CleanerTeams)
                  .Where(x => x.ClientId == ClientObject.Id
@@ -89,9 +118,14 @@ namespace CleaningRecords.Moduli
                  && ((ClientObject.Service != null && ClientObject.Service != 0) ? ClientObject.Service == x.ServiceId : true));
 
 
+            repeatJobs.Clear();
             foreach (var c in cj)
+            {
                 c.Team = null;
 
+                if (c.RepeatJobId != null)
+                    repeatJobs.Add(c.Id, (int)c.RepeatJobId);
+            }
             ClientObject.CleaningJobs = new ObservableCollection<CleaningJob>(cj);
             dataGrid.ItemsSource = ClientObject.CleaningJobs;
         }
@@ -112,8 +146,19 @@ namespace CleaningRecords.Moduli
             if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
             {
                 ExtraServicesWin dlg = new ExtraServicesWin(((CleaningJob)((Button)sender).DataContext).Id);
+                if (dlg.ShowDialog() == true)
+                    ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
+            }
+        }
+
+        private void RepeatEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).DataContext.GetType().Name == "CleaningJob")
+            {
+                CleaningJobRepeatWin dlg = new CleaningJobRepeatWin(((CleaningJob)((Button)sender).DataContext).Id);
                 dlg.ShowDialog();
-                ((CleaningJob)((Button)sender).DataContext).ConvertAmount();
+                if (dlg.Ok)
+                    Close();
             }
         }
     }

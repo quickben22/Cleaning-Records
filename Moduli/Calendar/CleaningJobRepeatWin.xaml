@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CleaningRecords.Moduli"
         mc:Ignorable="d"
-        Title="CleaningJobRepeatWin" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+        Title="REPEATING JOB" Height="500" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <CheckBox IsChecked="{Binding days[0]}" Content="Monday" HorizontalAlignment="Left" Margin="83,105,0,0" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding days[1]}" Content="Tuesday" HorizontalAlignment="Left" Margin="83,135,0,0" VerticalAlignment="Top"/>

@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CleaningRecords.Moduli"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1200">
 
     <UserControl.Resources>
         <local:StatusList x:Key="StatusList"/>
     </UserControl.Resources>
-    <Grid Margin="20">
+    <Grid Margin="20,10,0,0">
       
         <Grid.RowDefinitions>
             <RowDefinition Height="*" ></RowDefinition>
-            <RowDefinition Height="50" ></RowDefinition>
+            <RowDefinition Height="55" ></RowDefinition>
 
         </Grid.RowDefinitions>
 
@@ -34,17 +35,31 @@
                 <DataGridTextColumn Header="Telephone" Binding="{Binding Telephone, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource StatusList}}" SelectedValueBinding="{Binding ClientStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
-                <DataGridTemplateColumn  >
+                <DataGridTemplateColumn Header="Details" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="Edit_Click">Details</Button>
+                            <Button Height="40" Width="40" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="Edit_Click">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#f2c809"/>
+                                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+                                </Button.Resources>
+
+                                <materialDesign:PackIcon Kind="Edit" Height="30" Width="30" />
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn  >
+                <DataGridTemplateColumn  Header="Delete" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="Delete_Click">Delete</Button>
+                            <Button Height="40" Width="40" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="Delete_Click">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#e22553"/>
+                                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+                                </Button.Resources>
+
+                                <materialDesign:PackIcon Kind="Delete" Height="30" Width="30" />
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -52,7 +67,18 @@
 
         </DataGrid>
 
-        <Button Grid.Row="1" Height="45" FontSize="22" Width="250" Margin="0,0,0,0" Click="Add_Click">NEW CUSTOMER</Button>
+        <Button VerticalAlignment="Center" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Grid.Row="1" Height="45" FontSize="22" Width="250"  Click="Add_Click" >
+            <!--<Button.Resources>
+                <SolidColorBrush x:Key="SecondaryAccentBrush" Color="Green"/>
+                <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+            </Button.Resources>-->
+
+            <StackPanel Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="User" VerticalAlignment="Center" Height="35" Width="35" />
+                <TextBlock FontWeight="Bold" Text="NEW CUSTOMER" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+
+        </Button>
         <!--<Button Grid.Row="1" Click="Add_Click">NEW CUSTOMER</Button>-->
     </Grid>
 </UserControl>

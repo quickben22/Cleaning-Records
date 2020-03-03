@@ -7,7 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Client details" Height="450" Width="1500" WindowState="Maximized">
+        Title="CLIENT DETAILS" Height="450" Width="1500" WindowState="Maximized">
     <Window.Resources>
         <local:CleanersList x:Key="CleanersList"/>
         <local:TeamsList x:Key="TeamsList"/>
@@ -151,29 +151,81 @@
                 <DataGridComboBoxColumn Header="Main Service"  ItemsSource="{Binding Source={StaticResource ServicesList}}" SelectedValueBinding="{Binding ServiceId, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
                 <DataGridTextColumn Header="Amount" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Repeating" IsReadOnly="True" Binding="{Binding RepeatJobId,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RepeatJobIdConverter}}"/>
+
                 <DataGridComboBoxColumn Header="Status"  ItemsSource="{Binding Source={StaticResource JobStatusList}}" SelectedValueBinding="{Binding JobStatus, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"  />
 
 
-                <DataGridTemplateColumn  >
+                <DataGridTemplateColumn  Header="Repeat Edit" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="Services_Click">Services</Button>
+                            <Button Height="40" Width="40" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="RepeatEdit_Click">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#f2c809"/>
+                                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+                                </Button.Resources>
+
+                                <materialDesign:PackIcon Kind="CalendarRepeat" Height="30" Width="30" />
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn  >
+                <DataGridTemplateColumn Header="Services" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Click="Delete_Click">Delete</Button>
+                            <Button Height="40" Width="40" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="Services_Click">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#8c34eb"/>
+                                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+                                </Button.Resources>
+
+                                <materialDesign:PackIcon Kind="Cleaning" Height="30" Width="30" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Delete" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Height="40" Width="40" Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Click="Delete_Click">
+                                <Button.Resources>
+                                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="#e22553"/>
+                                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="White"/>
+                                </Button.Resources>
+
+                                <materialDesign:PackIcon Kind="Delete" Height="30" Width="30" />
+                            </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Grid.Row="3" Height="45" FontSize="22" Width="250" Margin="0,0,0,70" Click="Add_Click">NEW JOB</Button>
-        <Button Grid.Row="3" Height="45" FontSize="22" Width="250" Margin="0,70,0,0" Click="Close_Click">FINISH</Button>
+        <!--<Button Grid.Row="3" Height="45" FontSize="22" Width="250" Margin="0,0,0,70" Click="Add_Click">NEW JOB</Button>-->
+
+        <Button Margin="0,0,0,70"  VerticalAlignment="Center" Style="{DynamicResource MaterialDesignRaisedAccentButton}" Grid.Row="3" Height="45" FontSize="22" Width="250"  Click="Add_Click" >
+         
+
+            <StackPanel Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Work" VerticalAlignment="Center" Height="35" Width="35" />
+                <TextBlock Text="NEW JOB" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+
+        </Button>
+
+        <Button Grid.Row="3" VerticalAlignment="Center" Margin="0,70,0,0" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Height="45" FontSize="22" Width="250"  Click="Close_Click" >
+
+
+            <StackPanel Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="ExitRun" VerticalAlignment="Center" Height="35" Width="35" />
+                <TextBlock Text="FINISH" Margin="10,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
+
+        </Button>
+
+  
      
 
     </Grid>
